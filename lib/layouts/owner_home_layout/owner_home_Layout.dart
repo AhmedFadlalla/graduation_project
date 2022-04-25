@@ -13,25 +13,22 @@ import 'cubit/owner_state.dart';
 class OwnerHomeScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create:(context)=>OwnerCubit(),
-      child: BlocConsumer<OwnerCubit,OwnerState>(
-        listener: (context,state){},
-        builder: (context,state){
-          var cubit=OwnerCubit.get(context);
-          return Scaffold(
-            body: cubit.ownerScreens[cubit.currentIndex],
-            bottomNavigationBar: BottomNavigationBar(
-              items: cubit.items,
-              currentIndex: cubit.currentIndex,
-              onTap: (index){
+    return BlocConsumer<OwnerCubit,OwnerState>(
+      listener: (context,state){},
+      builder: (context,state){
+        var cubit=OwnerCubit.get(context);
+        return Scaffold(
+          body: cubit.ownerScreens[cubit.currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            items: cubit.items,
+            currentIndex: cubit.currentIndex,
+            onTap: (index){
 
-                cubit.changeBottomNavIndex(index);
-              },
-            ),
-          );
-        },
-      ),
+              cubit.changeBottomNavIndex(index);
+            },
+          ),
+        );
+      },
     );
   }
 }

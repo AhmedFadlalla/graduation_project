@@ -7,7 +7,11 @@ import 'package:graduation_project/layouts/home_layout/home_layout.dart';
 import 'package:graduation_project/modules/registeration_screen/register_screen/register_cubit/cubit.dart';
 import 'package:graduation_project/modules/registeration_screen/register_screen/register_cubit/states.dart';
 import 'package:graduation_project/shared/component/components.dart';
+import 'package:graduation_project/shared/component/constants.dart';
 import 'package:graduation_project/shared/styles/colors.dart';
+
+import '../../../shared/component/constants.dart';
+import '../../../shared/network/local/cach_helper.dart';
 
 class RegisterScreen extends StatelessWidget {
   @override
@@ -18,7 +22,9 @@ class RegisterScreen extends StatelessWidget {
         listener: (context,state){
 
           if(state is CreateUserSuccessState) {
-            navigateAndFinish(context, HomeScreenLayout());
+              navigateAndFinish(context, HomeScreenLayout());
+
+
           }
         },
         builder: (context,state){

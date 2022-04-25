@@ -8,43 +8,65 @@ import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.d
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
 import 'package:graduation_project/models/owner_model.dart';
 import 'package:graduation_project/models/post_model.dart';
+import 'package:graduation_project/modules/owner-screen/add_post/add_post_screen.dart';
 import 'package:graduation_project/shared/component/components.dart';
 import 'package:graduation_project/shared/styles/colors.dart';
 import 'package:graduation_project/shared/styles/icon_broken.dart';
 
-class CommunityScreen extends StatelessWidget {
+class OwnerCommunityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<OwnerCubit,OwnerState>(
+      listenWhen: (previous, current) {
+        return true;
+      },
       listener: (context,state){},
       builder: (context,state){
         double size=MediaQuery.of(context).size.height;
+        double width=MediaQuery.of(context).size.width;
         return
           Column(
             children: [
-              SizedBox(height: 20,),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 25.0,
-                    backgroundImage:
-                    NetworkImage('https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'),
+              SizedBox(height: size*0.04,),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  width: 390.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.grey[300],
                   ),
-                  SizedBox(
-                    width: 8.0,
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 20.0,
+                        backgroundImage:
+                        NetworkImage(OwnerCubit.get(context).ownerModel?.image==null?
+                            'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
+                            :OwnerCubit.get(context).ownerModel!.image
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                      InkWell(
+                        child: Container(
+                          height: 20,
+                          width: width*0.8,
+                          child: Text('What\s on your mind?'),
+
+
+                        ),
+                        onTap: (){
+
+                          navigateTo(context, AddPostScreen());
+
+                        },
+                      )
+                    ],
                   ),
-                  InkWell(
-                    child: Container(
-
-                        child: Text('What\s on your mind?'),
-
-
-                    ),
-                    onTap: (){
-
-                    },
-                  )
-                ],
+                ),
               ),
               ConditionalBuilder(
                 condition: OwnerCubit.get(context).posts.length >0,
@@ -70,10 +92,7 @@ class CommunityScreen extends StatelessWidget {
                           itemBuilder: (context,index)=>buildPostItem(OwnerCubit.get(context).posts[index],context,index),
                           separatorBuilder: (context,index)=>myDivider(),
                           itemCount:OwnerCubit.get(context).posts.length ),
-                      FloatingActionButton(
-                        onPressed: (){},
-                        child: Icon(Icons.add),
-                      )
+
 
                       // SocialCubit.get(context).posts.length
                     ],
@@ -84,7 +103,7 @@ class CommunityScreen extends StatelessWidget {
               ),
             ],
           );
-          // Image(image: AssetImage('assets/images/travel.jpg')
+        // Image(image: AssetImage('assets/images/travel.jpg')
 
       },
     );

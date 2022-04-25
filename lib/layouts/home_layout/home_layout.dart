@@ -10,30 +10,27 @@ import 'cubit/states.dart';
 class HomeScreenLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create:(context)=>HorseCubit(),
-      child: BlocConsumer<HorseCubit,HorseStates>(
-        listener: (context,state){},
-        builder: (context,state){
-          var cubit=HorseCubit.get(context);
-          return Scaffold(
-            appBar: AppBar(
-               title: Text(cubit.titles[cubit.currentIndex],),
-              actions: [
+    return BlocConsumer<HorseCubit,HorseStates>(
+      listener: (context,state){},
+      builder: (context,state){
+        var cubit=HorseCubit.get(context);
+        return Scaffold(
+          appBar: AppBar(
+             title: Text(cubit.titles[cubit.currentIndex],),
+            actions: [
 
-              ],
-            ),
-            body: cubit.screens[cubit.currentIndex],
-            bottomNavigationBar: BottomNavigationBar(
-              items: cubit.items,
-              currentIndex: cubit.currentIndex,
-              onTap: (index){
-                cubit.changeBottomNavIndex(index);
-              },
-            ),
-          );
-        },
-      ),
+            ],
+          ),
+          body: cubit.screens[cubit.currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+            items: cubit.items,
+            currentIndex: cubit.currentIndex,
+            onTap: (index){
+              cubit.changeBottomNavIndex(index);
+            },
+          ),
+        );
+      },
     );
   }
 }

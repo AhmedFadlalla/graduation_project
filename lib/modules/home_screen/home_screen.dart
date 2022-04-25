@@ -67,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                     Expanded(
                       child: buildImageInteractionCard(
                         title: 'الايواء',
-                        image: 'https://static.slaati.com/2020/07/949e4208-1e5a-4c9c-843f-0646f0a8ec99.jpg',
+                        image: 'https://www.alkonouz.com/wp-content/uploads/2020/07/%D8%A7%D8%B3%D8%B7%D8%A8%D9%84-%D8%BA%D9%84%D8%A7%D9%81.jpg',
                       ),
                     ),
                   ],

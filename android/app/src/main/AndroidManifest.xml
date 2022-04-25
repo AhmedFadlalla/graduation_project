@@ -40,6 +40,9 @@
        <meta-data
            android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyAbe69FB1JwIN3GlyTD9ZU8OCJFsUIiOso" />
+       android:usesCleartextTraffic="true"
 
-    </application>
+
+   </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>

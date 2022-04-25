@@ -66,9 +66,14 @@ class RegisterCubit extends Cubit<RegisterStates> {
         uId: uId,
         image:
             'https://rcmi.fiu.edu/wp-content/uploads/sites/30/2018/02/no_user.png',
+        cover: 'https://th.bing.com/th/id/R.38f36f9f78b46ab781fbba072232dd5b?rik=NbBTb1D4YyZSUQ&pid=ImgRaw&r=0',
         bio: 'write your bio',
         phone: phone,
-        isEmailVerified: false);
+        status: 1,
+
+
+
+    );
 
      FirebaseFirestore.instance
         .collection('users')

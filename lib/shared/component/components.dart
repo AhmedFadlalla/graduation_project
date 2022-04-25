@@ -276,6 +276,231 @@ Widget BuildDropBottom(
       ),
     );
 
+Widget defaultButton2({
+  double width = double.infinity,
+  double size = 25.0,
+  double height = 60,
+  Color background = Colors.blue,
+  required var function,
+  required String text,
+  bool isUpperCase = true,
+  double radius = 10.0,
+}) =>
+    Container(
+      width: width,
+      height: height,
+      child: Padding(
+        padding: const EdgeInsets.only(
+          right: 10.0,
+          left: 10.0,
+        ),
+        child: Row(
+          children: [
+            Icon(
+              Icons.vaccines,
+              size: 35,
+              color: Colors.white,
+            ),
+            SizedBox(
+              width: 20.0,
+            ),
+            MaterialButton(
+              onPressed: function,
+              child: Text(
+                isUpperCase ? text.toUpperCase() : text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: size,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(radius),
+        color: background,
+      ),
+    );
+Widget defaultRecordItem({
+  required String txt,
+}) =>
+    Expanded(
+      child: Material(
+        elevation: 22.0,
+        child: SizedBox(
+          height: 60.0,
+          child: Container(
+            width: 150,
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  '${txt}',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+              ),
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: Colors.white,
+              boxShadow: const [
+                BoxShadow(color: Colors.red, spreadRadius: 0.5),
+              ],
+            ),
+            height: 50,
+          ),
+        ),
+      ),
+    );
+Widget defaultRecord({
+  required String drName,
+  required String horseState,
+  required String horseDisease,
+  required String DiseaseDate,
+}) =>
+    Row(
+      children: [
+        Expanded(child: defaultRecordItem(txt: '${drName}')),
+        SizedBox(
+          width: 3.0,
+        ),
+        Expanded(child: defaultRecordItem(txt: '${horseState}')),
+        SizedBox(
+          width: 3.0,
+        ),
+        Expanded(child: defaultRecordItem(txt: '${horseDisease}')),
+        SizedBox(
+          width: 3.0,
+        ),
+        Expanded(child: defaultRecordItem(txt: '${DiseaseDate}')),
+        SizedBox(
+          width: 3.0,
+        ),
+      ],
+    );
+Widget defaultfollowingMedicineItem({
+  required String txt,
+  required double height,
+  required double width,
+  required IconData icon,
+  required String vaccine,
+  required String date,
+}) =>
+    Material(
+      elevation: 22.0,
+      child: Container(
+        width: width,
+        height: height,
+        child: Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 5.0,
+              ),
+              Icon(
+                icon,
+                size: 35,
+              ),
+              SizedBox(
+                width: 15.0,
+              ),
+              Column(
+                children: [
+                  Text(
+                    // '${txt}'
+                    'vaccine : ${vaccine}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 2.0,
+                  ),
+                  Text(
+                    // '${txt}'
+                    'date : ${date}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.indigo,
+          boxShadow: const [
+            BoxShadow(color: Colors.white, spreadRadius: 1.0),
+          ],
+        ),
+      ),
+    );
+
+Widget TestCard({
+
+  String? title,
+  //String image = 'https://www.photosmix.com/wp-content/uploads/2020/02/%D8%B5%D9%88%D8%B1-%D8%AC%D9%85%D9%8A%D9%84%D8%A9-%D8%AC%D8%AF%D8%A7-2020-%D8%B5%D9%88%D8%B1-%D8%AC%D9%85%D9%8A%D9%84%D8%A9-%D9%85%D9%83%D8%AA%D9%88%D8%A8-%D8%B9%D9%84%D9%8A%D9%87%D8%A7-%D9%83%D9%84%D8%A7%D9%85-%D8%AD%D9%84%D9%88-%D8%A7%D9%83%D8%AB%D8%B1-%D9%85%D9%86-100-%D8%B5%D9%88%D8%B1%D8%A9-%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9-2.jpg',
+  String image ='https://static.vecteezy.com/system/resources/previews/002/238/384/original/portrait-of-an-arabian-horse-head-on-a-black-background-illustration-vector.jpg',
+
+}) =>
+    SizedBox(
+      // width:50 ,
+      // height:200 ,
+      child: Card(
+        elevation: 22.0,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Column(
+
+          children: [
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Image(
+                  image: NetworkImage(
+                    image,
+                  ),
+                  width: double.infinity,
+                  height: 200.0,
+                  fit: BoxFit.cover,
+                ),
+                Container(
+                  color: Colors.black.withOpacity(0.4),
+                  padding: EdgeInsets.symmetric(
+                    vertical: 3,
+                    horizontal: 10,
+                  ),
+
+                  width: double.infinity,
+                  child: Text(
+                    title ?? '',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+
+        ),
+      ),
+    );
+
 
 
 

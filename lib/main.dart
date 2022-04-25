@@ -1,8 +1,12 @@
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
 import 'package:graduation_project/layouts/owner_home_layout/owner_home_Layout.dart';
+import 'package:graduation_project/modules/Doctor_Screens/Doctor_Cubit/doc_cubit.dart';
+
+import 'package:graduation_project/modules/registeration_screen/login_screen/cubit/cubit.dart';
 import 'package:graduation_project/modules/splash_screen/splashScreen.dart';
 import 'package:graduation_project/shared/bloc_observer.dart';
 import 'package:graduation_project/shared/component/constants.dart';
@@ -11,8 +15,9 @@ import 'package:graduation_project/shared/styles/themes.dart';
 
 import 'layouts/home_layout/home_layout.dart';
 import 'layouts/owner_home_layout/cubit/owner_cubit.dart';
+import 'modules/Doctor_Screens/doctor_home_page.dart';
 
-void main() async {
+void main(context) async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await Firebase.initializeApp();
@@ -20,15 +25,22 @@ void main() async {
   Widget widget;
   uId = CachHelper.getData(key: 'uId');
   oId =CachHelper.getData(key: 'oId');
+  dId =CachHelper.getData(key: 'dId');
+
 
 
 
   if (uId != null && oId==null) {
     widget = HomeScreenLayout();
   }
-  else if(uId != null && oId!=null)
+  else if(uId == null && oId!=null)
   {
     widget=OwnerHomeScreenLayout();
+  }
+
+  else if(uId == null && oId==null && dId !=null)
+  {
+    widget=DocHomeScreen();
   }
   else {
     widget = SplashScreen();
@@ -46,10 +58,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return new MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => HorseCubit()..getUserData()),
-          BlocProvider(create: (context) => OwnerCubit()..getOwnerData()..getHorseData())
+          BlocProvider(create: (context) => OwnerCubit()..getOwnerData()..getHorseData()..getAllPosts()),
+          BlocProvider(create: (context) => StandardCubit())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

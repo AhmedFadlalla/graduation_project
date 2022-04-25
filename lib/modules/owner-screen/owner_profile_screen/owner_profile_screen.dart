@@ -1,24 +1,26 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
-import 'package:graduation_project/modules/profile_screen/EditProfile.dart';
-import 'package:graduation_project/shared/component/components.dart';
-import 'package:graduation_project/shared/styles/icon_broken.dart';
+import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
 
-import '../../layouts/owner_home_layout/cubit/owner_state.dart';
+import '../../../shared/component/components.dart';
+import '../../../shared/styles/icon_broken.dart';
+import 'owner_edit_profile.dart';
 
-class ProfileScreen extends StatelessWidget {
+class OwnerProfileScreen extends StatelessWidget {
+  const OwnerProfileScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<OwnerCubit, OwnerState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        var model = OwnerCubit.get(context).ownerModel;
-
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
+    return  BlocConsumer<OwnerCubit,OwnerState>(
+      listenWhen: (previous, current) {
+        return true;
+      },
+        listener: (context,state){},
+        builder: (context,state)
+        {
+          return  Column(
             children: [
               Container(
                 height: 190.0,
@@ -51,7 +53,7 @@ class ProfileScreen extends StatelessWidget {
                     CircleAvatar(
                       radius: 64.0,
                       backgroundColor:
-                          Theme.of(context).scaffoldBackgroundColor,
+                      Theme.of(context).scaffoldBackgroundColor,
                       child: CircleAvatar(
                         radius: 60.0,
                         backgroundImage: NetworkImage(
@@ -167,7 +169,7 @@ class ProfileScreen extends StatelessWidget {
                     onPressed: () {
                       navigateTo(
                         context,
-                        EditProfileScreen(),
+                        OwnerEditProfileScreen(),
                       );
                     },
                     child: Icon(
@@ -177,10 +179,11 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ],
               ),
+
+
             ],
-          ),
+          );
+        },
         );
-      },
-    );
   }
 }

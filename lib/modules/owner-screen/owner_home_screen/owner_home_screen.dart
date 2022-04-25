@@ -6,6 +6,7 @@ import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
 import 'package:graduation_project/modules/owner-screen/accomm_scree/add_accomm_screen/add_accomm_screen.dart';
+import 'package:graduation_project/modules/owner-screen/doctor_screen/doc_home_screen.dart';
 import 'package:graduation_project/shared/component/components.dart';
 
 import '../Horses_screen/horses_screen.dart';
@@ -77,7 +78,7 @@ class OwnerHomeScreen extends StatelessWidget {
                             child: InkWell(
                               child: TestCard(
                                 title: 'Horse ',
-                                image: 'https://img.equinenow.com/slir/w800/equine/data/photos/1350049/1609624625/few-white-hairs-on-forehead-horse.jpg',
+                                image: 'https://th.bing.com/th/id/R.965f6052ef9736c4c4418c60303b82f0?rik=1i4pNLfjehE2ag&pid=ImgRaw&r=0',
 
                               ),
                               onTap: (){
@@ -94,6 +95,9 @@ class OwnerHomeScreen extends StatelessWidget {
                                 image: 'https://th.bing.com/th/id/OIP.6kPQxkyTkPZ8Vf1Bh4HnMwHaE8?pid=ImgDet&rs=1',
 
                               ),
+                              onTap: (){
+                                navigateTo(context, DoctorHomeScreen());
+                              },
                             ),
                           ),
 
@@ -185,59 +189,5 @@ class OwnerHomeScreen extends StatelessWidget {
         },
         listener : (context,state){});
   }
-  Widget TestCard({
 
-    String? title,
-    //String image = 'https://www.photosmix.com/wp-content/uploads/2020/02/%D8%B5%D9%88%D8%B1-%D8%AC%D9%85%D9%8A%D9%84%D8%A9-%D8%AC%D8%AF%D8%A7-2020-%D8%B5%D9%88%D8%B1-%D8%AC%D9%85%D9%8A%D9%84%D8%A9-%D9%85%D9%83%D8%AA%D9%88%D8%A8-%D8%B9%D9%84%D9%8A%D9%87%D8%A7-%D9%83%D9%84%D8%A7%D9%85-%D8%AD%D9%84%D9%88-%D8%A7%D9%83%D8%AB%D8%B1-%D9%85%D9%86-100-%D8%B5%D9%88%D8%B1%D8%A9-%D8%AC%D8%AF%D9%8A%D8%AF%D8%A9-2.jpg',
-    String image ='https://static.vecteezy.com/system/resources/previews/002/238/384/original/portrait-of-an-arabian-horse-head-on-a-black-background-illustration-vector.jpg',
-
-  }) =>
-      SizedBox(
-        // width:50 ,
-        // height:200 ,
-        child: Card(
-          elevation: 22.0,
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          child: Column(
-
-            children: [
-              Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Image(
-                    image: NetworkImage(
-                      image,
-                    ),
-                    width: double.infinity,
-                    height: 200.0,
-                    fit: BoxFit.cover,
-                  ),
-                  Container(
-                    color: Colors.black.withOpacity(0.4),
-                    padding: EdgeInsets.symmetric(
-                      vertical: 3,
-                      horizontal: 10,
-                    ),
-
-                    width: double.infinity,
-                    child: Text(
-                      title ?? '',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-
-          ),
-        ),
-      );
 }

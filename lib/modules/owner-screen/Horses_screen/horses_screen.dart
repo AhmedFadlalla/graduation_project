@@ -11,7 +11,7 @@ import 'HorseDetails.dart';
 import 'add_horses_screen.dart';
 
 class HorsesScreen extends StatelessWidget {
-  const HorsesScreen({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,6 @@ class HorsesScreen extends StatelessWidget {
 
     return BlocConsumer<OwnerCubit,OwnerState>(
         builder: (context,state){
-          late HorseModel model;
           var cubit=OwnerCubit.get(context);
           return Scaffold(
             backgroundColor: Colors.green,
@@ -57,12 +56,8 @@ class HorsesScreen extends StatelessWidget {
                         itemBuilder: (context,index)=>buildHorseCard(
                             cubit.horses[index],
                             size,
-                          (){
-                              navigateTo(context, HorseDetailsScreen());
-                              cubit.getHorseDetails(
-                                  horseId: cubit.horsesId[cubit.index],
-                              );
-                        }
+                          index,
+                          context
                         ),
                         separatorBuilder:(context,index)=> myDivider(),
                         itemCount: cubit.horses.length)
@@ -92,7 +87,7 @@ class HorsesScreen extends StatelessWidget {
 
         });
   }
-  Widget buildHorseCard(HorseModel model,var size,var onPressed)=> InkWell(
+  Widget buildHorseCard(HorseModel model,var size,index,context)=> InkWell(
     child: Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       height: 190.0,
@@ -225,6 +220,10 @@ class HorsesScreen extends StatelessWidget {
       ),
 
     ),
-    onTap: onPressed,
+    onTap: (){
+      OwnerCubit.get(context).getHorseDetails(OwnerCubit.get(context).horsesId[index],);
+      navigateTo(context, HorseDetailsScreen());
+
+    },
   );
 }

@@ -13,8 +13,9 @@ void printFullText(String text){
 }
 String token='';
 
-String? uId;
+ String? uId;
 String? oId;
+String? dId;
 
 //baseUrl: http://newsapi.org/
 // methode: v2/top-headlines?

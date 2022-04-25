@@ -4,13 +4,23 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
 import 'package:graduation_project/layouts/home_layout/home_layout.dart';
+import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
+import 'package:graduation_project/layouts/owner_home_layout/owner_home_Layout.dart';
+
+import 'package:graduation_project/modules/owner-screen/doctor_screen/doc_home_screen.dart';
 import 'package:graduation_project/modules/registeration_screen/register_screen/register_screen.dart';
 import 'package:graduation_project/shared/component/components.dart';
 import 'package:graduation_project/shared/network/local/cach_helper.dart';
 import 'package:graduation_project/shared/styles/colors.dart';
 
 
+import '../../../shared/component/constants.dart';
+import '../../../shared/component/constants.dart';
+import '../../../shared/component/constants.dart';
+import '../../../shared/component/constants.dart';
+import '../../Doctor_Screens/doctor_home_page.dart';
 import 'cubit/cubit.dart';
 import 'cubit/states.dart';
 
@@ -25,13 +35,51 @@ class LoginScreen extends StatelessWidget {
         listener: (context,state){
           if(state is LoginErrorState)
             showToast(text: state.error, state: ToastStates.ERROR);
+
+
+
+
           if(state is LoginSuccessState)
-            CachHelper.saveData(
-                key: 'uId',
-                value: state.uId)
-                .then((value) {
-              navigateAndFinish(context, HomeScreenLayout());
-            });
+            {
+
+              if(LoginCubit.get(context).status==1) {
+                CachHelper.saveData(
+                    key: 'uId',
+                    value: state.uId)
+                    .then((value) {
+
+                  navigateAndFinish(context, HomeScreenLayout());
+                  print(uId);
+                });
+              }
+              else if(LoginCubit.get(context).status==2)
+                {
+                  CachHelper.saveData(
+                      key: 'oId',
+                      value: '00'+state.uId)
+                      .then((value) {
+                    OwnerCubit.get(context).getOwnerData();
+                    navigateAndFinish(context, OwnerHomeScreenLayout());
+
+
+                    print(oId);
+                  });
+                }
+              else if(LoginCubit.get(context).status==3)
+                {
+                  CachHelper.saveData(
+                      key: 'dId',
+                      value: state.uId)
+                      .then((value) {
+                    navigateAndFinish(context,DocHomeScreen() );
+                    print(dId);
+                  });
+                }
+
+
+            }
+
+
           
         },
         builder: (context,state){
@@ -87,9 +135,17 @@ class LoginScreen extends StatelessWidget {
                       condition: state is! LoginLoadingState,
                       builder: (context)=>materialBottomLogin(
                           pressFunction: (){
-                            cubit.userLogin(
-                                email: emailController.text,
-                                password: passwordController.text);
+
+
+
+                                cubit.userLogin(
+                                    email: emailController.text,
+                                    password: passwordController.text);
+                                // LoginCubit.get(context).getDocValue();
+                                // if(LoginCubit.get(context).isDoc==true)
+                                //   navigateTo(context, DoctorHomeScreen());
+
+
 
                           },
                           bottomText: 'LOGIN',
