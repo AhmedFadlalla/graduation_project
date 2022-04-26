@@ -34,7 +34,7 @@ class OwnerEditProfileScreen extends StatelessWidget {
             defaultTextButton(
                 text: 'UPDATE',
                 pressedFunction: () {
-                  OwnerCubit.get(context).updateUser(
+                  OwnerCubit.get(context).updateOwner(
                       studName: nameController.text,
                       phone: phoneController.text,
                       bio: bioController.text);
@@ -78,7 +78,7 @@ class OwnerEditProfileScreen extends StatelessWidget {
                             ),
                             IconButton(
                                 onPressed: () {
-                                  HorseCubit.get(context).getCoverImage();
+                                  OwnerCubit.get(context).getCoverImage();
                                 },
                                 icon: CircleAvatar(
                                   radius: 20.0,
@@ -105,7 +105,7 @@ class OwnerEditProfileScreen extends StatelessWidget {
                             ),
                             IconButton(
                                 onPressed: () {
-                                  HorseCubit.get(context).getProfileImage();
+                                  OwnerCubit.get(context).getProfileImage();
                                 },
                                 icon: CircleAvatar(
                                   radius: 20.0,
@@ -122,28 +122,28 @@ class OwnerEditProfileScreen extends StatelessWidget {
                   SizedBox(
                     height: 10.0,
                   ),
-                  if (HorseCubit.get(context).profileImage != null ||
-                      HorseCubit.get(context).coverImage != null)
+                  if (OwnerCubit.get(context).profileImage != null ||
+                      OwnerCubit.get(context).coverImage != null)
                     Row(
                       children: [
-                        if (HorseCubit.get(context).profileImage != null)
+                        if (OwnerCubit.get(context).profileImage != null)
                           Expanded(
                             child: Column(
                               children: [
                                 defaultButton(
                                     function: () {
-                                      HorseCubit.get(context)
+                                      OwnerCubit.get(context)
                                           .uploadProfileImage(
                                           name: nameController.text,
                                           phone: phoneController.text,
                                           bio: bioController.text, context: context);
                                     },
                                     text: 'Upload Profile'),
-                                if (state is UserUpdateLoadingState)
+                                if (state is OwnerUpdateLoadingState)
                                   SizedBox(
                                     height: 5.0,
                                   ),
-                                if (state is UserUpdateLoadingState)
+                                if (state is OwnerUpdateLoadingState)
                                   LinearProgressIndicator()
                               ],
                             ),
@@ -151,23 +151,23 @@ class OwnerEditProfileScreen extends StatelessWidget {
                         SizedBox(
                           height: 8.0,
                         ),
-                        if (HorseCubit.get(context).coverImage != null)
+                        if (OwnerCubit.get(context).coverImage != null)
                           Expanded(
                             child: Column(
                               children: [
                                 defaultButton(
                                     function: () {
-                                      HorseCubit.get(context).uploadCoverImage(
+                                      OwnerCubit.get(context).uploadCoverImage(
                                           name: nameController.text,
                                           phone: phoneController.text,
                                           bio: bioController.text, context: context);
                                     },
                                     text: 'Upload Cover'),
-                                if (state is UserUpdateLoadingState)
+                                if (state is OwnerUpdateLoadingState)
                                   SizedBox(
                                     height: 5.0,
                                   ),
-                                if (state is UserUpdateLoadingState)
+                                if (state is OwnerUpdateLoadingState)
                                   LinearProgressIndicator()
                               ],
                             ),

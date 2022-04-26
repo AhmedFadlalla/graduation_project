@@ -23,13 +23,13 @@ class OwnerProfileScreen extends StatelessWidget {
           return  Column(
             children: [
               Container(
-                height: 190.0,
+                height: 250.0,
                 child: Stack(
                   alignment: AlignmentDirectional.bottomCenter,
                   children: [
                     Align(
                       child: Container(
-                        height: 140.0,
+                        height: 180.0,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.only(

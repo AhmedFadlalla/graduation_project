@@ -7,9 +7,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
+import 'package:graduation_project/models/doctor_model.dart';
 import 'package:graduation_project/models/horse_model.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../../models/Message_model.dart';
 import '../../../models/accom_model.dart';
 import '../../../models/owner_model.dart';
 import '../../../models/post_model.dart';
@@ -17,6 +19,7 @@ import '../../../models/user_model.dart';
 import '../../../modules/chats_screen/chat_screen.dart';
 import '../../../modules/community_screen/community_screen.dart';
 import '../../../modules/owner-screen/OwnerCommunityScreen.dart';
+import '../../../modules/owner-screen/owner_chat_screen/chat_home_screen.dart';
 import '../../../modules/owner-screen/owner_home_screen/owner_home_screen.dart';
 import '../../../modules/owner-screen/owner_profile_screen/owner_profile_screen.dart';
 import '../../../modules/profile_screen/profile_screen.dart';
@@ -58,7 +61,7 @@ class OwnerCubit extends Cubit<OwnerState> {
   List<Widget> ownerScreens = [
     OwnerHomeScreen(),
     OwnerCommunityScreen(),
-    ChatsScreen(),
+    OwnerChatsScreen(),
     OwnerProfileScreen(),
   ];
 
@@ -72,6 +75,8 @@ class OwnerCubit extends Cubit<OwnerState> {
   List<String> titles = ['Home', 'Community', 'Chats', 'Profile'];
 
   void changeBottomNavIndex(int index) {
+    if(index==2)
+      getAllUsers();
     currentIndex = index;
     emit(OwnerChangeBottomNavState());
   }
@@ -432,6 +437,11 @@ class OwnerCubit extends Cubit<OwnerState> {
         phone: phone,
         uId: value.user!.uid,
       );
+      addDoc(
+          name: name,
+          email: email,
+          phone: phone,
+          dId: value.user!.uid);
     }).catchError((error) {
       print(error.toString());
       emit(DocRegisterErrorState(error.toString()));
@@ -465,6 +475,37 @@ class OwnerCubit extends Cubit<OwnerState> {
     }).catchError((error) {
       emit(CreateDocErrorState(error.toString()));
     });
+  }
+
+  void addDoc({
+    required String name,
+    required String email,
+    required String phone,
+    required String dId,
+}){
+
+
+    DoctorModel doctorModel=DoctorModel(
+        name: name,
+        email: email,
+        phone: phone,
+        ssn: '',
+        image: '',
+        oId: oId!,
+        dId: dId);
+    FirebaseFirestore.instance
+        .collection('owners')
+        .doc(oId!)
+        .collection('doctors')
+        .doc(dId)
+    .set(doctorModel.toMap()).then((value) {
+      emit(AddDocSuccessState());
+    }).catchError((error){
+      print(error.toString());
+      emit(AddDocErrorState(error.toString()));
+
+    });
+
   }
 
   Future signOut()async{
@@ -571,10 +612,10 @@ class OwnerCubit extends Cubit<OwnerState> {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       profileImage = File(pickedFile.path);
-      emit(SocialProfileImageSuccessState());
+      emit(ProfileImageSuccessState());
     } else {
       print('No image selected');
-      emit(SocialProfileImageErrorState());
+      emit(ProfileImageErrorState());
     }
   }
 
@@ -584,10 +625,10 @@ class OwnerCubit extends Cubit<OwnerState> {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       coverImage = File(pickedFile.path);
-      emit(SocialCoverImageSuccessState());
+      emit(CoverImageSuccessState());
     } else {
       print('No image selected');
-      emit(SocialCoverImageErrorState());
+      emit(CoverImageErrorState());
     }
   }
 
@@ -595,22 +636,23 @@ class OwnerCubit extends Cubit<OwnerState> {
     required String name,
     required String phone,
     required String bio,
+    required context
   }) {
-    emit(SocialUserUpdateLoadingState());
+    emit(OwnerUpdateLoadingState());
 
     firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('users/${Uri.file(profileImage!.path).pathSegments.last}')
+        .child('owners/${Uri.file(profileImage!.path).pathSegments.last}')
         .putFile(profileImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
         // emit(SocialUploadProfileImageSuccessState());
-        updateUser(studName: name, phone: phone, bio: bio, image: value);
+        updateOwner(studName: name, phone: phone, bio: bio, image: value);
       }).catchError((error) {
-        emit(SocialUploadProfileImageErrorState());
+        emit(UploadProfileImageErrorState());
       });
     }).catchError((error) {
-      emit(SocialUploadProfileImageErrorState());
+      emit(UploadProfileImageErrorState());
     });
   }
 
@@ -618,26 +660,27 @@ class OwnerCubit extends Cubit<OwnerState> {
     required String name,
     required String phone,
     required String bio,
+    required context
   }) {
-    emit(SocialUserUpdateLoadingState());
+    emit(OwnerUpdateLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('users/${Uri.file(coverImage!.path).pathSegments.last}')
+        .child('owners/${Uri.file(coverImage!.path).pathSegments.last}')
         .putFile(coverImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
         // emit(SocialUploadCoverImageSuccessState());
-        updateUser(studName: name, phone: phone, bio: bio, cover: value);
+        updateOwner(studName: name, phone: phone, bio: bio, cover: value);
         print(value);
       }).catchError((error) {
-        emit(SocialUploadCoverImageErrorState());
+        emit(UploadCoverImageErrorState());
       });
     }).catchError((error) {
-      emit(SocialUploadCoverImageErrorState());
+      emit(UploadCoverImageErrorState());
     });
   }
 
-  void updateUser({
+  void updateOwner({
     required String studName,
     required String phone,
     required String bio,
@@ -646,7 +689,7 @@ class OwnerCubit extends Cubit<OwnerState> {
   }) {
     OwnerModel models = OwnerModel(
         studName: studName,
-        oId: ownerModel!.oId,
+        oId: oId!,
         phone: phone,
         bio: bio,
         image: image ?? ownerModel!.image,
@@ -654,15 +697,106 @@ class OwnerCubit extends Cubit<OwnerState> {
         address:  ownerModel!.address,
         ownerName: ownerModel!.ownerName);
     FirebaseFirestore.instance
-        .collection('owner')
-        .doc(ownerModel!.oId)
+        .collection('owners')
+        .doc(oId!)
         .update(models.toMap())
         .then((value) {
       getOwnerData();
     }).catchError((error) {
-      emit(SocialUserUpdateErrorState());
+      emit(OwnerUpdateErrorState());
     });
   }
 
+
+
+  UserModel? userModel;
+  void getUserData(){
+    emit(GetUserLoadingState());
+
+    FirebaseFirestore.instance.collection('users').doc(oId).get().then((value) {
+      userModel = UserModel.fromJson(value.data()!);
+      emit(GetUserSuccessfulState());
+    }).catchError((error) {
+      emit(GetUserErrorState(error.toString()));
+    });
+  }
+
+  List<UserModel> users = [];
+  void getAllUsers() {
+    if (users.length == 0)
+      FirebaseFirestore.instance.collection('users').get().then((value) {
+
+        emit(GetAllUserSuccessfulState());
+        value.docs.forEach((element) {
+          if (element.data()['uId'] != ownerModel!.oId)
+            users.add(UserModel.fromJson(element.data()));
+        });
+      }).catchError((error) {
+        print(error.toString());
+        emit(GetAllUserErrorState(error.toString()));
+      });
+  }
+  void sendMessage({
+    required String receiverId,
+    required String text,
+    required String dateTime,
+  }) {
+    MessageModel model = MessageModel(
+        dateTime: dateTime,
+        senderId: oId,
+        receiverId: receiverId,
+        text: text);
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(oId!)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('message')
+        .add(model.toMap())
+        .then((value) {
+      emit(SendMessageSuccessfulState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(SendMessageErrorState());
+    });
+
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(receiverId)
+        .collection('chats')
+        .doc(oId)
+        .collection('message')
+        .add(model.toMap())
+        .then((value) {
+      emit(SendMessageSuccessfulState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(SendMessageErrorState());
+    });
+  }
+
+  List<MessageModel> messages = [];
+
+  void getMessages({
+    required String receiverId,
+  }) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(oId)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('message')
+        .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+      messages = [];
+      event.docs.forEach((element) {
+        messages.add(MessageModel.fromJson(element.data()));
+      });
+
+      emit(GetMessageSuccessfulState());
+    });
+  }
 
 }

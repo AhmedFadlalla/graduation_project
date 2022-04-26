@@ -286,6 +286,8 @@ class HorseCubit extends Cubit<HorseStates> {
             address: address,
             image: value);
 
+        makeOwner(name: studName, image: value);
+
 
 
       }).catchError((error) {
@@ -316,7 +318,7 @@ class HorseCubit extends Cubit<HorseStates> {
     OwnerModel model = OwnerModel(
         studName: studName,
         ownerName: userModel!.name,
-        oId: '00' +uId! ,
+        oId: userModel!.uId,
         phone: userModel!.phone,
         address: address,
         image: image,
@@ -326,23 +328,27 @@ class HorseCubit extends Cubit<HorseStates> {
     emit(CreateOwnerLoadingState());
     FirebaseFirestore.instance
         .collection('owners')
-        .doc('00' + uId!)
+        .doc(userModel!.uId)
         .set(model.toMap())
         .then((value) {
-      emit(CreateOwnerSuccessState('00' + uId!));
+
+      emit(CreateOwnerSuccessState(userModel!.uId));
     }).catchError((error) {
       print(error.toString());
       emit(CreateOwnerErrorState(error.toString()));
     });
   }
 
-  void makeOwner(){
+  void makeOwner({
+  required String name,
+  required String image
+}){
     UserModel model = UserModel(
-        name: userModel!.name,
+        name: name,
         email: userModel!.email,
         uId: userModel!.uId,
         image:
-        'https://rcmi.fiu.edu/wp-content/uploads/sites/30/2018/02/no_user.png',
+        image,
         bio: 'write your bio',
         phone: userModel!.phone,
         cover: '',

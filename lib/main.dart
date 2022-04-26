@@ -4,15 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
 import 'package:graduation_project/layouts/owner_home_layout/owner_home_Layout.dart';
-import 'package:graduation_project/modules/Doctor_Screens/Doctor_Cubit/doc_cubit.dart';
-
-import 'package:graduation_project/modules/registeration_screen/login_screen/cubit/cubit.dart';
 import 'package:graduation_project/modules/splash_screen/splashScreen.dart';
 import 'package:graduation_project/shared/bloc_observer.dart';
 import 'package:graduation_project/shared/component/constants.dart';
 import 'package:graduation_project/shared/network/local/cach_helper.dart';
 import 'package:graduation_project/shared/styles/themes.dart';
-
+import 'layouts/doc_home_layout/Doctor_Cubit/doc_cubit.dart';
 import 'layouts/home_layout/home_layout.dart';
 import 'layouts/owner_home_layout/cubit/owner_cubit.dart';
 import 'modules/Doctor_Screens/doctor_home_page.dart';
@@ -27,6 +24,9 @@ void main(context) async {
   oId =CachHelper.getData(key: 'oId');
   dId =CachHelper.getData(key: 'dId');
 
+print(uId);
+  print(oId);
+  print(dId);
 
 
 
@@ -61,8 +61,8 @@ class MyApp extends StatelessWidget {
     return new MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => HorseCubit()..getUserData()),
-          BlocProvider(create: (context) => OwnerCubit()..getOwnerData()..getHorseData()..getAllPosts()),
-          BlocProvider(create: (context) => StandardCubit())
+          BlocProvider(create: (context) => OwnerCubit()..getOwnerData()..getHorseData()..getAllPosts()..getUserData()),
+          BlocProvider(create: (context) => DoctorCubit())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

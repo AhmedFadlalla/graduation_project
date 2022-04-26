@@ -30,7 +30,7 @@ class InfoScreen extends StatelessWidget {
           if (state is CreateOwnerSuccessState)
             {
 
-               HorseCubit.get(context).makeOwner();
+
                 CachHelper.saveData(
                     key: 'oId',
                     value: state.oId)

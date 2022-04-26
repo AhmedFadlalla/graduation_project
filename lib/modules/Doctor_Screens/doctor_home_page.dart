@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/modules/Doctor_Screens/Doctor_Cubit/doc_cubit.dart';
-import 'package:graduation_project/modules/Doctor_Screens/Doctor_Cubit/doc_states.dart';
+import 'package:graduation_project/layouts/doc_home_layout/Doctor_Cubit/doc_cubit.dart';
+
 import 'package:graduation_project/modules/Doctor_Screens/followmedicine.dart';
 import 'package:graduation_project/modules/Doctor_Screens/healthrecord.dart';
 import 'package:graduation_project/modules/Doctor_Screens/rosheta.dart';
 import 'package:graduation_project/shared/component/components.dart';
+
+import '../../layouts/doc_home_layout/Doctor_Cubit/doc_states.dart';
 
 class DocHomeScreen extends StatelessWidget {
   // var productionFarm = TextEditingController();
@@ -21,18 +23,17 @@ class DocHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<StandardCubit, StandardStates> //1
+    return BlocConsumer<DoctorCubit, DoctorStates> //1
         (
       listener: (BuildContext context, state) {}, //1
       builder: (BuildContext context, state) //rebuilder//1
           {
-        var data = StandardCubit.get(context).data;
-        print(StandardCubit.get(context).data.length);
+        var data = DoctorCubit.get(context).data;
+        print(data.length);
         return Scaffold(
           body: Center(
             child: Column(
               children: [
-                /////xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
                 SizedBox(
                   height: 33,
                 ),

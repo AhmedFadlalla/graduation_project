@@ -3,17 +3,46 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/models/DiseaseModel.dart';
-import 'package:graduation_project/modules/Doctor_Screens/Doctor_Cubit/doc_states.dart';
+import 'package:graduation_project/modules/Doctor_Screens/doc_profile_screen.dart';
+import 'package:graduation_project/modules/Doctor_Screens/doctor_home_page.dart';
+
+import '../../../modules/Doctor_Screens/doc_chat_screen.dart';
+import '../../../modules/Doctor_Screens/doc_community_screen.dart';
+import '../../../shared/styles/icon_broken.dart';
+import 'doc_states.dart';
+
 //import 'package:youssef_example/standardbloc/standardstates.dart';
 
-class StandardCubit extends Cubit<StandardStates> //1
+class DoctorCubit extends Cubit<DoctorStates> //1
 {
-  StandardCubit() : super(InitialState()); //السوبر بياخد استاتس//1
-  static StandardCubit get(context) => BlocProvider.of(context);
+  DoctorCubit() : super(InitialState()); //السوبر بياخد استاتس//1
+  static DoctorCubit get(context) => BlocProvider.of(context);
 
-////////////////////////////////////
 
-// ////////////////////////////////////
+
+
+  int currentIndex = 0;
+  List<Widget> docScreens = [
+    DocHomeScreen(),
+    DocCommunityScreen(),
+    DocChatScreen(),
+    DocProfileScreen(),
+  ];
+
+  List<BottomNavigationBarItem> items = [
+    BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+    BottomNavigationBarItem(
+        icon: Icon(IconBroken.Activity), label: 'Community'),
+    BottomNavigationBarItem(icon: Icon(IconBroken.Chat), label: 'Chat'),
+    BottomNavigationBarItem(icon: Icon(IconBroken.Profile), label: 'Profile'),
+  ];
+  List<String> titles = ['Home', 'Community', 'Chats', 'Profile'];
+
+  void changeBottomNavIndex(int index) {
+    currentIndex = index;
+    emit(DocChangeBottomNavState());
+  }
+
   String? valueChooseTimesPerDay;
   void dropDownButtonTimesPerDay(newValue) {
     valueChooseTimesPerDay = newValue.toString();
@@ -27,27 +56,14 @@ class StandardCubit extends Cubit<StandardStates> //1
     emit(DropDownButtonState());
   }
 
-////////////////////////////////////////////
-  //   Timestamp? dateTime;
-//
-//   void pickHorseBirthDate(date) {
-//     dateTime = date;
-//     emit(DatePickedSuccessfulState());
-//   }
-  ///////////////////////////////////
+
+
   String? valueChooseDayWeekMonth;
   void dropDownButtonDayWeekMonth(newValue) {
     valueChooseDayWeekMonth = newValue.toString();
     emit(DropDownButtonState());
   }
 
-///////////////////////////////////////////////////
-//   bool? ischeck=false;
-//   void Check_Box(newValue)
-//   {
-//     ischeck=newvalue;
-//     emit(CheckBoxx());
-//   }
   List<DiseaseModel> data = [];
   Future getdata() async {
     data.clear();

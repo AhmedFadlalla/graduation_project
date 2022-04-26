@@ -127,7 +127,7 @@ class OwnerCommunityScreen extends StatelessWidget {
                 radius: 25.0,
                 backgroundImage:
                 NetworkImage(
-                    '${OwnerCubit.get(context).ownerModel!.image}'
+                    '${model.image}'
                 ),
               ),
               SizedBox(
@@ -139,7 +139,7 @@ class OwnerCommunityScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text('${OwnerCubit.get(context).ownerModel!.studName}',
+                        Text('${model.name}',
                           style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.bold,

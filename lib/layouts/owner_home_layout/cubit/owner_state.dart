@@ -85,6 +85,13 @@ class CreateDocErrorState extends OwnerState{
   CreateDocErrorState(this.error);
 }
 
+class   AddDocSuccessState extends OwnerState{
+}
+class AddDocErrorState extends OwnerState{
+  final String error;
+  AddDocErrorState(this.error);
+}
+
 class CreatePostLoadingState extends OwnerState{}
 class CreatePostSuccessState extends OwnerState{}
 class CreatePostErrorState extends OwnerState{}
@@ -101,17 +108,39 @@ class GetPostsErrorState extends OwnerState{
   GetPostsErrorState(this.error);
 }
 
-class  SocialProfileImageSuccessState extends OwnerState{}
-class  SocialProfileImageErrorState extends OwnerState{}
-class  SocialCoverImageSuccessState extends OwnerState{}
-class  SocialCoverImageErrorState extends OwnerState{}
+class  ProfileImageSuccessState extends OwnerState{}
+class  ProfileImageErrorState extends OwnerState{}
+class  CoverImageSuccessState extends OwnerState{}
+class  CoverImageErrorState extends OwnerState{}
 
 
-class  SocialUploadProfileImageSuccessState extends OwnerState{}
-class  SocialUploadProfileImageErrorState extends OwnerState{}
+class  UploadProfileImageSuccessState extends OwnerState{}
+class  UploadProfileImageErrorState extends OwnerState{}
 
-class  SocialUploadCoverImageSuccessState extends OwnerState{}
-class  SocialUploadCoverImageErrorState extends OwnerState{}
+class  UploadCoverImageSuccessState extends OwnerState{}
+class  UploadCoverImageErrorState extends OwnerState{}
 
-class  SocialUserUpdateLoadingState extends OwnerState{}
-class  SocialUserUpdateErrorState extends OwnerState{}
+class  OwnerUpdateLoadingState extends OwnerState{}
+class  OwnerUpdateErrorState extends OwnerState{}
+
+class GetAllUserSuccessfulState extends OwnerState{}
+class GetAllUserErrorState extends OwnerState{
+  final String error;
+  GetAllUserErrorState(this.error);
+}
+
+class SendMessageSuccessfulState extends OwnerState{}
+class SendMessageErrorState extends OwnerState{}
+
+
+class GetMessageSuccessfulState extends OwnerState{}
+class GetUserLoadingState extends OwnerState{}
+class GetUserSuccessfulState extends OwnerState{}
+
+class GetUserErrorState extends OwnerState{
+  final String error;
+
+  GetUserErrorState(this.error);
+
+
+}

@@ -6,6 +6,8 @@ class DoctorModel{
   late  String phone;
   late  String image;
   late  String ssn;
+  late  String oId;
+  late  String dId;
 
 
 
@@ -15,6 +17,8 @@ class DoctorModel{
     phone=json['phone'];
     image=json['image'];
     ssn=json['ssn'];
+    oId=json['oId'];
+    dId=json['dId'];
 
   }
 
@@ -27,6 +31,8 @@ class DoctorModel{
         'phone':phone,
         'image':image,
         'ssn':ssn,
+        'oId':oId,
+        'dId':dId,
 
 
       };
@@ -38,6 +44,8 @@ class DoctorModel{
     required this.phone,
     required this.ssn,
     required this.image,
+    required this.oId,
+    required this.dId,
 
   });
 

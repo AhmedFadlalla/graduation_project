@@ -56,9 +56,10 @@ class LoginScreen extends StatelessWidget {
                 {
                   CachHelper.saveData(
                       key: 'oId',
-                      value: '00'+state.uId)
+                      value: state.uId)
                       .then((value) {
                     OwnerCubit.get(context).getOwnerData();
+
                     navigateAndFinish(context, OwnerHomeScreenLayout());
 
 
