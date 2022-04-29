@@ -11,13 +11,13 @@ class HorseModel {
   late String motherName;
   late String motherName1;
   late String motherName2;
-  late String sectionNum;
+  late String sectionName;
   late String boxNum;
   late String owner;
   late String birthDate;
   late String initPrice;
   late String microshipCode;
-
+  late String type;
   late String color;
   late String gander;
 
@@ -30,7 +30,8 @@ class HorseModel {
     motherName = json['motherName'];
     motherName1 = json['motherName1'];
     motherName2 = json['motherName2'];
-    sectionNum = json['sectionNum'];
+    sectionName = json['sectionName'];
+    type = json['type'];
     boxNum = json['boxNum'];
     owner = json['owner'];
     birthDate = json['birthDate'];
@@ -51,7 +52,8 @@ class HorseModel {
       'motherName': motherName,
       'motherName1': motherName1,
       'motherName2': motherName2,
-      'sectionNum': sectionNum,
+      'sectionName': sectionName,
+      'type': type,
       'boxNum': boxNum,
       'owner': owner,
       'birthDate': birthDate,
@@ -72,7 +74,8 @@ class HorseModel {
     required this.motherName,
     required this.motherName1,
     required this.motherName2,
-    required this.sectionNum,
+    required this.sectionName,
+    required this.type,
     required this.boxNum,
     required this.owner,
     required this.birthDate,

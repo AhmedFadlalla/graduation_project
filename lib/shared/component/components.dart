@@ -42,6 +42,7 @@ Widget defaultFormField({
   var onsubmit,
   var onChange,
   var onTap,
+  String? hintText,
   var prefixIconTapFunction,
   required var validator,
   required String label,
@@ -64,6 +65,7 @@ Widget defaultFormField({
       decoration: InputDecoration(
         labelText: label,
 
+        hintText: hintText,
         prefixIcon: InkWell(
           onTap: prefixIconTapFunction,
           child: Icon(

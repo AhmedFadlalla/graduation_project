@@ -2,6 +2,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/layouts/doc_home_layout/doc_home_layout.dart';
 import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
 import 'package:graduation_project/layouts/owner_home_layout/owner_home_Layout.dart';
 import 'package:graduation_project/modules/splash_screen/splashScreen.dart';
@@ -12,7 +13,7 @@ import 'package:graduation_project/shared/styles/themes.dart';
 import 'layouts/doc_home_layout/Doctor_Cubit/doc_cubit.dart';
 import 'layouts/home_layout/home_layout.dart';
 import 'layouts/owner_home_layout/cubit/owner_cubit.dart';
-import 'modules/Doctor_Screens/doctor_home_page.dart';
+
 
 void main(context) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,7 +41,7 @@ print(uId);
 
   else if(uId == null && oId==null && dId !=null)
   {
-    widget=DocHomeScreen();
+    widget=DocHomeScreenLayout();
   }
   else {
     widget = SplashScreen();

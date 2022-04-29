@@ -9,6 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
 import 'package:graduation_project/models/doctor_model.dart';
 import 'package:graduation_project/models/horse_model.dart';
+import 'package:graduation_project/modules/registeration_screen/login_screen/login_screen.dart';
+import 'package:graduation_project/shared/component/components.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../models/Message_model.dart';
@@ -19,6 +21,7 @@ import '../../../models/user_model.dart';
 import '../../../modules/chats_screen/chat_screen.dart';
 import '../../../modules/community_screen/community_screen.dart';
 import '../../../modules/owner-screen/OwnerCommunityScreen.dart';
+import '../../../modules/owner-screen/OwnerSettingScreen.dart';
 import '../../../modules/owner-screen/owner_chat_screen/chat_home_screen.dart';
 import '../../../modules/owner-screen/owner_home_screen/owner_home_screen.dart';
 import '../../../modules/owner-screen/owner_profile_screen/owner_profile_screen.dart';
@@ -62,7 +65,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     OwnerHomeScreen(),
     OwnerCommunityScreen(),
     OwnerChatsScreen(),
-    OwnerProfileScreen(),
+    OwnerSettingsScreen(),
   ];
 
   List<BottomNavigationBarItem> items = [
@@ -70,7 +73,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     BottomNavigationBarItem(
         icon: Icon(IconBroken.Activity), label: 'Community'),
     BottomNavigationBarItem(icon: Icon(IconBroken.Chat), label: 'Chat'),
-    BottomNavigationBarItem(icon: Icon(IconBroken.Profile), label: 'Profile'),
+    BottomNavigationBarItem(icon: Icon(IconBroken.Setting), label: 'Settings'),
   ];
   List<String> titles = ['Home', 'Community', 'Chats', 'Profile'];
 
@@ -97,6 +100,12 @@ class OwnerCubit extends Cubit<OwnerState> {
 
   void onChangeRasanDropDownButton(newValue) {
     rasanValueChoose = newValue;
+    emit(DropDownButtonState());
+  }
+  String? sectionValueChoose;
+
+  void onChangeSectionDropDownButton(newValue) {
+    sectionValueChoose = newValue;
     emit(DropDownButtonState());
   }
 
@@ -158,7 +167,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     required String motherName,
     required String motherName1,
     required String motherName2,
-    required String sectionNum,
+    required String sectionName,
     required String boxNum,
     required String owner,
     required String dateTime,
@@ -186,7 +195,7 @@ class OwnerCubit extends Cubit<OwnerState> {
             motherName: motherName,
             motherName1: motherName1,
             motherName2: motherName2,
-            sectionNum: sectionNum,
+            sectionName: sectionName,
             boxNum: boxNum,
             dateTime: dateTime,
             initPrice: initPrice,
@@ -214,7 +223,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     required String motherName,
     required String motherName1,
     required String motherName2,
-    required String sectionNum,
+    required String sectionName,
     required String boxNum,
     required String owner,
     required String initPrice,
@@ -224,7 +233,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     required String color,
     required String gander,
   }) {
-    addTypeCollection(type);
+    addTypeCollection(sectionName);
     emit(CreateHorseLoadingState());
     HorseModel model = HorseModel(
         horseName: horseName,
@@ -235,20 +244,22 @@ class OwnerCubit extends Cubit<OwnerState> {
         motherName: motherName,
         motherName1: motherName1,
         motherName2: motherName2,
-        sectionNum: sectionNum,
+        sectionName: sectionName,
         boxNum: boxNum,
         owner: owner,
+        type: type,
         birthDate: dateTime,
         initPrice: initPrice,
         microshipCode: microshipCode,
         color: color,
         gander: gander);
 
+    print(sectionName);
     FirebaseFirestore.instance
         .collection('owners')
         .doc(oId)
         .collection('sections')
-         .doc('$type'+'1')
+         .doc('$sectionName')
         .collection('horses')
         .doc(microshipCode)
         .set(model.toMap())
@@ -261,15 +272,15 @@ class OwnerCubit extends Cubit<OwnerState> {
   }
 
 
-  void addTypeCollection(String type){
+  void addTypeCollection(String section){
 
     FirebaseFirestore.instance
         .collection('owners')
         .doc(oId)
         .collection('sections')
-        .doc('$type'+'1').set({
-      'name':type,
-      'secId':type+'1'
+        .doc('$section').set({
+      'name':section,
+      'secId':section
     })
         .then((value) {
       emit(AddCollectionSuccessfulState());
@@ -325,12 +336,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     emit(DropDownButtonState());
   }
 
-  String? sectionValueChoose;
 
-  void dropDownButtonSection(newValue) {
-    sectionValueChoose = newValue.toString();
-    emit(DropDownButtonState());
-  }
 
 
 
@@ -423,6 +429,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     required String email,
     required String password,
     required String phone,
+    required String section
   }) {
     emit(DocRegisterLoadingState());
 
@@ -441,7 +448,8 @@ class OwnerCubit extends Cubit<OwnerState> {
           name: name,
           email: email,
           phone: phone,
-          dId: value.user!.uid);
+          dId: value.user!.uid,
+          section: section);
     }).catchError((error) {
       print(error.toString());
       emit(DocRegisterErrorState(error.toString()));
@@ -464,7 +472,9 @@ class OwnerCubit extends Cubit<OwnerState> {
         bio: 'write your bio',
         cover: '',
         phone: phone,
-        status: 3);
+        status: 3,
+      oId: oId
+    );
 
     FirebaseFirestore.instance
         .collection('users')
@@ -482,6 +492,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     required String email,
     required String phone,
     required String dId,
+    required String section
 }){
 
 
@@ -489,15 +500,18 @@ class OwnerCubit extends Cubit<OwnerState> {
         name: name,
         email: email,
         phone: phone,
-        ssn: '',
+        ssn: 0,
         image: '',
         oId: oId!,
-        dId: dId);
+        dId: dId,
+      section:section
+    );
     FirebaseFirestore.instance
         .collection('owners')
         .doc(oId!)
-        .collection('doctors')
-        .doc(dId)
+        .collection('sections')
+        .doc('$section')
+     .collection('doctor').doc(dId)
     .set(doctorModel.toMap()).then((value) {
       emit(AddDocSuccessState());
     }).catchError((error){
@@ -508,14 +522,16 @@ class OwnerCubit extends Cubit<OwnerState> {
 
   }
 
-  Future signOut()async{
-    try{
-      return await FirebaseAuth.instance.signOut();
-    }
-    catch(e){
-      print(e.toString());
-      return null;
-    }
+  Future signOut({required context})async{
+
+    await FirebaseAuth.instance.signOut().then((value) {
+      navigateTo(context, LoginScreen());
+      emit(SignOutSuccessfulState());
+    }).catchError((error){
+      print(error.toString());
+      emit(SignOutErrorState(error.toString()));
+    });
+
 
   }
 
@@ -798,5 +814,7 @@ class OwnerCubit extends Cubit<OwnerState> {
       emit(GetMessageSuccessfulState());
     });
   }
+
+
 
 }

@@ -144,3 +144,12 @@ class GetUserErrorState extends OwnerState{
 
 
 }
+class SignOutSuccessfulState extends OwnerState{}
+
+class SignOutErrorState extends OwnerState{
+  final String error;
+
+  SignOutErrorState(this.error);
+
+
+}

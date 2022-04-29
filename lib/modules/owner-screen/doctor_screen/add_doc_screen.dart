@@ -103,6 +103,28 @@ class AddDoctorScreen extends StatelessWidget {
                               //   ),
                               // ),
 
+                              BuildDropBottom(
+                                dropdownButtonTitle: ' اختر العنبر',
+                                function: (newValue) {
+                                  cubit.onChangeSectionDropDownButton(newValue);
+                                },
+                                items: [
+                                  'طلايق ',
+                                  ' أمهات',
+                                  'بكاري',
+                                  'مهارة اناث',
+                                  ' مهارة ذكور',
+                                ].map((valueItem) {
+                                  return DropdownMenuItem(
+                                    value: valueItem,
+                                    child: Text(valueItem),
+                                  );
+                                }).toList(),
+                                value: cubit.sectionValueChoose,
+                              ),
+                              SizedBox(
+                                height: 15.0,
+                              ),
                               defaultFormField(
                                   controller: nameController,
                                   type: TextInputType.text,
@@ -127,7 +149,10 @@ class AddDoctorScreen extends StatelessWidget {
                                     return null;
                                   },
                                   label: 'الايميل',
-                                  prefixIcon: Icons.email),
+                                  prefixIcon: Icons.email,
+                                hintText: 'email@doc.com'
+
+                              ),
                               SizedBox(
                                 height: height*0.02,
                               ),
@@ -169,7 +194,9 @@ class AddDoctorScreen extends StatelessWidget {
                                             name: nameController.text,
                                             email: emailController.text,
                                             password: passwordController.text,
-                                            phone: phoneController.text);
+                                            phone: phoneController.text,
+                                          section: cubit.sectionValueChoose as String,
+                                        );
 
                                       }),
                                   fallback: (context) =>

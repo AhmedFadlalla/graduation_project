@@ -4,6 +4,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/layouts/doc_home_layout/doc_home_layout.dart';
 import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
 import 'package:graduation_project/layouts/home_layout/home_layout.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
@@ -20,7 +21,7 @@ import '../../../shared/component/constants.dart';
 import '../../../shared/component/constants.dart';
 import '../../../shared/component/constants.dart';
 import '../../../shared/component/constants.dart';
-import '../../Doctor_Screens/doctor_home_page.dart';
+
 import 'cubit/cubit.dart';
 import 'cubit/states.dart';
 
@@ -72,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                       key: 'dId',
                       value: state.uId)
                       .then((value) {
-                    navigateAndFinish(context,DocHomeScreen() );
+                    navigateAndFinish(context,DocHomeScreenLayout() );
                     print(dId);
                   });
                 }

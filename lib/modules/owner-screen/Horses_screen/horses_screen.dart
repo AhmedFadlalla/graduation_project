@@ -203,7 +203,7 @@ class HorsesScreen extends StatelessWidget {
                             width: 5.0,
                           ),
                           Text(
-                            '${model.sectionNum}',
+                            '${model.sectionName}',
                             style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 18,

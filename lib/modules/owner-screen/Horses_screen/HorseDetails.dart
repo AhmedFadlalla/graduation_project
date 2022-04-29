@@ -177,7 +177,7 @@ class HorseDetailsScreen extends StatelessWidget {
                             width: 5.0,
                           ),
                           Text(
-                            '${cubit.horses[cubit.index].sectionNum}',
+                            '${cubit.horses[cubit.index].sectionName}',
                             style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 18,

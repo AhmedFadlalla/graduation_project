@@ -233,20 +233,26 @@ class AddHorseScreen extends StatelessWidget {
                                 prefixIcon: Icons.add),
                           ),
                           SizedBox(
-                            height: 15.0,
+                            height: 20.0,
                           ),
-                          Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: defaultFormField(
-                                controller: anbernumController,
-                                type: TextInputType.text,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'يجب ادخال رقم العنبر';
-                                  }
-                                },
-                                label: 'رقم العنبر',
-                                prefixIcon: Icons.ad_units),
+                          BuildDropBottom(
+                            dropdownButtonTitle: ' اختر العنبر',
+                            function: (newValue) {
+                              cubit.onChangeSectionDropDownButton(newValue);
+                            },
+                            items: [
+                              'طلايق ',
+                              ' أمهات',
+                              'بكاري',
+                              'مهارة اناث',
+                              ' مهارة ذكور',
+                            ].map((valueItem) {
+                              return DropdownMenuItem(
+                                value: valueItem,
+                                child: Text(valueItem),
+                              );
+                            }).toList(),
+                            value: cubit.sectionValueChoose,
                           ),
                           SizedBox(
                             height: 15.0,
@@ -404,6 +410,7 @@ class AddHorseScreen extends StatelessWidget {
                             }).toList(),
                             value: cubit.rasanValueChoose,
                           ),
+
                           SizedBox(
                             height: 20.0,
                           ),
@@ -447,6 +454,7 @@ class AddHorseScreen extends StatelessWidget {
                               builder: (context) => defaultButton(
                                   text: 'Submit',
                                   function: () {
+                                    print(cubit.sectionValueChoose as String);
                                     cubit.uploadHorseImage(
                                         horseName: horsenameController.text,
                                         fatherName: fathernameController.text,
@@ -455,7 +463,7 @@ class AddHorseScreen extends StatelessWidget {
                                         motherName: mothernameController.text,
                                         motherName1: mothername1Controller.text,
                                         motherName2: mothername2Controller.text,
-                                        sectionNum: anbernumController.text,
+                                        sectionName:cubit.sectionValueChoose as String ,
                                         boxNum: boxnumController.text,
                                         owner: ownernameController.text,
                                         dateTime: (cubit.DayValueChoose as String) +
