@@ -233,8 +233,18 @@ class Rosheta extends StatelessWidget {
                                 String? medicineperDay =DoctorCubit.get(context).valueChooseTimesPerDay;
                                 String?medicineDuraition =DoctorCubit.get(context).valueChooseNumOfDayWeekMonth;
                                 String? type = DoctorCubit.get(context).valueChooseDayWeekMonth;
-                                DoctorCubit.get(context).sendRosheta(DiseaseModel(disease: disease, vaccine: vaccine, vaccineDate: vaccineDate, medicineperDay: medicineperDay, medicineDuraition: medicineDuraition, type: type)).then((value) {
-                                  DoctorCubit.get(context).getdata();
+                                DoctorCubit.get(context).sendRosheta(
+                                    DiseaseModel(
+                                        disease: disease,
+                                        vaccine: vaccine,
+                                        vaccineDate: vaccineDate,
+                                        medicineperDay: medicineperDay,
+                                        medicineDuraition: medicineDuraition,
+                                        type: type,
+
+                                    )
+                                ,DoctorCubit.get(context).horseId).then((value) {
+                                  DoctorCubit.get(context).getdata(hId: DoctorCubit.get(context).horseId);
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Added'),backgroundColor: Colors.green,));
                                    Navigator.pushReplacement(
                                     context, //my place

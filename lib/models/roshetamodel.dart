@@ -7,7 +7,12 @@ class DiseaseModel{
   String? medicineperDay ;
   String?medicineDuraition ;
   String? type ;
-  DiseaseModel({required this.disease,required this.vaccine,required this.vaccineDate,required this.medicineperDay,required this.medicineDuraition,required this.type});
+
+  DiseaseModel({
+    required this.disease,
+    required this.vaccine,
+    required this.vaccineDate,
+    required this.medicineperDay,required this.medicineDuraition,required this.type});
   DiseaseModel.fromJson(Map<String,dynamic>?json){
     disease=json!['disease'];
     vaccine=json['vaccine'];
@@ -15,6 +20,7 @@ class DiseaseModel{
     medicineperDay=json['medicineperDay'];
     medicineDuraition=json['medicineDuraition'];
     type=json['type'];
+
   }
   Map<String,dynamic> toMap(){
     return {'disease':disease,
@@ -22,7 +28,8 @@ class DiseaseModel{
       'vaccineDate':vaccineDate,
       'medicineperDay':medicineperDay,
       'type':type,
-      'medicineDuraition':medicineDuraition
+      'medicineDuraition':medicineDuraition,
+
     };
   }
 }

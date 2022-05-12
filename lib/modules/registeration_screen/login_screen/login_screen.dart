@@ -9,6 +9,7 @@ import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
 import 'package:graduation_project/layouts/home_layout/home_layout.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
 import 'package:graduation_project/layouts/owner_home_layout/owner_home_Layout.dart';
+import 'package:graduation_project/modules/Doctor_Screens/complete_info.dart';
 
 import 'package:graduation_project/modules/owner-screen/doctor_screen/doc_home_screen.dart';
 import 'package:graduation_project/modules/registeration_screen/register_screen/register_screen.dart';
@@ -59,7 +60,7 @@ class LoginScreen extends StatelessWidget {
                       key: 'oId',
                       value: state.uId)
                       .then((value) {
-                    OwnerCubit.get(context).getOwnerData();
+
 
                     navigateAndFinish(context, OwnerHomeScreenLayout());
 
@@ -73,7 +74,10 @@ class LoginScreen extends StatelessWidget {
                       key: 'dId',
                       value: state.uId)
                       .then((value) {
-                    navigateAndFinish(context,DocHomeScreenLayout() );
+                    CachHelper.saveData(
+                        key: 'done',
+                        value: 0);
+                    navigateAndFinish(context,DoctorCompleteInfo() );
                     print(dId);
                   });
                 }

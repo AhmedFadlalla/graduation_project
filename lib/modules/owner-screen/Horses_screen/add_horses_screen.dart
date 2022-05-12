@@ -75,134 +75,142 @@ class AddHorseScreen extends StatelessWidget {
                           SizedBox(
                             height: 15.0,
                           ),
-                          Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: defaultFormField(
-                                controller: microController,
-                                type: TextInputType.text,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'يجب ادخال المايكروشيب ';
-                                  }
-                                },
-                                label: 'كود المايكروشيب',
-                                prefixIcon: Icons.code),
-                          ),
+                          defaultFormField(
+                              controller: microController,
+                              type: TextInputType.text,
+                              validator: (value){
+                                if(value.isEmpty){
+                                  return 'يجب ادخال الكود';
+                                }
+                                return null;
+                              },
+                              label: 'يجب ادخال كود المايكروشيب',
+                              prefixIcon:Icons.drive_file_rename_outline),
                           SizedBox(
                             height: 15.0,
                           ),
-                          Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: defaultFormField(
-                                controller: horsenameController,
-                                type: TextInputType.text,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'يجب ادخال الاسم ';
-                                  }
-                                },
-                                label: 'اسم الحصان',
-                                prefixIcon: Icons.drive_file_rename_outline),
-                          ),
+                          defaultFormField(
+                              controller: horsenameController,
+                              type: TextInputType.text,
+                              validator: (value) {
+                                if (value.isEmpty) {
+                                  return 'يجب ادخال الاسم ';
+                                }
+                              },
+                              label: 'اسم الحصان',
+                              prefixIcon: Icons.drive_file_rename_outline),
                           SizedBox(
                             height: 15.0,
                           ),
-                          Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: defaultFormField(
-                                controller: fathernameController,
-                                type: TextInputType.text,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return ' يجب ادخال اسم الاب';
-                                  }
-                                },
-                                label: 'اسم الاب ',
-                                prefixIcon: Icons.ad_units),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: defaultFormField(
+                                    controller: fathernameController,
+                                    type: TextInputType.text,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return ' يجب ادخال اسم الاب';
+                                      }
+                                    },
+                                    label: 'اسم الاب ',
+                                    prefixIcon: Icons.ad_units),
+                              ),
+                              SizedBox(
+                                width: 7.0,
+                              ),
+                              Expanded(
+                                child:defaultFormField(
+                                    controller: mothernameController,
+                                    type: TextInputType.text,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return 'يجب ادخال اسم الام';
+                                      }
+                                    },
+                                    label: 'اسم الام',
+                                    prefixIcon: Icons.ad_units),
+                              ),
+
+                            ],
                           ),
+
                           SizedBox(
                             height: 15.0,
                           ),
-                          Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: defaultFormField(
-                                controller: fathername1Controller,
-                                type: TextInputType.text,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return ' يجب ادخال اسم الجد';
-                                  }
-                                },
-                                label: 'اسم الجد ',
-                                prefixIcon: Icons.ad_units),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: defaultFormField(
+                                    controller: fathername1Controller,
+                                    type: TextInputType.text,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return ' يجب ادخال اسم الجد';
+                                      }
+                                    },
+                                    label: 'اسم الجد ',
+                                    prefixIcon: Icons.ad_units),
+                              ),
+                              SizedBox(
+                                width: 7.0,
+                              ),
+                              Expanded(
+                                child: defaultFormField(
+                                    controller: mothername1Controller,
+                                    type: TextInputType.text,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return ' يجب ادخال اسم الجدة';
+                                      }
+                                    },
+                                    label: 'اسم الجدة ',
+                                    prefixIcon: Icons.ad_units),
+                              ),
+
+                            ],
                           ),
+
                           SizedBox(
                             height: 15.0,
                           ),
-                          Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: defaultFormField(
-                                controller: fathername2Controller,
-                                type: TextInputType.text,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return ' يجب ادخال اسم اب الجد';
-                                  }
-                                },
-                                label: 'اسم اب الجد ',
-                                prefixIcon: Icons.ad_units),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: defaultFormField(
+                                    controller: fathername2Controller,
+                                    type: TextInputType.text,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return ' يجب ادخال اسم اب الجد';
+                                      }
+                                    },
+                                    label: 'اسم اب الجد ',
+                                    prefixIcon: Icons.ad_units),
+                              ),
+                              SizedBox(
+                                width: 7.0,
+                              ),
+                              Expanded(
+                                child: defaultFormField(
+                                    controller: mothername2Controller,
+                                    type: TextInputType.text,
+                                    validator: (value) {
+                                      if (value.isEmpty) {
+                                        return ' يجب ادخال اسم ام الجدة';
+                                      }
+                                    },
+                                    label: 'اسم ام الجدة ',
+                                    prefixIcon: Icons.ad_units),
+                              ),
+
+                            ],
                           ),
+
                           SizedBox(
                             height: 15.0,
                           ),
-                          Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: defaultFormField(
-                                controller: mothernameController,
-                                type: TextInputType.text,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return 'يجب ادخال اسم الام';
-                                  }
-                                },
-                                label: 'اسم الام',
-                                prefixIcon: Icons.ad_units),
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: defaultFormField(
-                                controller: mothername1Controller,
-                                type: TextInputType.text,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return ' يجب ادخال اسم الجدة';
-                                  }
-                                },
-                                label: 'اسم الجدة ',
-                                prefixIcon: Icons.ad_units),
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
-                          Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: defaultFormField(
-                                controller: mothername2Controller,
-                                type: TextInputType.text,
-                                validator: (value) {
-                                  if (value.isEmpty) {
-                                    return ' يجب ادخال اسم ام الجدة';
-                                  }
-                                },
-                                label: 'اسم ام الجدة ',
-                                prefixIcon: Icons.ad_units),
-                          ),
-                          SizedBox(
-                            height: 15.0,
-                          ),
+
                           Directionality(
                             textDirection: TextDirection.rtl,
                             child: defaultFormField(
@@ -455,6 +463,7 @@ class AddHorseScreen extends StatelessWidget {
                                   text: 'Submit',
                                   function: () {
                                     print(cubit.sectionValueChoose as String);
+                                    print(microController.text);
                                     cubit.uploadHorseImage(
                                         horseName: horsenameController.text,
                                         fatherName: fathernameController.text,

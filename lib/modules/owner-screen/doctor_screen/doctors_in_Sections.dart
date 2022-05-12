@@ -1,17 +1,15 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/models/section_data_model.dart';
-import 'package:graduation_project/modules/owner-screen/doctor_screen/add_doc_screen.dart';
-import 'package:graduation_project/modules/owner-screen/doctor_screen/doctors_in_Sections.dart';
-import 'package:graduation_project/shared/component/components.dart';
+import 'package:graduation_project/models/doctor_model.dart';
 
 import '../../../layouts/owner_home_layout/cubit/owner_cubit.dart';
 import '../../../layouts/owner_home_layout/cubit/owner_state.dart';
+import '../../../shared/component/components.dart';
 
-class DoctorHomeScreen extends StatelessWidget {
-  const DoctorHomeScreen({Key? key}) : super(key: key);
+class DoctorSection extends StatelessWidget {
+  const DoctorSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +21,7 @@ class DoctorHomeScreen extends StatelessWidget {
             backgroundColor: Colors.green,
             floatingActionButton: FloatingActionButton(
               onPressed: (){
-                navigateTo(context, AddDoctorScreen());
+
               },
               child: Icon(
                   Icons.add
@@ -51,14 +49,14 @@ class DoctorHomeScreen extends StatelessWidget {
                     ListView.separated(
                         physics: BouncingScrollPhysics(),
                         shrinkWrap: true,
-                        itemBuilder: (context,index)=>buildSectionCard(
-                            cubit.sectionData[index],
+                        itemBuilder: (context,index)=>buildDoctorCard(
+                            cubit.docData[index],
                             size,
                             index,
                             context
                         ),
                         separatorBuilder:(context,index)=> myDivider(),
-                        itemCount: cubit.sectionData.length)
+                        itemCount: cubit.docData.length)
 
                   ],
                 ),
@@ -82,12 +80,10 @@ class DoctorHomeScreen extends StatelessWidget {
         },
         listener: (context,state){
 
-          if (state is GetSectionsDoctorsDataSuccessfulStates)
-            navigateTo(context, DoctorSection());
 
         });
   }
-  Widget buildSectionCard(SectionDataModel model,var size,index,context)=> InkWell(
+  Widget buildDoctorCard(DoctorModel model,var size,index,context)=> InkWell(
     child: Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       height: 190.0,
@@ -119,7 +115,7 @@ class DoctorHomeScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius:BorderRadius.circular(70),
                     image: DecorationImage(
-                      image: NetworkImage('https://media.istockphoto.com/photos/veterinary-horses-on-the-farm-picture-id1212267638?s=612x612'),
+                      image: NetworkImage('https://rcmi.fiu.edu/wp-content/uploads/sites/30/2018/02/no_user.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -165,7 +161,6 @@ class DoctorHomeScreen extends StatelessWidget {
 
     ),
     onTap: (){
-      OwnerCubit.get(context).getDoctors(secId: model.secId);
 
     },
   );

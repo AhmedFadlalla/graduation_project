@@ -10,7 +10,7 @@ import 'package:graduation_project/shared/component/components.dart';
 import 'package:graduation_project/shared/network/local/cach_helper.dart';
 
 import '../../shared/styles/colors.dart';
-import 'doc_profile_screen.dart';
+import 'doc_profile_screens/doc_profile_screen.dart';
 
 class DocSettingsScreen extends StatelessWidget {
   const DocSettingsScreen({Key? key}) : super(key: key);
@@ -57,7 +57,7 @@ class DocSettingsScreen extends StatelessWidget {
                           child: CircleAvatar(
                             radius: 25.0,
                             backgroundImage: NetworkImage(
-                              '',
+                              '${DoctorCubit.get(context).doctorModel!.image}',
                             ),
                           ),
                         ),
@@ -67,7 +67,7 @@ class DocSettingsScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('${OwnerCubit.get(context).userModel!.name}',
+                              Text('${DoctorCubit.get(context).doctorModel!.name}',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -134,7 +134,7 @@ class DocSettingsScreen extends StatelessWidget {
             Spacer(),
             defaultButton(
                 function: (){
-                  OwnerCubit.get(context).signOut(context: context);
+                  // OwnerCubit.get(context).signOut(context: context);
 
 
                 },

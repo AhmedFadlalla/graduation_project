@@ -36,9 +36,7 @@ class _FollowMedicine extends State<FollowMedicine>{
       {
 
       return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-        ),
+
         body: Padding(
           padding: const EdgeInsets.all(22.0),
           child: Column(

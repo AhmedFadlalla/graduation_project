@@ -56,13 +56,12 @@ class HealthRecord extends StatelessWidget {
                         ),
                       ),
                     ),
-                    content: BlocProvider(create: (context) => DoctorCubit(),
-                    child: BlocConsumer<DoctorCubit, DoctorStates>(
+                    content: BlocConsumer<DoctorCubit, DoctorStates>(
                       listener: (context, state) {
-                      
+
                     },
                       builder: (context,state){
-                        
+
                         return Form(
                           key: formKey,
                           child: SingleChildScrollView(
@@ -139,13 +138,14 @@ class HealthRecord extends StatelessWidget {
                       defaultButton2(
                         text: 'حفظ ',
                         function: () {
+
                          if(formKey.currentState!.validate()){
                             DoctorCubit.get(context).sendDisease(
                             DiseaseData(disease: disease.text,
                              doctor: doctor.text,
                             diseaseCase: diseaseState.text,
-                            date: diseaseDate.text)).then((value){
-                              DoctorCubit.get(context).getdDisease();
+                            date: diseaseDate.text),DoctorCubit.get(context).horseId).then((value){
+                              DoctorCubit.get(context).getdDisease(hId: DoctorCubit.get(context).horseId);
                               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Added'),backgroundColor: Colors.green,));
                                    Navigator.pushReplacement(
                                     context, //my place
@@ -167,7 +167,7 @@ class HealthRecord extends StatelessWidget {
                           ),
                         ));
                       },
-                    ),),
+                    ),
                     backgroundColor: Colors.white,
                   ),
                 ),
@@ -180,9 +180,7 @@ class HealthRecord extends StatelessWidget {
             backgroundColor: Colors.red,
           ),
           ///////////////////////////////////////////////////
-          appBar: AppBar(
-            backgroundColor: Colors.black,
-          ),
+
 
           body:
 

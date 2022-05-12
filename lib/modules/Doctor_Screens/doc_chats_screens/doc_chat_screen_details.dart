@@ -1,30 +1,30 @@
-
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/layouts/doc_home_layout/Doctor_Cubit/doc_cubit.dart';
-import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
 
-import 'package:graduation_project/models/user_model.dart';
-import 'package:graduation_project/shared/styles/colors.dart';
-
-import '../../../layouts/owner_home_layout/cubit/owner_state.dart';
+import '../../../layouts/doc_home_layout/Doctor_Cubit/doc_states.dart';
 import '../../../models/Message_model.dart';
+import '../../../models/user_model.dart';
+import '../../../shared/styles/colors.dart';
 import '../../../shared/styles/icon_broken.dart';
 
-class OwnerChatDetailsScreen extends StatelessWidget {
+class DocChatScreenDetails extends StatelessWidget {
+
   UserModel userModel;
-  OwnerChatDetailsScreen({required this.userModel});
+  DocChatScreenDetails({required this.userModel});
+  
+
   @override
   Widget build(BuildContext context) {
     return Builder(
       builder: (BuildContext context) {
 
-        OwnerCubit.get(context)
+        DoctorCubit.get(context)
             .getMessages(
             receiverId: userModel.uId);
-        return BlocConsumer<OwnerCubit,OwnerState>(
+        return BlocConsumer<DoctorCubit,DoctorStates>(
           listener: (context,state){},
           builder: (context,state){
             var messageController=TextEditingController();
@@ -57,7 +57,7 @@ class OwnerChatDetailsScreen extends StatelessWidget {
                 ],
               ),
               body: ConditionalBuilder(
-                  condition: OwnerCubit.get(context).messages.length>0,
+                  condition: DoctorCubit.get(context).messages.length>0,
                   builder: (context)=>Padding(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(
@@ -67,15 +67,15 @@ class OwnerChatDetailsScreen extends StatelessWidget {
                           child: ListView.separated(
                               physics: BouncingScrollPhysics(),
                               itemBuilder: (context,index){
-                                var message=OwnerCubit.get(context).messages[index];
-                                if(OwnerCubit.get(context).userModel!.uId==message.senderId)
+                                var message=DoctorCubit.get(context).messages[index];
+                                if(DoctorCubit.get(context).userModel!.uId==message.senderId)
                                   return buildMyMessages(message);
                                 return buildMessages(message);
                               },
                               separatorBuilder: (context,index)=>SizedBox(
                                 height: 15.0,
                               ),
-                              itemCount: OwnerCubit.get(context).messages.length),
+                              itemCount: DoctorCubit.get(context).messages.length),
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -106,7 +106,7 @@ class OwnerChatDetailsScreen extends StatelessWidget {
                                 child: MaterialButton(
                                   onPressed: (){
 
-                                    OwnerCubit.get(context).sendMessage(
+                                    DoctorCubit.get(context).sendMessage(
                                         receiverId: userModel.uId,
                                         text: messageController.text,
                                         dateTime: DateTime.now().toString());
@@ -127,9 +127,10 @@ class OwnerChatDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  fallback:(context)=>Center(child: Column(
+                  fallback:(context)=>Column(
                     children: [
 
+                      Spacer(),
                       Container(
                         decoration: BoxDecoration(
                             border: Border.all(
@@ -178,7 +179,7 @@ class OwnerChatDetailsScreen extends StatelessWidget {
                         ),
                       )
                     ],
-                  ),)),
+                  )),
 
             );
           },
@@ -186,9 +187,8 @@ class OwnerChatDetailsScreen extends StatelessWidget {
       },
 
     );
-
-
   }
+
   Widget buildMessages(MessageModel model)=> Align(
     alignment: AlignmentDirectional.centerStart,
     child: Container(
@@ -209,7 +209,7 @@ class OwnerChatDetailsScreen extends StatelessWidget {
   Widget buildMyMessages(MessageModel model)=>Align(
     alignment:AlignmentDirectional.centerEnd,
     child: Container(
-      width: double.infinity,
+        width: 100.0,
         height: 50.0,
         decoration: BoxDecoration(
             color:defaultColor.withOpacity(0.2),
@@ -224,9 +224,9 @@ class OwnerChatDetailsScreen extends StatelessWidget {
             horizontal: 10.0
         ),
         child:Text(
-            '${model.text}',
+          '${model.text}',
           style: TextStyle(
-            fontSize: 25.0
+              fontSize: 25.0
           ),
         )
     ),

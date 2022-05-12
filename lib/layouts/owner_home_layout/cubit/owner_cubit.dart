@@ -9,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
 import 'package:graduation_project/models/doctor_model.dart';
 import 'package:graduation_project/models/horse_model.dart';
+import 'package:graduation_project/models/section_data_model.dart';
 import 'package:graduation_project/modules/registeration_screen/login_screen/login_screen.dart';
 import 'package:graduation_project/shared/component/components.dart';
 import 'package:image_picker/image_picker.dart';
@@ -255,11 +256,13 @@ class OwnerCubit extends Cubit<OwnerState> {
         gander: gander);
 
     print(sectionName);
+    print(oId);
+    print(microshipCode);
     FirebaseFirestore.instance
         .collection('owners')
-        .doc(oId)
+        .doc(oId!)
         .collection('sections')
-         .doc('$sectionName')
+         .doc(sectionName)
         .collection('horses')
         .doc(microshipCode)
         .set(model.toMap())
@@ -443,6 +446,7 @@ class OwnerCubit extends Cubit<OwnerState> {
         email: email,
         phone: phone,
         uId: value.user!.uid,
+        section: section
       );
       addDoc(
           name: name,
@@ -461,6 +465,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     required String email,
     required String phone,
     required String uId,
+    required String section,
 
   }) {
     UserModel model = UserModel(
@@ -473,7 +478,8 @@ class OwnerCubit extends Cubit<OwnerState> {
         cover: '',
         phone: phone,
         status: 3,
-      oId: oId
+      oId: oId,
+      section: section
     );
 
     FirebaseFirestore.instance
@@ -486,6 +492,7 @@ class OwnerCubit extends Cubit<OwnerState> {
       emit(CreateDocErrorState(error.toString()));
     });
   }
+
 
   void addDoc({
     required String name,
@@ -500,17 +507,20 @@ class OwnerCubit extends Cubit<OwnerState> {
         name: name,
         email: email,
         phone: phone,
-        ssn: 0,
+        ssn: '',
         image: '',
         oId: oId!,
         dId: dId,
-      section:section
+      section:section,
+      address: '',
+      bio: userModel!.bio,
+      cover: userModel!.cover
     );
     FirebaseFirestore.instance
         .collection('owners')
         .doc(oId!)
         .collection('sections')
-        .doc('$section')
+        .doc(section)
      .collection('doctor').doc(dId)
     .set(doctorModel.toMap()).then((value) {
       emit(AddDocSuccessState());
@@ -537,9 +547,6 @@ class OwnerCubit extends Cubit<OwnerState> {
 
 
   File? postImage;
-
-
-
   Future<void> getPostImage() async {
     final  pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
@@ -585,7 +592,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     String? postImage,
   }) {
     PostModel models = PostModel(
-        name: ownerModel!.ownerName,
+        name: ownerModel!.studName,
         uId: ownerModel!.oId,
         image: ownerModel!.image,
         dateTime: dateTime,
@@ -799,7 +806,7 @@ class OwnerCubit extends Cubit<OwnerState> {
   }) {
     FirebaseFirestore.instance
         .collection('users')
-        .doc(oId)
+        .doc(dId)
         .collection('chats')
         .doc(receiverId)
         .collection('message')
@@ -810,9 +817,63 @@ class OwnerCubit extends Cubit<OwnerState> {
       event.docs.forEach((element) {
         messages.add(MessageModel.fromJson(element.data()));
       });
-
+      print(messages.length);
       emit(GetMessageSuccessfulState());
+
     });
+  }
+
+
+
+  List<SectionDataModel> sectionData=[];
+  void getSectionsData(){
+    FirebaseFirestore.instance
+        .collection('owners')
+        .doc(oId)
+        .collection('sections')
+        .get()
+        .then((value) {
+      value.docs.forEach((element){
+        sectionData.add(SectionDataModel.fromJson(element.data()));
+      });
+
+       emit(GetSectionsDataSuccessfulStates());
+       print(sectionData.length);
+    }).catchError((error){
+      print(error.toString());
+      emit(GetSectionsDataErrorStates(error.toString()));
+    });
+
+
+
+
+
+  }
+
+  List<DoctorModel> docData=[];
+  void getDoctors({
+  required String secId
+}){
+
+    docData=[];
+    FirebaseFirestore.instance
+        .collection('owners')
+        .doc(oId)
+        .collection('sections')
+        .doc(secId)
+        .collection('doctor')
+        .get()
+        .then((value) {
+      value.docs.forEach((element){
+        docData.add(DoctorModel.fromJson(element.data()));
+      });
+      emit(GetSectionsDoctorsDataSuccessfulStates());
+      print(docData.length);
+    }).catchError((error){
+      print(error.toString());
+      emit(GetSectionsDoctorsDataErrorStates(error.toString()));
+    });
+
   }
 
 

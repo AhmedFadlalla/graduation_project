@@ -5,10 +5,14 @@ class DoctorModel{
   late  String email;
   late  String phone;
   late  String image;
-  late  int ssn;
+  late  String ssn;
   late  String oId;
   late  String dId;
   late  String section;
+  late String address;
+  late String bio;
+  late String cover;
+
 
 
 
@@ -21,6 +25,9 @@ class DoctorModel{
     oId=json['oId'];
     dId=json['dId'];
     section=json['section'];
+    address=json['address'];
+    bio=json['bio'];
+    cover=json['cover'];
 
   }
 
@@ -36,6 +43,9 @@ class DoctorModel{
         'oId':oId,
         'dId':dId,
         'section':section,
+        'address':address,
+        'bio':bio,
+        'cover':cover,
 
 
       };
@@ -50,6 +60,9 @@ class DoctorModel{
     required this.oId,
     required this.dId,
     required this.section,
+    required this.address,
+    required this.bio,
+    required this.cover,
 
   });
 

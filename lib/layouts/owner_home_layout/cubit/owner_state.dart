@@ -153,3 +153,16 @@ class SignOutErrorState extends OwnerState{
 
 
 }
+class GetSectionsDataSuccessfulStates extends OwnerState{}
+class GetSectionsDataErrorStates extends OwnerState{
+  final String error;
+  GetSectionsDataErrorStates(this.error);
+
+}
+
+class GetSectionsDoctorsDataSuccessfulStates extends OwnerState{}
+class GetSectionsDoctorsDataErrorStates extends OwnerState{
+  final String error;
+  GetSectionsDoctorsDataErrorStates(this.error);
+
+}

@@ -25,83 +25,85 @@ class OwnerCommunityScreen extends StatelessWidget {
         double size=MediaQuery.of(context).size.height;
         double width=MediaQuery.of(context).size.width;
         return
-          Column(
-            children: [
-              SizedBox(height: size*0.04,),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Container(
-                  width: 390.0,
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: Colors.grey[300],
-                  ),
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 20.0,
-                        backgroundImage:
-                        NetworkImage(OwnerCubit.get(context).ownerModel?.image==null?
-                            'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
-                            :OwnerCubit.get(context).ownerModel!.image
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: size*0.04,),
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Container(
+                    width: 390.0,
+                    height: 50.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: Colors.grey[300],
+                    ),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 20.0,
+                          backgroundImage:
+                          NetworkImage(OwnerCubit.get(context).ownerModel?.image==null?
+                              'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
+                              :OwnerCubit.get(context).ownerModel!.image
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 8.0,
-                      ),
-                      InkWell(
-                        child: Container(
-                          height: 20,
-                          width: width*0.8,
-                          child: Text('What\s on your mind?'),
-
-
+                        SizedBox(
+                          width: 8.0,
                         ),
-                        onTap: (){
+                        InkWell(
+                          child: Container(
+                            height: 20,
+                            width: width*0.8,
+                            child: Text('What\s on your mind?'),
 
-                          navigateTo(context, AddPostScreen());
 
-                        },
-                      )
-                    ],
+                          ),
+                          onTap: (){
+
+                            navigateTo(context, AddPostScreen());
+
+                          },
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              ConditionalBuilder(
-                condition: OwnerCubit.get(context).posts.length >0,
-                builder:(context)=>SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      // Container(
-                      //   width: double.infinity,
-                      //   height: 170.0,
-                      //   child: Card(
-                      //     clipBehavior: Clip.antiAliasWithSaveLayer,
-                      //     elevation: 20.0,
-                      //     child: Image(
-                      //       image: NetworkImage('https://cdn.pixabay.com/photo/2017/03/30/10/59/social-networking-2187996_960_720.jpg'),
-                      //       fit: BoxFit.cover,
-                      //       height: 150.0,
-                      //     ),
-                      //   ),
-                      // ),
-                      ListView.separated(
-                          physics: BouncingScrollPhysics(),
-                          shrinkWrap: true,
-                          itemBuilder: (context,index)=>buildPostItem(OwnerCubit.get(context).posts[index],context,index),
-                          separatorBuilder: (context,index)=>myDivider(),
-                          itemCount:OwnerCubit.get(context).posts.length ),
+                ConditionalBuilder(
+                  condition: OwnerCubit.get(context).posts.length >0,
+                  builder:(context)=>SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        // Container(
+                        //   width: double.infinity,
+                        //   height: 170.0,
+                        //   child: Card(
+                        //     clipBehavior: Clip.antiAliasWithSaveLayer,
+                        //     elevation: 20.0,
+                        //     child: Image(
+                        //       image: NetworkImage('https://cdn.pixabay.com/photo/2017/03/30/10/59/social-networking-2187996_960_720.jpg'),
+                        //       fit: BoxFit.cover,
+                        //       height: 150.0,
+                        //     ),
+                        //   ),
+                        // ),
+                        ListView.separated(
+                            physics: BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context,index)=>buildPostItem(OwnerCubit.get(context).posts[index],context,index),
+                            separatorBuilder: (context,index)=>myDivider(),
+                            itemCount:OwnerCubit.get(context).posts.length ),
 
 
-                      // SocialCubit.get(context).posts.length
-                    ],
+                        // SocialCubit.get(context).posts.length
+                      ],
+                    ),
                   ),
-                ),
-                fallback: (context)=>Center(child: CircularProgressIndicator()),
+                  fallback: (context)=>Center(child: CircularProgressIndicator()),
 
-              ),
-            ],
+                ),
+              ],
+            ),
           );
         // Image(image: AssetImage('assets/images/travel.jpg')
 

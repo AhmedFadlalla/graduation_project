@@ -287,6 +287,7 @@ Widget defaultButton2({
   required String text,
   bool isUpperCase = true,
   double radius = 10.0,
+  IconData icon = Icons.vaccines,
 }) =>
     Container(
       width: width,
@@ -299,20 +300,22 @@ Widget defaultButton2({
         child: Row(
           children: [
             Icon(
-              Icons.vaccines,
+              icon,
               size: 35,
               color: Colors.white,
             ),
             SizedBox(
               width: 20.0,
             ),
-            MaterialButton(
-              onPressed: function,
-              child: Text(
-                isUpperCase ? text.toUpperCase() : text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: size,
+            Expanded(
+              child: MaterialButton(
+                onPressed: function,
+                child: Text(
+                  isUpperCase ? text.toUpperCase() : text,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: size,
+                  ),
                 ),
               ),
             ),

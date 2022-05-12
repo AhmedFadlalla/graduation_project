@@ -10,6 +10,7 @@ class UserModel{
   late  String uId;
   late  int status;
     String? oId;
+  String? section;
 
 
 
@@ -23,6 +24,7 @@ class UserModel{
     uId=json['uid'];
     status=json['status'];
     oId=json['oId'];
+    section=json['section'];
 
 
   }
@@ -40,6 +42,7 @@ class UserModel{
         'uid':uId,
         'status':status,
         'oId':oId,
+        'section':section,
 
     };
 
@@ -53,7 +56,8 @@ class UserModel{
     required this.image,
     required this.cover,
     required this.status,
-    this.oId
+    this.oId,
+    this.section
 
   });
 
