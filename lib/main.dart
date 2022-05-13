@@ -66,7 +66,13 @@ class MyApp extends StatelessWidget {
     return new MultiBlocProvider(
         providers: [
           BlocProvider(create: (context) => HorseCubit()..getUserData()),
-          BlocProvider(create: (context) => OwnerCubit()..getOwnerData()..getHorseData()..getAllPosts()..getUserData()..getSectionsData()),
+          BlocProvider(create: (context) => OwnerCubit()
+            ..getOwnerData()
+            ..getHorseData()
+            ..getAllPosts()
+            ..getUserData()
+            ..getSectionsData()
+          ),
           BlocProvider(create: (context) => DoctorCubit()..getDocData()..getAllPosts()..getAllUsers())
         ],
         child: MaterialApp(

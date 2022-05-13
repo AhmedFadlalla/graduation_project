@@ -209,7 +209,7 @@ class OwnerChatDetailsScreen extends StatelessWidget {
   Widget buildMyMessages(MessageModel model)=>Align(
     alignment:AlignmentDirectional.centerEnd,
     child: Container(
-      width: double.infinity,
+      width: 150.0,
         height: 50.0,
         decoration: BoxDecoration(
             color:defaultColor.withOpacity(0.2),
@@ -226,7 +226,7 @@ class OwnerChatDetailsScreen extends StatelessWidget {
         child:Text(
             '${model.text}',
           style: TextStyle(
-            fontSize: 25.0
+            fontSize: 15.0
           ),
         )
     ),

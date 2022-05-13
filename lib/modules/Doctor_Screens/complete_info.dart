@@ -29,6 +29,7 @@ class DoctorCompleteInfo extends StatelessWidget {
       },
       builder: (BuildContext context, state) {
 
+        DoctorCubit.get(context).getDocFullData();
         var cubit=DoctorCubit.get(context);
 
         DoctorName.text=cubit.userModel!.name;

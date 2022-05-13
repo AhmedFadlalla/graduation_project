@@ -9,6 +9,9 @@ import 'package:graduation_project/modules/owner-screen/doctor_screen/add_doc_sc
 import 'package:graduation_project/shared/component/components.dart';
 
 import '../../models/horse_model.dart';
+import 'aleka/alka.dart';
+import 'aleka/show.dart';
+import 'feed_screen/carehorse.dart';
 import 'followmedicine.dart';
 import 'healthrecord.dart';
 
@@ -42,6 +45,105 @@ class DocHomeScreen extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: (){
+                            showDialog(
+                              context: context,
+                              builder: (_) =>Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 50,
+                                  left: 50,
+                                ),
+                                child: AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20.0),
+                                  ),
+                                  actions: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        InkWell(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowDetails()));
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+                                            width: double.infinity,
+                                            height: 100.0,
+                                            child: defaultbutton(
+
+
+                                                width:double.infinity,
+                                                background: Colors.grey.withOpacity(0.9),
+                                                function:(){print("hello flutter");},
+                                                text:'العلائق',
+                                                size: 20.0
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 30,),
+                                        InkWell(
+                                          onTap: (){
+                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>AlCar()));
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+                                            width: double.infinity,
+                                            height: 100.0,
+                                            child: defaultbutton(
+                                              width:double.infinity,
+                                              function:(){print("hello flutter");},
+                                              background: Colors.grey.withOpacity(0.9),
+                                              text:'كون عليقة',
+                                              size: 20.0,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                            width: double.infinity,
+                            height: 100.0,
+                            child: defaultButton(
+                                width:double.infinity,
+                                background:Colors.grey,
+                                function:(){print("hello flutter");},
+                                text:'تكوين العلائق',
+
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: InkWell(
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>CareHorse()));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+                            width: double.infinity,
+                            height: 100.0,
+                            child: defaultbutton(
+                                width:double.infinity,
+                                background:Colors.grey,
+                                function:(){print("hello flutter");},
+                                text:'الخيول والتغذية',
+                                size: 30.0
+                            ),
+                          ),
                         ),
                       ),
                     ],

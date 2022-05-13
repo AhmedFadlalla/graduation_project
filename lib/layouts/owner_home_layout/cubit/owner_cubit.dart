@@ -18,6 +18,7 @@ import '../../../models/Message_model.dart';
 import '../../../models/accom_model.dart';
 import '../../../models/owner_model.dart';
 import '../../../models/post_model.dart';
+import '../../../models/productmodel.dart';
 import '../../../models/user_model.dart';
 import '../../../modules/chats_screen/chat_screen.dart';
 import '../../../modules/community_screen/community_screen.dart';
@@ -806,7 +807,7 @@ class OwnerCubit extends Cubit<OwnerState> {
   }) {
     FirebaseFirestore.instance
         .collection('users')
-        .doc(dId)
+        .doc(oId)
         .collection('chats')
         .doc(receiverId)
         .collection('message')
@@ -872,6 +873,41 @@ class OwnerCubit extends Cubit<OwnerState> {
     }).catchError((error){
       print(error.toString());
       emit(GetSectionsDoctorsDataErrorStates(error.toString()));
+    });
+
+  }
+
+
+  Future<void> saveProduct(ProductData productData)async{
+
+    emit(SendProductLoadingState());
+    await FirebaseFirestore.instance
+         .collection('owners')
+         .doc(oId!)
+        .collection('Ingredients')
+        .doc()
+        .set(productData.toMap())
+        .then((value){
+      emit(SendProductSuccessfulState());
+    }).catchError((error){
+      print(error.toString());
+      emit(SendProductErrorState(error.toString()));
+
+    });
+  }
+  Stream<List<ProductData>>? getProducts(){
+    return FirebaseFirestore.instance
+        .collection('owners')
+        .doc(oId!)
+        .collection('Ingredients')
+        .snapshots()
+        .map((snapShot){
+      return snapShot.docs.map((docs){
+
+        return ProductData.fromJson(docs.data());
+
+      }).toList();
+
     });
 
   }

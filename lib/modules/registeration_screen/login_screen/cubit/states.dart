@@ -21,5 +21,12 @@ class GetDocValueErrorState extends LoginStates{
   final String error;
   GetDocValueErrorState(this.error);
 }
+class LoginGetDoctorDataSuccessState extends LoginStates{
+
+}
+class LoginGetDoctorDataErrorState extends LoginStates{
+  final String error;
+  LoginGetDoctorDataErrorState(this.error);
+}
 class LoginChangePasswordVisibilityState extends LoginStates{}
 

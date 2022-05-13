@@ -6,6 +6,7 @@ import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
 import 'package:graduation_project/modules/owner-screen/accomm_scree/add_accomm_screen/add_accomm_screen.dart';
+import 'package:graduation_project/modules/owner-screen/aleka_screens/productss.dart';
 import 'package:graduation_project/modules/owner-screen/doctor_screen/doc_home_screen.dart';
 import 'package:graduation_project/shared/component/components.dart';
 
@@ -37,6 +38,7 @@ class OwnerHomeScreen extends StatelessWidget {
                   SizedBox(
                     height: height*0.1,
                   ),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -62,11 +64,47 @@ class OwnerHomeScreen extends StatelessWidget {
 
                     ],
                   ),
+
                   SizedBox(
                     height: height*0.01,
                   ),
 
 
+                  // Center(
+                  //   child: SizedBox(
+                  //     width:500 ,
+                  //     height:220 ,
+                  //     child: CarouselSlider(
+                  //
+                  //       options: CarouselOptions(
+                  //         enlargeCenterPage: true,
+                  //         enableInfiniteScroll: false,
+                  //         autoPlay: true,
+                  //         autoPlayInterval: Duration(seconds: 3),
+                  //         // autoPlayAnimationDuration: Duration(milliseconds: 500),
+                  //       ),
+                  //
+                  //       items:imagelist.map((e) => ClipRRect(
+                  //         borderRadius: BorderRadius.circular(8),
+                  //         child: Stack(
+                  //           fit: StackFit.expand,
+                  //           children: <Widget>[
+                  //             Image.network(
+                  //               e,
+                  //
+                  //               fit: BoxFit.cover,
+                  //             )
+                  //
+                  //           ],
+                  //         ),
+                  //
+                  //       )).toList(),
+                  //
+                  //
+                  //
+                  //     ),
+                  //   ),
+                  // ),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -141,43 +179,28 @@ class OwnerHomeScreen extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Center(
+                      child: Container(
+                        width: 170.0,
+                        height: 208.0,
+                        child: InkWell(
+                          child: TestCard(
+                            title: 'العليقه',
+                            image: 'https://cdn.altibbi.com/cdn/cache/1000x500/image/2021/12/26/5b0e062448bbcb8220b3ffc9938aa306.webp',
+
+
+                          ),
+                          onTap: (){
+                            navigateTo(context, Product());
+                          },
+                        ),
+                      ),
+                  ),
+
+
 
                   /////////////////////////////
-                  Center(
-                    child: SizedBox(
-                      width:500 ,
-                      height:220 ,
-                      child: CarouselSlider(
 
-                        options: CarouselOptions(
-                          enlargeCenterPage: true,
-                          enableInfiniteScroll: false,
-                          autoPlay: true,
-                          autoPlayInterval: Duration(seconds: 3),
-                          // autoPlayAnimationDuration: Duration(milliseconds: 500),
-                        ),
-
-                        items:imagelist.map((e) => ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: <Widget>[
-                              Image.network(
-                                e,
-
-                                fit: BoxFit.cover,
-                              )
-
-                            ],
-                          ),
-
-                        )).toList(),
-
-
-
-                      ),
-                    ),
-                  ),
 
 
 

@@ -13,9 +13,12 @@ import 'package:graduation_project/modules/Doctor_Screens/doc_profile_screens/do
 import 'package:image_picker/image_picker.dart';
 
 import '../../../models/Message_model.dart';
+import '../../../models/alekaamodel.dart';
 import '../../../models/disease_model/disease_model.dart';
 
+import '../../../models/horsemodel.dart';
 import '../../../models/post_model.dart';
+import '../../../models/productmodel.dart';
 import '../../../modules/Doctor_Screens/Doc_settings_screen.dart';
 import '../../../modules/Doctor_Screens/doc_chats_screens/doc_chat_screen.dart';
 import '../../../modules/Doctor_Screens/doc_community_screen.dart';
@@ -195,10 +198,7 @@ class DoctorCubit extends Cubit<DoctorStates> //1
   DoctorModel? doctorModel;
 
   void getDocFullData() {
-    print(userModel!.oId);
-    print(dId);
-    print(userModel!.section);
-    emit(GetDocFullDataLoadingState());
+
     FirebaseFirestore.instance
         .collection('owners')
         .doc(userModel!.oId)
@@ -209,8 +209,7 @@ class DoctorCubit extends Cubit<DoctorStates> //1
         .get()
         .then((value) {
       doctorModel = DoctorModel.fromJson(value.data()!);
-      print(doctorModel!.ssn);
-      emit(GetDocFullDataSuccessfulState());
+
     }).catchError((error) {
       print(error.toString());
       emit(GetDocFullDataErrorState(error.toString()));
@@ -219,7 +218,8 @@ class DoctorCubit extends Cubit<DoctorStates> //1
 
   List<HorseModel> horses = [];
   String? horseId;
-
+  HorseModel? horseModel;
+  String?horseName;
   void getHorses() {
     emit(GetHorsesDataLoadingState());
     FirebaseFirestore.instance
@@ -230,9 +230,12 @@ class DoctorCubit extends Cubit<DoctorStates> //1
         .collection('horses')
         .get()
         .then((value) {
+
       value.docs.forEach((element) {
+        horseModel=HorseModel.fromJson(element.data());
         horses.add(HorseModel.fromJson(element.data()));
         horseId = element.id;
+
       });
       emit(GetHorsesDataSuccessfulState());
     }).catchError((error) {
@@ -242,6 +245,7 @@ class DoctorCubit extends Cubit<DoctorStates> //1
   }
 
   void getHorsesData() {
+
 
 
   }
@@ -623,5 +627,128 @@ class DoctorCubit extends Cubit<DoctorStates> //1
     });
   }
 
+
+  String? AliqaValueChoose;
+
+  void onChangeAliqaItem(newValue) {
+    AliqaValueChoose = newValue;
+    emit(DropDownButtonState());
+  }
+  String? AliqaValueChoose1;
+  String? AliqaValueChoose2;
+  String? AliqaValueChoose3;
+  void onChangeAliqaIngredientItem(newValue,indeex) {
+    if(indeex==0){
+      AliqaValueChoose1=newValue;
+    }
+    else if(indeex==1){
+      AliqaValueChoose2=newValue;
+    }
+    else if(indeex==2){
+      AliqaValueChoose3=newValue;
+    }
+    emit(DropDownButtonState());
+  }
+
+
+  DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+      value: item,
+      child: Text(
+        item,
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+      ));
+  String? valueChoose;
+  List<String> colorItems = ['Black', 'White'];
+  List<String> gender_items = [
+    'ذكر',
+    'انثي',
+  ];
+  String? rasanValueChoose;
+
+  void onChangeRasanDropDownButton(newValue) {
+    rasanValueChoose = newValue;
+    emit(DropDownButtonState());
+  }
+
+  String? ganderValueChoose;
+
+  void onChangeGanderItem(newValue) {
+    ganderValueChoose = newValue;
+    emit(DropDownButtonState());
+  }
+
+  String? HorseNameChoose;
+
+  void onChangeNameItem(newValue) {
+    HorseNameChoose = newValue;
+    emit(DropDownButtonState());
+  }
+
+  String? HorseHalaChoose;
+
+  void onChangeHalaItem(newValue) {
+    HorseHalaChoose = newValue;
+    emit(DropDownButtonState());
+  }
+
+  String? colorValueChoose;
+
+  void onChangeColorItem(newValue) {
+    colorValueChoose = newValue;
+    emit(DropDownButtonState());
+  }
+  String? datanamechoose;
+  void onChangedataItem(newValue) {
+    datanamechoose = newValue;
+    emit(DropDownButtonState());
+  }
+
+  Stream<List<ProductData>>? getProducts(){
+    return FirebaseFirestore.instance.collection('owners')
+        .doc(doctorModel!.oId).collection('Ingredients').snapshots().map((snapShot){
+      return snapShot.docs.map((docs){
+        return ProductData.fromJson(docs.data());
+      }).toList();
+    });
+  }
+
+  Future<void> saveala2kData(AlekaModel alekaModel)async{
+    await FirebaseFirestore.instance
+        .collection('owners')
+        .doc(doctorModel!.oId)
+        .collection('ala2k')
+        .doc()
+        .set(alekaModel.toMap()).then((value){
+      emit(SendAlekaSuccessState());
+    }).catchError((error){
+      print(error.toString());
+      emit(SendAlekaErrorState(error.toString()));
+
+    });
+  }
+  Stream<List<AlekaModel>>? getelAlaaik(){
+    return FirebaseFirestore.instance
+        .collection('owners')
+        .doc(doctorModel!.oId).collection('ala2k')
+        .snapshots().map((snapShot){
+      return snapShot.docs.map((docs){
+        return AlekaModel.fromJson(docs.data());
+      }).toList();
+    });
+  }
+
+
+  Future<void> saveHorseFeed(HorseData horseData,horseId)async{
+    await FirebaseFirestore.instance..collection('owners')
+        .doc(doctorModel!.oId)
+         .collection('sections').doc(doctorModel!.section).collection('horses').doc(horseId)
+        .collection('HorseFeeding').doc().set(horseData.toMap()).then((value){
+      emit(SendHorseFeedSuccessfulState());
+    }).catchError((error){
+      print(error.toString());
+      emit(SendHorseFeedErrorState(error.toString()));
+
+    });
+  }
 
 }

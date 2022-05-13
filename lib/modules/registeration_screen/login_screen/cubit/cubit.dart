@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/models/doctor_model.dart';
 import 'package:graduation_project/models/user_model.dart';
 import 'package:graduation_project/modules/registeration_screen/login_screen/cubit/states.dart';
 
@@ -62,6 +63,28 @@ class LoginCubit extends Cubit<LoginStates>{
     });
   }
 
+  DoctorModel? doctorModel;
+  int? routeStates;
+  getDocStatusValue(String docId){
+    FirebaseFirestore.instance
+        .collection('owners')
+        .doc(userData!.oId)
+        .collection('sections')
+        .doc(userData!.section)
+        .collection('doctor')
+        .doc(docId)
+        .get()
+        .then((value) {
+          doctorModel=DoctorModel.fromJson(value.data()!);
+          print(routeStates);
+          emit(LoginGetDoctorDataSuccessState());
+
+    }).catchError((error){
+      emit(LoginGetDoctorDataErrorState(error.toString()));
+    });
+
+
+  }
   IconData suffixIcon=Icons.visibility;
   bool isPassword=true;
 

@@ -16,6 +16,7 @@ class DoctorModel{
 
 
 
+
   DoctorModel.fromJson(Map<String,dynamic> json){
     name=json['name'];
     email=json['email'];
@@ -28,6 +29,8 @@ class DoctorModel{
     address=json['address'];
     bio=json['bio'];
     cover=json['cover'];
+
+
 
   }
 
@@ -48,6 +51,7 @@ class DoctorModel{
         'cover':cover,
 
 
+
       };
 
   }
@@ -63,6 +67,7 @@ class DoctorModel{
     required this.address,
     required this.bio,
     required this.cover,
+
 
   });
 

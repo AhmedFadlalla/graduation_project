@@ -506,6 +506,16 @@ Widget TestCard({
       ),
     );
 
-
+Widget defaultbutton({required double width,required Color background,required Function function,required String text, double radius = 20.0,required double size})=>
+    Container(
+      width: width,
+      child: MaterialButton(
+        onPressed:function(),
+        child: Text(text.toUpperCase(),style: TextStyle(fontSize: size,fontWeight: FontWeight.bold,color: Colors.white,),),),
+      decoration: BoxDecoration(
+        borderRadius:BorderRadius.circular(radius),
+        color: background,
+      ),
+    );
 
 

@@ -61,7 +61,6 @@ class LoginScreen extends StatelessWidget {
                       value: state.uId)
                       .then((value) {
 
-
                     navigateAndFinish(context, OwnerHomeScreenLayout());
 
 

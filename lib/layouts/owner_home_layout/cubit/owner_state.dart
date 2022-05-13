@@ -166,3 +166,20 @@ class GetSectionsDoctorsDataErrorStates extends OwnerState{
   GetSectionsDoctorsDataErrorStates(this.error);
 
 }
+
+class SendProductLoadingState extends OwnerState{}
+class SendProductSuccessfulState extends OwnerState{}
+
+class SendProductErrorState extends OwnerState{
+  final String error;
+
+  SendProductErrorState(this.error);
+}
+class GetProductLoadingState extends OwnerState{}
+class GetProductSuccessfulState extends OwnerState{}
+
+class GetProductErrorState extends OwnerState{
+  final String error;
+
+  GetProductErrorState(this.error);
+}

@@ -192,6 +192,7 @@ class DocChatScreenDetails extends StatelessWidget {
   Widget buildMessages(MessageModel model)=> Align(
     alignment: AlignmentDirectional.centerStart,
     child: Container(
+      width: double.infinity,
         decoration: BoxDecoration(
             color: Colors.grey[300],
             borderRadius: BorderRadiusDirectional.only(
@@ -209,10 +210,10 @@ class DocChatScreenDetails extends StatelessWidget {
   Widget buildMyMessages(MessageModel model)=>Align(
     alignment:AlignmentDirectional.centerEnd,
     child: Container(
-        width: 100.0,
+        width: 220.0,
         height: 50.0,
         decoration: BoxDecoration(
-            color:defaultColor.withOpacity(0.2),
+            color:defaultColor.withOpacity(0.1),
             borderRadius: BorderRadiusDirectional.only(
                 topStart:Radius.circular(10.0),
                 topEnd:Radius.circular(10.0) ,
@@ -226,7 +227,7 @@ class DocChatScreenDetails extends StatelessWidget {
         child:Text(
           '${model.text}',
           style: TextStyle(
-              fontSize: 25.0
+              fontSize: 20.0
           ),
         )
     ),

@@ -137,8 +137,23 @@ class GetUserErrorState extends DoctorStates{
 
 
 }
+class SendAlekaSuccessState extends DoctorStates{}
+class SendAlekaErrorState extends DoctorStates{
+  final String error;
+
+  SendAlekaErrorState(this.error);
+
+}
+
+class SendHorseFeedSuccessfulState extends DoctorStates{}
+
+class SendHorseFeedErrorState extends DoctorStates{
+  final String error;
+
+  SendHorseFeedErrorState(this.error);
 
 
+}
 
 
 
