@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:graduation_project/layouts/doc_home_layout/Doctor_Cubit/doc_cubit.dart';
 import 'package:graduation_project/layouts/doc_home_layout/Doctor_Cubit/doc_states.dart';
+import 'package:graduation_project/layouts/doc_home_layout/doc_home_layout.dart';
 
 import '../../main.dart';
 import '../../models/disease_model/disease_model.dart';
@@ -151,7 +152,7 @@ class HealthRecord extends StatelessWidget {
                                     context, //my place
 
                                     MaterialPageRoute(
-                                      builder: (context) => MyApp(),
+                                      builder: (context) => DocHomeScreenLayout(),
                                     ),
                                     /////اللي انا رايحله
                                   );

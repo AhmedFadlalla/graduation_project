@@ -2,39 +2,29 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
-import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
-import 'package:graduation_project/modules/owner-screen/Horses_screen/horses_section_screen.dart';
-import 'package:graduation_project/shared/component/components.dart';
+import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
+import 'package:graduation_project/models/horse_model.dart';
 
-import '../../../models/horse_model.dart';
-import '../../../models/section_data_model.dart';
+import '../../../layouts/owner_home_layout/cubit/owner_cubit.dart';
+import '../../../layouts/owner_home_layout/cubit/owner_state.dart';
+import '../../../models/doctor_model.dart';
+import '../../../shared/component/components.dart';
 import 'HorseDetails.dart';
-import 'add_horses_screen.dart';
 
-class HorsesScreen extends StatelessWidget {
-
+class HorsesSectionSection extends StatelessWidget {
+  const HorsesSectionSection({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
-
     return BlocConsumer<OwnerCubit,OwnerState>(
         builder: (context,state){
           var cubit=OwnerCubit.get(context);
+          Size size = MediaQuery.of(context).size;
           return Scaffold(
             backgroundColor: Colors.green,
-            floatingActionButton: FloatingActionButton(
-              onPressed: (){
-                navigateTo(context, AddHorseScreen());
-              },
-              child: Icon(
-                  Icons.add
-              ),
-            ),
+
             body: ConditionalBuilder(
-              condition: cubit.sectionData.length>0,
+              condition: cubit.horseData.length>0,
               builder:(context)=>SingleChildScrollView(
                 child: Column(
                   children: [
@@ -55,13 +45,14 @@ class HorsesScreen extends StatelessWidget {
                     ListView.separated(
                         physics: BouncingScrollPhysics(),
                         shrinkWrap: true,
-                        itemBuilder: (context,index)=>buildSectionCard(
-                            cubit.sectionData[index],
+                        itemBuilder: (context,index)=>buildHorseCard(
+                            cubit.horseData[index],
                             size,
                             index,
-                            context),
+                            context
+                        ),
                         separatorBuilder:(context,index)=> myDivider(),
-                        itemCount: cubit.sectionData.length)
+                        itemCount: cubit.horseData.length)
 
                   ],
                 ),
@@ -73,7 +64,7 @@ class HorsesScreen extends StatelessWidget {
                     image: NetworkImage('https://www.europeanequinelawyers.com/wp-content/uploads/2018/03/brexit-1024x682.jpg'),
                   ),
                   Text(
-                      'No horses Yet !!!!',
+                    'No Doctor Yet!!!!!!!!!',
                     style: TextStyle(
                       fontSize: 30.0,
                     ),
@@ -85,12 +76,12 @@ class HorsesScreen extends StatelessWidget {
         },
         listener: (context,state){
 
-          if(state is GetHorsesSecDataSuccessState)
-                navigateTo(context, HorsesSectionSection());
+          if(state is GetHorsesDetailsSuccessfulState)
+            navigateTo(context, HorseDetailsScreen());
 
         });
   }
-  Widget buildSectionCard(SectionDataModel model,var size,index,context)=> InkWell(
+  Widget buildHorseCard(HorseModel model,var size,index,context)=> InkWell(
     child: Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       height: 190.0,
@@ -122,7 +113,7 @@ class HorsesScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius:BorderRadius.circular(70),
                     image: DecorationImage(
-                      image: NetworkImage('https://media.istockphoto.com/photos/veterinary-horses-on-the-farm-picture-id1212267638?s=612x612'),
+                      image: NetworkImage('${model.horseImage}'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -149,7 +140,45 @@ class HorsesScreen extends StatelessWidget {
                             width: 5.0,
                           ),
                           Text(
-                            '${model.name}',
+                            '${model.horseName}',
+                            style: TextStyle(
+                                color: Colors.brown,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'المايكروشيب :',
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            '${model.microshipCode}',
+                            style: TextStyle(
+                                color: Colors.brown,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            'رقم الصندوق :',
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            '${model.boxNum}',
                             style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 18,
@@ -168,7 +197,8 @@ class HorsesScreen extends StatelessWidget {
 
     ),
     onTap: (){
-      OwnerCubit.get(context).getHorses(secId: model.secId);
+      print(model.microshipCode);
+      OwnerCubit.get(context).getHorseDetailsData(horseId:model.microshipCode,secId: model.sectionName );
 
     },
   );

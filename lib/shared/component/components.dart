@@ -10,6 +10,7 @@ Widget defaultButton({
   Color background = Colors.blue,
   required var function,
   required String text,
+  var fontSize,
   bool isUpperCase = true,
   double radius = 10.0,
 }) =>
@@ -22,6 +23,8 @@ Widget defaultButton({
           isUpperCase ? text.toUpperCase() : text,
           style: TextStyle(
             color: Colors.white,
+            fontSize: fontSize,
+            fontWeight: FontWeight.bold
           ),
         ),
       ),

@@ -9,6 +9,7 @@ import 'package:graduation_project/modules/owner-screen/doctor_screen/add_doc_sc
 import 'package:graduation_project/shared/component/components.dart';
 
 import '../../models/horse_model.dart';
+import 'aleka/aleka_home_screen.dart';
 import 'aleka/alka.dart';
 import 'aleka/show.dart';
 import 'feed_screen/carehorse.dart';
@@ -52,78 +53,18 @@ class DocHomeScreen extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: InkWell(
-                          onTap: (){
-                            showDialog(
-                              context: context,
-                              builder: (_) =>Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 50,
-                                  left: 50,
-                                ),
-                                child: AlertDialog(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  actions: [
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        InkWell(
-                                          onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>ShowDetails()));
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-                                            width: double.infinity,
-                                            height: 100.0,
-                                            child: defaultbutton(
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+                          width: double.infinity,
+                          height: 100.0,
+                          child: defaultButton(
+                              width:double.infinity,
+                              background:Colors.grey,
+                              function:(){Navigator.push(context, MaterialPageRoute(builder: (context)=>AlekaHomeScreen()));},
+                              text:' العلائق',
+                            fontSize: 30.0
 
 
-                                                width:double.infinity,
-                                                background: Colors.grey.withOpacity(0.9),
-                                                function:(){print("hello flutter");},
-                                                text:'العلائق',
-                                                size: 20.0
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 30,),
-                                        InkWell(
-                                          onTap: (){
-                                            Navigator.push(context, MaterialPageRoute(builder: (context)=>AlCar()));
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
-                                            width: double.infinity,
-                                            height: 100.0,
-                                            child: defaultbutton(
-                                              width:double.infinity,
-                                              function:(){print("hello flutter");},
-                                              background: Colors.grey.withOpacity(0.9),
-                                              text:'كون عليقة',
-                                              size: 20.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                            width: double.infinity,
-                            height: 100.0,
-                            child: defaultButton(
-                                width:double.infinity,
-                                background:Colors.grey,
-                                function:(){print("hello flutter");},
-                                text:'تكوين العلائق',
-
-                            ),
                           ),
                         ),
                       ),
@@ -140,13 +81,28 @@ class DocHomeScreen extends StatelessWidget {
                                 width:double.infinity,
                                 background:Colors.grey,
                                 function:(){print("hello flutter");},
-                                text:'الخيول والتغذية',
+                                text:'التغذية',
                                 size: 30.0
                             ),
                           ),
                         ),
                       ),
                     ],
+                  ),
+                  Center(
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+                      padding: EdgeInsets.only(right: 8.0,left: 8.0),
+                      height: 35.0,
+                      color: Colors.blue,
+                      child: Text(
+                        'Your Horses',
+                        style: TextStyle(
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
                   ),
                   ListView.separated(
                       physics: BouncingScrollPhysics(),
@@ -184,6 +140,7 @@ class DocHomeScreen extends StatelessWidget {
           if (state is GetDocSuccessfulState)
             {
               cubit.getDocFullData();
+
               cubit.getHorses();
             }
 

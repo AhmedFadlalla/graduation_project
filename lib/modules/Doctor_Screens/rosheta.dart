@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/layouts/doc_home_layout/doc_home_layout.dart';
 
 import '../../layouts/doc_home_layout/Doctor_Cubit/doc_cubit.dart';
 import '../../layouts/doc_home_layout/Doctor_Cubit/doc_states.dart';
@@ -248,9 +249,8 @@ class Rosheta extends StatelessWidget {
                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Added'),backgroundColor: Colors.green,));
                                    Navigator.pushReplacement(
                                     context, //my place
-
                                     MaterialPageRoute(
-                                      builder: (context) => MyApp(),
+                                      builder: (context) => DocHomeScreenLayout(),
                                     ),
                                     /////اللي انا رايحله
                                   );

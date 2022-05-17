@@ -65,7 +65,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => HorseCubit()..getUserData()),
+          BlocProvider(create: (context) => HorseCubit()
+            ..getUserData()
+            ..getAllUsers()
+            ..getAllPosts()
+            ..getAccomData()
+          ),
           BlocProvider(create: (context) => OwnerCubit()
             ..getOwnerData()
             ..getHorseData()

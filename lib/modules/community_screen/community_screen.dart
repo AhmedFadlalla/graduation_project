@@ -4,51 +4,72 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
 import 'package:graduation_project/layouts/home_layout/cubit/states.dart';
-import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
-import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
-import 'package:graduation_project/models/owner_model.dart';
+
 import 'package:graduation_project/models/post_model.dart';
+import 'package:graduation_project/modules/community_screen/user_add_post.dart';
+import 'package:graduation_project/modules/owner-screen/add_post/add_post_screen.dart';
+
 import 'package:graduation_project/shared/component/components.dart';
 import 'package:graduation_project/shared/styles/colors.dart';
 import 'package:graduation_project/shared/styles/icon_broken.dart';
 
-class CommunityScreen extends StatelessWidget {
+class UserCommunityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<OwnerCubit,OwnerState>(
-      listener: (context,state){},
-      builder: (context,state){
-        double size=MediaQuery.of(context).size.height;
-        return
-          Column(
+    return BlocConsumer<HorseCubit, HorseStates>(
+      listenWhen: (previous, current) {
+        return true;
+      },
+      listener: (context, state) {},
+      builder: (context, state) {
+        double size = MediaQuery.of(context).size.height;
+        double width = MediaQuery.of(context).size.width;
+        return SingleChildScrollView(
+          child: Column(
             children: [
-              SizedBox(height: 20,),
-              Row(
-                children: [
-                  CircleAvatar(
-                    radius: 25.0,
-                    backgroundImage:
-                    NetworkImage('https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'),
+              SizedBox(
+                height: size * 0.04,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Container(
+                  width: 390.0,
+                  height: 50.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8.0),
+                    color: Colors.grey[300],
                   ),
-                  SizedBox(
-                    width: 8.0,
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 20.0,
+                        backgroundImage: NetworkImage(HorseCubit.get(context)
+                            .userModel
+                            ?.image ==
+                            null
+                            ? 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80'
+                            : HorseCubit.get(context).userModel!.image),
+                      ),
+                      SizedBox(
+                        width: 8.0,
+                      ),
+                      InkWell(
+                        child: Container(
+                          height: 20,
+                          width: width * 0.8,
+                          child: Text('What\s on your mind?'),
+                        ),
+                        onTap: () {
+                          navigateTo(context, UserAddPostScreen());
+                        },
+                      )
+                    ],
                   ),
-                  InkWell(
-                    child: Container(
-
-                        child: Text('What\s on your mind?'),
-
-
-                    ),
-                    onTap: (){
-
-                    },
-                  )
-                ],
+                ),
               ),
               ConditionalBuilder(
-                condition: OwnerCubit.get(context).posts.length >0,
-                builder:(context)=>SingleChildScrollView(
+                condition: HorseCubit.get(context).posts.length > 0,
+                builder: (context) => SingleChildScrollView(
                   child: Column(
                     children: [
                       // Container(
@@ -67,31 +88,28 @@ class CommunityScreen extends StatelessWidget {
                       ListView.separated(
                           physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
-                          itemBuilder: (context,index)=>buildPostItem(OwnerCubit.get(context).posts[index],context,index),
-                          separatorBuilder: (context,index)=>myDivider(),
-                          itemCount:OwnerCubit.get(context).posts.length ),
-                      FloatingActionButton(
-                        onPressed: (){},
-                        child: Icon(Icons.add),
-                      )
+                          itemBuilder: (context, index) => buildPostItem(
+                              HorseCubit.get(context).posts[index],
+                              context,
+                              index),
+                          separatorBuilder: (context, index) => myDivider(),
+                          itemCount: HorseCubit.get(context).posts.length),
 
                       // SocialCubit.get(context).posts.length
                     ],
                   ),
                 ),
-                fallback: (context)=>Center(child: CircularProgressIndicator()),
-
+                fallback: (context) => Center(child: CircularProgressIndicator()),
               ),
             ],
-          );
-          // Image(image: AssetImage('assets/images/travel.jpg')
-
+          ),
+        );
+        // Image(image: AssetImage('assets/images/travel.jpg')
       },
     );
   }
 
-
-  Widget buildPostItem(PostModel model,BuildContext context,index)=>Card(
+  Widget buildPostItem(PostModel model, BuildContext context, index) => Card(
     clipBehavior: Clip.antiAliasWithSaveLayer,
     elevation: 10.0,
     margin: EdgeInsets.symmetric(
@@ -106,10 +124,8 @@ class CommunityScreen extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 25.0,
-                backgroundImage:
-                NetworkImage(
-                    '${OwnerCubit.get(context).ownerModel!.image}'
-                ),
+                backgroundImage: NetworkImage(
+                    '${model.image}'),
               ),
               SizedBox(
                 width: 8.0,
@@ -120,20 +136,20 @@ class CommunityScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text('${OwnerCubit.get(context).ownerModel!.studName}',
+                        Text(
+                          '${model.name}',
                           style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                             height: 1.4,
-
-                          ),),
+                          ),
+                        ),
                         SizedBox(
                           width: 4.0,
                         ),
                         Icon(
-
                           Icons.check_circle,
-                          color:  defaultColor,
+                          color: defaultColor,
                           size: 16.0,
                         )
                       ],
@@ -141,15 +157,12 @@ class CommunityScreen extends StatelessWidget {
                     SizedBox(
                       width: 10.0,
                     ),
-                    Text(
-                        '${model.dateTime}',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
-
+                    Text('${model.dateTime}',
+                        style:
+                        Theme.of(context).textTheme.caption!.copyWith(
                           height: 1.4,
-                        )
-                    )
+                        ))
                   ],
-
                 ),
               ),
               SizedBox(
@@ -158,24 +171,22 @@ class CommunityScreen extends StatelessWidget {
               IconButton(
                 icon: Icon(
                   Icons.more_horiz,
-
                 ),
-                onPressed: (){},
+                onPressed: () {},
               )
             ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 5.0,
-                vertical: 5.0
-            ),
+            padding:
+            const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
             child: myDivider(),
           ),
           Text(
             '${model.text}',
-            style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                color: Colors.black
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .subtitle1!
+                .copyWith(color: Colors.black),
           ),
           // Padding(
           //   padding: const EdgeInsets.only(
@@ -246,35 +257,29 @@ class CommunityScreen extends StatelessWidget {
           //     ),
           //   ),
           // ),
-          if(model.postImage != '')
+          if (model.postImage != '')
             Container(
               height: 180.0,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5.0),
                   image: DecorationImage(
-                    image:  NetworkImage(
-                        '${model.postImage}'
-                    ),
-                    fit:BoxFit.cover ,
-
-                  )
-              ),
+                    image: NetworkImage('${model.postImage}'),
+                    fit: BoxFit.cover,
+                  )),
             ),
-          if(model.postImage != '')
-            SizedBox(height: 8.0,),
+          if (model.postImage != '')
+            SizedBox(
+              height: 8.0,
+            ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 5.0),
             child: Row(
               children: [
                 Expanded(
                   child: InkWell(
-
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5.0
-                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: Row(
-
                         children: [
                           Icon(
                             IconBroken.Heart,
@@ -284,23 +289,23 @@ class CommunityScreen extends StatelessWidget {
                           SizedBox(
                             width: 5.0,
                           ),
-                          Text('${OwnerCubit.get(context).likes[index]}',
-                            style: Theme.of(context).textTheme.caption!.copyWith(
-                                color: Colors.grey
-                            ),)
+                          Text(
+                            '${HorseCubit.get(context).likes[index]}',
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(color: Colors.grey),
+                          )
                         ],
                       ),
                     ),
-                    onTap: (){},
+                    onTap: () {},
                   ),
                 ),
                 Expanded(
                   child: InkWell(
-
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5.0
-                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -312,14 +317,17 @@ class CommunityScreen extends StatelessWidget {
                           SizedBox(
                             width: 5.0,
                           ),
-                          Text('1200 comments',
-                            style: Theme.of(context).textTheme.caption!.copyWith(
-                                color: Colors.grey
-                            ),)
+                          Text(
+                            '1200 comments',
+                            style: Theme.of(context)
+                                .textTheme
+                                .caption!
+                                .copyWith(color: Colors.grey),
+                          )
                         ],
                       ),
                     ),
-                    onTap: (){},
+                    onTap: () {},
                   ),
                 )
               ],
@@ -339,10 +347,8 @@ class CommunityScreen extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 10.0,
-                        backgroundImage:
-                        NetworkImage(
-                            '${OwnerCubit.get(context).ownerModel!.image}'
-                        ),
+                        backgroundImage: NetworkImage(
+                            '${HorseCubit.get(context).userModel!.image}'),
                       ),
                       SizedBox(
                         width: 10.0,
@@ -353,17 +359,13 @@ class CommunityScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  onTap: (){},
+                  onTap: () {},
                 ),
               ),
               InkWell(
-
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 5.0
-                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
                   child: Row(
-
                     children: [
                       Icon(
                         IconBroken.Heart,
@@ -373,21 +375,22 @@ class CommunityScreen extends StatelessWidget {
                       SizedBox(
                         width: 5.0,
                       ),
-                      Text('Like',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
-                            color: Colors.grey
-                        ),)
+                      Text(
+                        'Like',
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption!
+                            .copyWith(color: Colors.grey),
+                      )
                     ],
                   ),
                 ),
-                onTap: (){
+                onTap: () {
                   // OwnerCubit.get(context).likePost(HorseCubit.get(context).postsId[index]);
                 },
               )
             ],
           )
-
-
         ],
       ),
     ),

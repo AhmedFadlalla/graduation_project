@@ -40,7 +40,8 @@ class HorseDetailsScreen extends StatelessWidget {
                           padding: EdgeInsets.all(25),
                           child: Image(
                               image: NetworkImage(
-                                  '${cubit.horses[cubit.index].horseImage}'))),
+                                  '${cubit.horseData[cubit.index].horseImage}'))),
+                      SizedBox(height: 20.0,),
                       Row(
                         children: [
                           Text(
@@ -51,7 +52,7 @@ class HorseDetailsScreen extends StatelessWidget {
                             width: 5.0,
                           ),
                           Text(
-                            '${cubit.horses[cubit.index].horseName}',
+                            '${cubit.horseData[cubit.index].horseName}',
                             style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 18,
@@ -59,114 +60,7 @@ class HorseDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'الاب :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            '${cubit.horses[cubit.index].fatherName}',
-                            style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'الجد  :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            '${cubit.horses[cubit.index].fatherName1}',
-                            style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'اب الجد :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            '${cubit.horses[cubit.index].fatherName2}',
-                            style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'الام :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            '${cubit.horses[cubit.index].motherName}',
-                            style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'الجدة :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            '${cubit.horses[cubit.index].motherName1}',
-                            style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'ام الجدة :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            '${cubit.horses[cubit.index].motherName2}',
-                            style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                      SizedBox(height: 20.0,),
                       Row(
                         children: [
                           Text(
@@ -177,7 +71,7 @@ class HorseDetailsScreen extends StatelessWidget {
                             width: 5.0,
                           ),
                           Text(
-                            '${cubit.horses[cubit.index].sectionName}',
+                            '${cubit.horseData[cubit.index].sectionName}',
                             style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 18,
@@ -185,6 +79,7 @@ class HorseDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(height: 20.0,),
                       Row(
                         children: [
                           Text(
@@ -195,7 +90,7 @@ class HorseDetailsScreen extends StatelessWidget {
                             width: 5.0,
                           ),
                           Text(
-                            '${cubit.horses[cubit.index].microshipCode}',
+                            '${cubit.horseData[cubit.index].microshipCode}',
                             style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 18,
@@ -203,6 +98,7 @@ class HorseDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(height: 20.0,),
                       Row(
                         children: [
                           Text(
@@ -213,7 +109,7 @@ class HorseDetailsScreen extends StatelessWidget {
                             width: 5.0,
                           ),
                           Text(
-                            '${cubit.horses[cubit.index].initPrice}',
+                            '${cubit.horseData[cubit.index].initPrice} جنية',
                             style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 18,
@@ -221,6 +117,7 @@ class HorseDetailsScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      SizedBox(height: 20.0,),
                       Row(
                         children: [
                           Text(
@@ -231,12 +128,131 @@ class HorseDetailsScreen extends StatelessWidget {
                             width: 5.0,
                           ),
                           Text(
-                            '${cubit.horses[cubit.index].birthDate}',
+                            '${cubit.horseData[cubit.index].birthDate}',
                             style: TextStyle(
                                 color: Colors.brown,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold),
                           ),
+                        ],
+                      ),
+                      SizedBox(height: 20.0,),
+                      Row(
+                        children: [
+                          Text(
+                            'الرسن :',
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            '${cubit.horseData[cubit.index].type}',
+                            style: TextStyle(
+                                color: Colors.brown,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.0,),
+                      Row(
+                        children: [
+                          Text(
+                            'النوع :',
+                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          ),
+                          SizedBox(
+                            width: 5.0,
+                          ),
+                          Text(
+                            '${cubit.horseData[cubit.index].gander}',
+                            style: TextStyle(
+                                color: Colors.brown,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Row(
+                        children: [
+                          Text(
+                            '${cubit.horseData[cubit.index].horseName}',
+                            style: TextStyle(
+                                color: Colors.brown,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(width: 25.0,),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Text(
+                                    '${cubit.horseData[cubit.index].fatherName}',
+                                    style: TextStyle(
+                                        color: Colors.brown,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(width: 25.0,),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        '${cubit.horseData[cubit.index].fatherName1}',
+                                        style: TextStyle(
+                                            color: Colors.brown,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(height: 25.0,),
+                                      Text(
+                                        '${cubit.horseData[cubit.index].motherName1}',
+                                        style: TextStyle(
+                                            color: Colors.brown,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 25.0,),
+                              Row(
+                                children: [
+                                  Text(
+                                    '${cubit.horseData[cubit.index].motherName}',
+                                    style: TextStyle(
+                                        color: Colors.brown,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(width: 25.0,),
+                                  Column(
+                                    children: [
+                                      Text(
+                                        '${cubit.horseData[cubit.index].fatherName2}',
+                                        style: TextStyle(
+                                            color: Colors.brown,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(height: 25.0,),
+                                      Text(
+                                        '${cubit.horseData[cubit.index].motherName2}',
+                                        style: TextStyle(
+                                            color: Colors.brown,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+
                         ],
                       ),
                     ],

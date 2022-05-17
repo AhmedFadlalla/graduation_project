@@ -27,10 +27,10 @@ class RemovePostImageState extends HorseStates{}
 
 class GetPostsLoadingState extends HorseStates{}
 class GetPostsSuccessfulState extends HorseStates{}
-  class GetPostsErrorState extends HorseStates{
+class GetPostsErrorState extends HorseStates{
   final String error;
   GetPostsErrorState(this.error);
-  }
+}
 
 class GetOwnerLoadingState extends HorseStates{}
 class GetOwnerSuccessfulState extends HorseStates{}
@@ -99,4 +99,9 @@ class UserUpdateLoadingState extends HorseStates {}
 
 class UserUpdateErrorState extends HorseStates {}
 
+class GetAccomindationDataSuccessState extends HorseStates{}
+class GetAccomindationDataErrorState extends HorseStates{
+  final String error;
 
+  GetAccomindationDataErrorState(this.error);
+}

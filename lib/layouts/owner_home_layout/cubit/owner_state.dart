@@ -66,9 +66,16 @@ class CreateAccomErrorState extends OwnerState{
   CreateAccomErrorState(this.error);
 
 }
+class CreateAccomCollectionSuccessState extends OwnerState{}
+class CreateAccomCollectionErrorState extends OwnerState{
+  final String error;
 
+  CreateAccomCollectionErrorState(this.error);
+
+}
 class AccomImageSuccessState extends OwnerState{}
 class AccomImageErrorState extends OwnerState{}
+
 
 class DocRegisterLoadingState extends OwnerState{}
 class DocRegisterSuccessState extends OwnerState{
@@ -129,8 +136,8 @@ class GetAllUserErrorState extends OwnerState{
   GetAllUserErrorState(this.error);
 }
 
-class SendMessageSuccessfulState extends OwnerState{}
-class SendMessageErrorState extends OwnerState{}
+class OwnerSendMessageSuccessfulState extends OwnerState{}
+class OwnerSendMessageErrorState extends OwnerState{}
 
 
 class GetMessageSuccessfulState extends OwnerState{}
@@ -182,4 +189,12 @@ class GetProductErrorState extends OwnerState{
   final String error;
 
   GetProductErrorState(this.error);
+}
+class CheckBoxx extends OwnerState{}
+
+class GetHorsesSecDataSuccessState extends OwnerState{}
+class GetHorsesSecDataErrorState extends OwnerState{
+  final String error;
+
+  GetHorsesSecDataErrorState(this.error);
 }

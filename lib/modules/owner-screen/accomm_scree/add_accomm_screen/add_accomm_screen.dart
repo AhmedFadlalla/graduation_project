@@ -20,6 +20,8 @@ class AddAccommindationScreen extends StatelessWidget {
             var phoneController       = TextEditingController();
           var priceController       = TextEditingController();
           var cubit=OwnerCubit.get(context);
+          addressController.text=cubit.ownerModel!.address;
+          phoneController.text=cubit.ownerModel!.phone;
 
           return Scaffold(
             body: SafeArea(

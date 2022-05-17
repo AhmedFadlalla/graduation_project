@@ -1,11 +1,10 @@
-
 import 'dart:io';
 
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:graduation_project/models/accom_model.dart';
 import 'package:graduation_project/models/owner_model.dart';
 import 'package:graduation_project/modules/registeration_screen/login_screen/cubit/cubit.dart';
+
 
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
@@ -14,23 +13,22 @@ import 'package:graduation_project/layouts/home_layout/cubit/states.dart';
 import 'package:graduation_project/models/post_model.dart';
 import 'package:graduation_project/models/user_model.dart';
 import 'package:graduation_project/modules/chats_screen/chat_screen.dart';
-import 'package:graduation_project/modules/community_screen/community_screen.dart';
 import 'package:graduation_project/modules/home_screen/home_screen.dart';
-import 'package:graduation_project/modules/profile_screen/profile_screen.dart';
 import 'package:graduation_project/shared/styles/icon_broken.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 import '../../../models/Message_model.dart';
+import '../../../modules/community_screen/community_screen.dart';
 import '../../../modules/owner-screen/owner_home_screen/owner_home_screen.dart';
+import '../../../modules/profile_screen/profile_screen.dart';
 import '../../../shared/component/constants.dart';
-
 
 class HorseCubit extends Cubit<HorseStates> {
   HorseCubit() : super(HorseInitialState());
 
   static HorseCubit get(context) => BlocProvider.of(context);
 
-   UserModel? userModel;
+  UserModel? userModel;
 
   void getUserData() {
     emit(GetUserLoadingState());
@@ -46,9 +44,9 @@ class HorseCubit extends Cubit<HorseStates> {
   int currentIndex = 0;
   List<Widget> screens = [
     HomeScreen(),
-    // CommunityScreen(),
-    ChatsScreen(),
-    // ProfileScreen(),
+    UserCommunityScreen(),
+    UserChatsScreen(),
+    UserProfileScreen(),
   ];
 
   List<BottomNavigationBarItem> items = [
@@ -64,7 +62,6 @@ class HorseCubit extends Cubit<HorseStates> {
     currentIndex = index;
     emit(HorseChangeBottomNavState());
   }
-
 
   File? profileImage;
   var picker = ImagePicker();
@@ -93,12 +90,11 @@ class HorseCubit extends Cubit<HorseStates> {
     }
   }
 
-  void uploadProfileImage({
-    required String name,
-    required String phone,
-    required String bio,
-    required context
-  }) {
+  void uploadProfileImage(
+      {required String name,
+        required String phone,
+        required String bio,
+        required context}) {
     emit(UserUpdateLoadingState());
 
     firebase_storage.FirebaseStorage.instance
@@ -108,7 +104,7 @@ class HorseCubit extends Cubit<HorseStates> {
         .then((value) {
       value.ref.getDownloadURL().then((value) {
         // emit(SocialUploadProfileImageSuccessState());
-        updateUser(name: name, phone: phone, bio: bio, image: value, context: context);
+        updateUser(name: name, phone: phone, bio: bio, image: value);
       }).catchError((error) {
         emit(UploadProfileImageErrorState());
       });
@@ -117,12 +113,11 @@ class HorseCubit extends Cubit<HorseStates> {
     });
   }
 
-  void uploadCoverImage({
-    required String name,
-    required String phone,
-    required String bio,
-    required context
-  }) {
+  void uploadCoverImage(
+      {required String name,
+        required String phone,
+        required String bio,
+        required context}) {
     emit(UserUpdateLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
@@ -131,7 +126,7 @@ class HorseCubit extends Cubit<HorseStates> {
         .then((value) {
       value.ref.getDownloadURL().then((value) {
         // emit(SocialUploadCoverImageSuccessState());
-        updateUser(name: name, phone: phone, bio: bio, cover: value, context: context);
+        updateUser(name: name, phone: phone, bio: bio, cover: value);
         print(value);
       }).catchError((error) {
         emit(CoverImagePickedErrorState());
@@ -147,7 +142,6 @@ class HorseCubit extends Cubit<HorseStates> {
     required String bio,
     String? cover,
     String? image,
-    required context,
   }) {
     UserModel models = UserModel(
         name: name,
@@ -156,7 +150,8 @@ class HorseCubit extends Cubit<HorseStates> {
         phone: phone,
         bio: bio,
         image: image ?? userModel!.image,
-        cover: cover ?? userModel!.cover, status: LoginCubit.get(context).status!);
+        cover: cover ?? userModel!.cover,
+        status: userModel!.status);
     FirebaseFirestore.instance
         .collection('users')
         .doc(userModel!.uId)
@@ -168,12 +163,10 @@ class HorseCubit extends Cubit<HorseStates> {
     });
   }
 
-   File? postImage;
-
-
+  File? postImage;
 
   Future<void> getPostImage() async {
-    final  pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       postImage = File(pickedFile.path);
       emit(PostImageSuccessState());
@@ -252,7 +245,6 @@ class HorseCubit extends Cubit<HorseStates> {
     });
   }
 
-
   File? ownerImage;
 
   Future<void> getOwnerImage() async {
@@ -265,31 +257,20 @@ class HorseCubit extends Cubit<HorseStates> {
       emit(OwnerImageErrorState());
     }
   }
+
   void uploadOwnerImage({
     required String studName,
     required String address,
-
   }) {
     emit(CreateOwnerLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('owner/${Uri
-        .file(ownerImage!.path)
-        .pathSegments
-        .last}')
+        .child('owner/${Uri.file(ownerImage!.path).pathSegments.last}')
         .putFile(ownerImage!)
         .then((value) {
       print(value);
       value.ref.getDownloadURL().then((value) {
-        createOwner(
-            studName: studName,
-            address: address,
-            image: value);
-
-        makeOwner(name: studName, image: value);
-
-
-
+        createOwner(studName: studName, address: address, image: value);
       }).catchError((error) {
         print(error.toString());
         emit(CreateOwnerErrorState(error.toString()));
@@ -299,17 +280,23 @@ class HorseCubit extends Cubit<HorseStates> {
       emit(CreateOwnerErrorState(error.toString()));
     });
   }
-   OwnerModel? ownerModel;
-  void getOwnerData()  {
+
+  OwnerModel? ownerModel;
+  void getOwnerData() {
     emit(GetOwnerLoadingState());
 
-    FirebaseFirestore.instance.collection('owners').doc(ownerModel!.oId).get().then((value) {
+    FirebaseFirestore.instance
+        .collection('owners')
+        .doc(ownerModel!.oId)
+        .get()
+        .then((value) {
       ownerModel = OwnerModel.fromJson(value.data()!);
       emit(GetOwnerSuccessfulState());
     }).catchError((error) {
       emit(GetOwnerErrorState(error.toString()));
     });
   }
+
   void createOwner({
     required String studName,
     required String address,
@@ -318,66 +305,55 @@ class HorseCubit extends Cubit<HorseStates> {
     OwnerModel model = OwnerModel(
         studName: studName,
         ownerName: userModel!.name,
-        oId: userModel!.uId,
+        oId: '00' + uId!,
         phone: userModel!.phone,
         address: address,
         image: image,
-      cover: userModel!.cover,
-      bio: userModel!.bio
-    );
+        cover: userModel!.cover,
+        bio: userModel!.bio);
     emit(CreateOwnerLoadingState());
     FirebaseFirestore.instance
         .collection('owners')
-        .doc(userModel!.uId)
+        .doc('00' + uId!)
         .set(model.toMap())
         .then((value) {
-
-      emit(CreateOwnerSuccessState(userModel!.uId));
+      emit(CreateOwnerSuccessState('00' + uId!));
     }).catchError((error) {
       print(error.toString());
       emit(CreateOwnerErrorState(error.toString()));
     });
   }
 
-  void makeOwner({
-  required String name,
-  required String image
-}){
+  void makeOwner() {
     UserModel model = UserModel(
-        name: name,
+        name: userModel!.name,
         email: userModel!.email,
         uId: userModel!.uId,
         image:
-        image,
+        'https://rcmi.fiu.edu/wp-content/uploads/sites/30/2018/02/no_user.png',
         bio: 'write your bio',
         phone: userModel!.phone,
         cover: '',
-        status:2
-
-    );
-    FirebaseFirestore.instance.collection('users')
-        .doc(uId).update(model.toMap())
+        status: 2);
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .update(model.toMap())
         .then((value) {
-
-
       emit(MakeOwnerSuccessState());
-
-    })
-        .catchError((error){
+    }).catchError((error) {
       emit(MakeOwnerErrorState(error.toString()));
     });
-
   }
-
 
   List<UserModel> users = [];
 
   void getAllUsers() {
-    if (users.length == 0)
+    users=[];
       FirebaseFirestore.instance.collection('users').get().then((value) {
         emit(GetAllUsersSuccessState());
         value.docs.forEach((element) {
-          if (element.data()['uId'] != userModel!.uId)
+          if (element.data()['uId'] != uId)
             users.add(UserModel.fromJson(element.data()));
         });
       }).catchError((error) {
@@ -393,7 +369,7 @@ class HorseCubit extends Cubit<HorseStates> {
   }) {
     MessageModel model = MessageModel(
       text: text,
-      senderId: userModel?.uId,
+      senderId: uId,
       receiverId: receiverId,
       dateTime: dateTime,
     );
@@ -402,7 +378,7 @@ class HorseCubit extends Cubit<HorseStates> {
 
     FirebaseFirestore.instance
         .collection('users')
-        .doc(userModel!.uId)
+        .doc(uId)
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
@@ -419,7 +395,7 @@ class HorseCubit extends Cubit<HorseStates> {
         .collection('users')
         .doc(receiverId)
         .collection('chats')
-        .doc(userModel!.uId)
+        .doc(uId)
         .collection('messages')
         .add(model.toMap())
         .then((value) {
@@ -436,7 +412,7 @@ class HorseCubit extends Cubit<HorseStates> {
   }) {
     FirebaseFirestore.instance
         .collection('users')
-        .doc(userModel!.uId)
+        .doc(uId)
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
@@ -444,7 +420,6 @@ class HorseCubit extends Cubit<HorseStates> {
         .snapshots()
         .listen((event) {
       messages = [];
-
       event.docs.forEach((element) {
         messages.add(MessageModel.fromJson(element.data()));
       });
@@ -452,18 +427,30 @@ class HorseCubit extends Cubit<HorseStates> {
       emit(GetMessagesSuccessState());
     });
   }
-
-
-
-
+  
+  
+  List<AccomModel> accomList=[];
+  String? accomId;
+  
+  void getAccomData(){
+    accomList=[];
+    FirebaseFirestore.instance
+        .collection('Accomendations')
+        .get()
+        .then((value) {
+          value.docs.forEach((element) {
+            accomList.add(AccomModel.fromJson(element.data()));
+            accomId=element.id;
+            print(accomId);
+          });
+          emit(GetAccomindationDataSuccessState());
+    })
+        .catchError((error){
+          print(error.toString());
+          emit(GetAccomindationDataErrorState(error.toString()));
+    });
+  }
 
 
 
 }
-
-
-
-
-
-
-

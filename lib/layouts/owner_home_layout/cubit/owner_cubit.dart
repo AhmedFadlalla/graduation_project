@@ -420,13 +420,51 @@ class OwnerCubit extends Cubit<OwnerState> {
         .collection('Accomendation')
         .add(model.toMap())
         .then((value) {
+          addAccomCollection(
+              AccomImage: AccomImage,
+              type: type,
+              Price: Price,
+              info: info,
+              address: address,
+              phone: phone);
       emit(CreateAccomSuccessState());
+
     }).catchError((error) {
       print(error.toString());
       emit(CreateAccomErrorState(error.toString()));
     });
   }
 
+  void addAccomCollection({
+    required String AccomImage,
+    required String type,
+    required String Price,
+    required String info,
+    required String address,
+
+    required String phone,
+}){
+    AccomModel model = AccomModel(
+      AccomImage: AccomImage,
+      type: type,
+      Price: Price,
+      info: info,
+      address: address,
+      phone: phone,
+      accomCreatorId: ownerModel!.oId,
+      accomCreatorName: ownerModel!.studName
+    );
+    FirebaseFirestore.instance
+        .collection('Accomendations')
+        .add(model.toMap())
+        .then((value) {
+
+          emit(CreateAccomCollectionSuccessState());
+    }).catchError((error){
+
+      emit(CreateAccomCollectionErrorState(error.toString()));
+    });
+  }
 
   void docRegister({
     required String name,
@@ -779,10 +817,10 @@ class OwnerCubit extends Cubit<OwnerState> {
         .collection('message')
         .add(model.toMap())
         .then((value) {
-      emit(SendMessageSuccessfulState());
+      emit(OwnerSendMessageSuccessfulState());
     }).catchError((error) {
       print(error.toString());
-      emit(SendMessageErrorState());
+      emit(OwnerSendMessageErrorState());
     });
 
     FirebaseFirestore.instance
@@ -793,10 +831,10 @@ class OwnerCubit extends Cubit<OwnerState> {
         .collection('message')
         .add(model.toMap())
         .then((value) {
-      emit(SendMessageSuccessfulState());
+      emit(OwnerSendMessageSuccessfulState());
     }).catchError((error) {
       print(error.toString());
-      emit(SendMessageErrorState());
+      emit(OwnerSendMessageErrorState());
     });
   }
 
@@ -876,7 +914,57 @@ class OwnerCubit extends Cubit<OwnerState> {
     });
 
   }
+  List<HorseModel> horseData=[];
+  void getHorses({required String secId}){
+    horseData=[];
+    FirebaseFirestore.instance
+        .collection('owners')
+        .doc(oId)
+        .collection('sections')
+        .doc(secId)
+    .collection('horses')
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        horseData.add(HorseModel.fromJson(element.data()));
+      });
+      emit(GetHorsesSecDataSuccessState());
 
+    }).catchError((error){
+      print(error.toString());
+      emit(GetHorsesSecDataErrorState(error.toString()));
+    });
+
+  }
+HorseModel? horseModel;
+  void getHorseDetailsData({
+    required horseId,
+    required secId
+
+}){
+    print(oId);
+    print("sec:${userModel!.section}");
+    FirebaseFirestore.instance
+        .collection('owners')
+        .doc(oId)
+        .collection('sections')
+        .doc(secId)
+        .collection('horses')
+        .doc(horseId)
+        .get()
+        .then((value) {
+          horseModel=HorseModel.fromJson(value.data()!);
+          emit(GetHorsesDetailsSuccessfulState());
+    })
+        .catchError((error){
+
+          print(error.toString());
+      emit(GetHorsesDetailsErrorState(error.toString()));
+    });
+
+
+
+  }
 
   Future<void> saveProduct(ProductData productData)async{
 
@@ -914,4 +1002,10 @@ class OwnerCubit extends Cubit<OwnerState> {
 
 
 
+  bool shouldCheck = false;
+
+  void Check_Box(val) {
+    shouldCheck = val;
+    emit(CheckBoxx());
+  }
 }

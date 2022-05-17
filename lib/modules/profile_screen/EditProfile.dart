@@ -1,14 +1,14 @@
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
-import 'package:graduation_project/layouts/home_layout/cubit/states.dart';
-import 'package:graduation_project/shared/component/components.dart';
-import 'package:graduation_project/shared/styles/icon_broken.dart';
-import 'package:image_picker/image_picker.dart';
+import '../../../layouts/home_layout/cubit/cubit.dart';
+import '../../../layouts/home_layout/cubit/states.dart';
+import '../../../shared/component/components.dart';
+import '../../../shared/styles/icon_broken.dart';
 
-class EditProfileScreen extends StatelessWidget {
+class UserEditProfileScreen extends StatelessWidget {
+  const UserEditProfileScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HorseCubit, HorseStates>(
@@ -32,9 +32,10 @@ class EditProfileScreen extends StatelessWidget {
                 text: 'UPDATE',
                 pressedFunction: () {
                   HorseCubit.get(context).updateUser(
-                      name: nameController.text,
-                      phone: phoneController.text,
-                      bio: bioController.text, context: context);
+                    name: nameController.text,
+                    phone: phoneController.text,
+                    bio: bioController.text,
+                  );
                 }),
           ]),
           body: SingleChildScrollView(
@@ -67,7 +68,7 @@ class EditProfileScreen extends StatelessWidget {
                                       image: coverImage == null
                                           ? NetworkImage('${userModel?.cover}')
                                           : FileImage(coverImage)
-                                              as ImageProvider,
+                                      as ImageProvider,
                                       fit: BoxFit.cover,
                                     )),
                               ),
@@ -92,7 +93,7 @@ class EditProfileScreen extends StatelessWidget {
                             CircleAvatar(
                               radius: 65.0,
                               backgroundColor:
-                                  Theme.of(context).scaffoldBackgroundColor,
+                              Theme.of(context).scaffoldBackgroundColor,
                               child: CircleAvatar(
                                 radius: 60.0,
                                 backgroundImage: profileImage == null
@@ -131,9 +132,10 @@ class EditProfileScreen extends StatelessWidget {
                                     function: () {
                                       HorseCubit.get(context)
                                           .uploadProfileImage(
-                                              name: nameController.text,
-                                              phone: phoneController.text,
-                                              bio: bioController.text, context: context);
+                                          name: nameController.text,
+                                          phone: phoneController.text,
+                                          bio: bioController.text,
+                                          context: context);
                                     },
                                     text: 'Upload Profile'),
                                 if (state is UserUpdateLoadingState)
@@ -157,7 +159,8 @@ class EditProfileScreen extends StatelessWidget {
                                       HorseCubit.get(context).uploadCoverImage(
                                           name: nameController.text,
                                           phone: phoneController.text,
-                                          bio: bioController.text, context: context);
+                                          bio: bioController.text,
+                                          context: context);
                                     },
                                     text: 'Upload Cover'),
                                 if (state is UserUpdateLoadingState)
@@ -217,5 +220,6 @@ class EditProfileScreen extends StatelessWidget {
         );
       },
     );
+    ;
   }
 }

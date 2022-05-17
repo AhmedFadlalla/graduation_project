@@ -7,6 +7,8 @@ class AccomModel {
   late String info;
   late String address;
   late String phone;
+   String? accomCreatorId;
+  String? accomCreatorName;
 
   AccomModel.fromJson(Map<String, dynamic> json) {
     AccomImage = json['AccomImage'];
@@ -16,6 +18,8 @@ class AccomModel {
     address = json['address'];
 
     phone = json['phone'];
+    accomCreatorId = json['accomCreatorId'];
+    accomCreatorName = json['accomCreatorName'];
   }
 
   Map<String, dynamic> toMap() {
@@ -27,6 +31,8 @@ class AccomModel {
       'address': address,
 
       'phone': phone,
+      'accomCreatorId': accomCreatorId,
+      'accomCreatorName': accomCreatorName,
     };
   }
 
@@ -37,5 +43,7 @@ class AccomModel {
     required this.info,
     required this.address,
     required this.phone,
+    this.accomCreatorId,
+    this.accomCreatorName,
   });
 }

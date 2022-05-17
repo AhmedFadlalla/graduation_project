@@ -209,6 +209,7 @@ class DoctorCubit extends Cubit<DoctorStates> //1
         .get()
         .then((value) {
       doctorModel = DoctorModel.fromJson(value.data()!);
+      emit(GetDocFullDataSuccessfulState());
 
     }).catchError((error) {
       print(error.toString());
@@ -244,8 +245,23 @@ class DoctorCubit extends Cubit<DoctorStates> //1
     });
   }
 
-  void getHorsesData() {
 
+  Stream<List<HorseModel>>? getHorsesData() {
+
+    FirebaseFirestore.instance
+        .collection('owners')
+        .doc(userModel!.oId)
+        .collection('sections')
+        .doc(userModel!.section)
+        .collection('horses')
+        .snapshots().map((event) {
+      emit(GetHorsesDataSuccessfulState());
+         return event.docs.map((e) {
+            return HorseModel.fromJson(e.data());
+          }).toList();
+
+    });
+    return null;
 
 
   }
@@ -345,6 +361,7 @@ class DoctorCubit extends Cubit<DoctorStates> //1
   }
 
 
+
   File? profileImage;
 
 
@@ -390,7 +407,7 @@ class DoctorCubit extends Cubit<DoctorStates> //1
         .putFile(profileImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-        // emit(SocialUploadProfileImageSuccessState());
+        emit(UploadProfileImageSuccessState());
         // updateOwner(studName: name, phone: phone, bio: bio, image: value);
         updateDoctor(docName: docName, phone: phone, bio: bio, address: address,image: value);
       }).catchError((error) {
@@ -418,7 +435,7 @@ class DoctorCubit extends Cubit<DoctorStates> //1
         .putFile(coverImage!)
         .then((value) {
       value.ref.getDownloadURL().then((value) {
-        // emit(SocialUploadCoverImageSuccessState());
+        emit(UploadCoverImageSuccessState());
         updateDoctor(docName: docName, phone: phone, bio: bio, address: address,cover: value);
         print(value);
       }).catchError((error) {
@@ -551,7 +568,7 @@ class DoctorCubit extends Cubit<DoctorStates> //1
 
   List<UserModel> users = [];
   void getAllUsers() {
-    if (users.length == 0)
+    users=[];
       FirebaseFirestore.instance.collection('users').get().then((value) {
 
         emit(GetAllUserSuccessfulState());
@@ -736,12 +753,32 @@ class DoctorCubit extends Cubit<DoctorStates> //1
       }).toList();
     });
   }
+  
+  List<ProductData> productModel=[];
+  ProductData? productData;
+  void getAlekaData(){
+    FirebaseFirestore.instance.collection('owners')
+        .doc(doctorModel!.oId)
+        .collection('Ingredients')
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        productModel.add(ProductData.fromJson(element.data()));
+        productData=ProductData.fromJson(element.data());
+      });
+    }).catchError((error){
+
+    });
+  }
 
 
   Future<void> saveHorseFeed(HorseData horseData,horseId)async{
     await FirebaseFirestore.instance..collection('owners')
         .doc(doctorModel!.oId)
-         .collection('sections').doc(doctorModel!.section).collection('horses').doc(horseId)
+         .collection('sections')
+        .doc(doctorModel!.section)
+        .collection('horses')
+        .doc(horseId)
         .collection('HorseFeeding').doc().set(horseData.toMap()).then((value){
       emit(SendHorseFeedSuccessfulState());
     }).catchError((error){

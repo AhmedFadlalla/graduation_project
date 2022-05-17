@@ -7,10 +7,13 @@ import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.d
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
 import 'package:graduation_project/modules/owner-screen/accomm_scree/add_accomm_screen/add_accomm_screen.dart';
 import 'package:graduation_project/modules/owner-screen/aleka_screens/productss.dart';
+import 'package:graduation_project/modules/owner-screen/auction_screen/createauction.dart';
 import 'package:graduation_project/modules/owner-screen/doctor_screen/doc_home_screen.dart';
 import 'package:graduation_project/shared/component/components.dart';
 
 import '../Horses_screen/horses_screen.dart';
+import '../auction_screen/auctionboard.dart';
+import '../auction_screen/auctionestabls.dart';
 
 class OwnerHomeScreen extends StatelessWidget {
   const OwnerHomeScreen({Key? key}) : super(key: key);
@@ -153,10 +156,15 @@ class OwnerHomeScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: TestCard(
-                              title: 'Auction ',
-                              image: 'https://th.bing.com/th/id/R.ae628746bfbab21425bd926faced8c32?rik=z9w7a6vB7MpcGw&riu=http%3a%2f%2fwww.irishnews.com%2fpicturesarchive%2firishnews%2firishnews%2f2019%2f05%2f22%2f163509791-8afe60e5-8411-4817-bc81-e5da163ae568.jpg&ehk=hPd%2bbofRZrUEgzq1EDAvovtAXoP%2fhIfgCct7QV%2bqkjc%3d&risl=&pid=ImgRaw&r=0',
+                            child: InkWell(
+                              child: TestCard(
+                                title: 'Auction ',
+                                image: 'https://th.bing.com/th/id/R.ae628746bfbab21425bd926faced8c32?rik=z9w7a6vB7MpcGw&riu=http%3a%2f%2fwww.irishnews.com%2fpicturesarchive%2firishnews%2firishnews%2f2019%2f05%2f22%2f163509791-8afe60e5-8411-4817-bc81-e5da163ae568.jpg&ehk=hPd%2bbofRZrUEgzq1EDAvovtAXoP%2fhIfgCct7QV%2bqkjc%3d&risl=&pid=ImgRaw&r=0',
 
+                              ),
+                              onTap: (){
+                                navigateTo(context, AuctionBoard());
+                              },
                             ),
                           ),
                           SizedBox(width: 40.0,),

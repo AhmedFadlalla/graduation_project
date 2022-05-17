@@ -7,6 +7,7 @@ import 'package:graduation_project/shared/component/constants.dart';
 import 'package:graduation_project/shared/network/local/cach_helper.dart';
 
 import '../../layouts/owner_home_layout/owner_home_Layout.dart';
+import '../user_accom_screens/user_accom_screens.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -35,45 +36,23 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(width: 50.0,),
-
-
                     Expanded(
-                        child: InkWell(
-                          child: buildImageInteractionCard(
-                            title: 'العيادات المتنقلة',
-                            image: 'https://gumlet.assettype.com/ajel%2Fimport%2Fuploads%2Fmaterial-file%2F5e6a41874d53fe7013667193%2F5e6a418a95952.jpg?auto=format%2Ccompress&fit=max&format=webp&w=400&dpr=2.6',
-                          ),
-                          onTap: (){},
+                      child: InkWell(
+                        child: buildImageInteractionCard(
+                          title: 'الايواء',
+                          image: 'https://www.alkonouz.com/wp-content/uploads/2020/07/%D8%A7%D8%B3%D8%B7%D8%A8%D9%84-%D8%BA%D9%84%D8%A7%D9%81.jpg',
                         ),
+                        onTap: (){
+                          navigateTo(context, UserAccomindationHomeScreen());
+                        },
                       ),
+                    ),
 
                   ],
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Container(
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: buildImageInteractionCard(
-                        title: 'تعليم الفروسية',
-                        image: 'https://upload.wikimedia.org/wikipedia/commons/f/fa/Horse_riding_in_coca_cola_arena_-_melbourne_show_2005.jpg',
-                      ),
-                    ),
-                    SizedBox(width: 50.0,),
-                    Expanded(
-                      child: buildImageInteractionCard(
-                        title: 'الايواء',
-                        image: 'https://www.alkonouz.com/wp-content/uploads/2020/07/%D8%A7%D8%B3%D8%B7%D8%A8%D9%84-%D8%BA%D9%84%D8%A7%D9%81.jpg',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+
             /////////////////الصف  التاني ///////////////////////////////
             // EdgeInsets.symmetric(horizontal: 20.0),
             Padding(
@@ -82,13 +61,7 @@ class HomeScreen extends StatelessWidget {
                 width: double.infinity,
                 child: Row(
                   children: [
-                    Expanded(
-                      child: buildImageInteractionCard(
-                        title: 'العلاج بالخيل',
-                        image: 'https://4.bp.blogspot.com/-LjtJR4ODm8I/Vnlwc1WT-mI/AAAAAAAAMj4/0TFFA1AaOjU/s1600/equine_therapy%2Bautism.jpeg',
-                      ),
-                    ),
-                    SizedBox(width: 50.0,),
+
 
                     Expanded(
                       child: buildImageInteractionCard(
@@ -96,6 +69,13 @@ class HomeScreen extends StatelessWidget {
                         image: 'https://media.istockphoto.com/photos/justice-gavel-on-laptop-computer-keyboard-picture-id931025190?k=20&m=931025190&s=612x612&w=0&h=MK7l3HOK1XmgCPKwx6WVxMX_yM_NtQqCuV1QsBys8dM=',
                       ),
                     ),
+                    Expanded(
+                      child: buildImageInteractionCard(
+                        title: 'مستلزمات الخيل ',
+                        image: 'https://m.media-amazon.com/images/I/61XBNNddj4L.jpg',
+                      ),
+                    ),
+
 
 
                   ],
@@ -103,55 +83,9 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
             /////////////////////////////////////////////////////
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Container(
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: buildImageInteractionCard(
-                        title: 'مستلزمات الخيل ',
-                        image: 'https://m.media-amazon.com/images/I/61XBNNddj4L.jpg',
-                      ),
-                    ),
-                    SizedBox(width: 50.0,),
 
-                    Expanded(
-                      child: buildImageInteractionCard(
-                        title: 'نقل الخيل ',
-                        image: 'https://blog.equinavia.com/wp-content/uploads/2021/03/3-Photo-by-Shelly-Busby-on-Unsplash.png',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
             //////////////////////
-            Padding(
-              padding: const EdgeInsets.all(30.0),
-              child: Container(
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: buildImageInteractionCard(
-                        title: 'الرحلات',
-                        image: 'https://oceananniesresorts.com/wp-content/uploads/2020/08/Horseback-Riding-Myrtle-Beach-1.jpg',
-                      ),
-                    ),
-                    SizedBox(width: 50.0,),
 
-                    Expanded(
-                      child: buildImageInteractionCard(
-                        title: 'التغذية والرعاية ',
-                        image: 'https://thumbs.dreamstime.com/b/woman-veterinary-checking-horse-health-stable-horses-veterinary-job-121926474.jpg',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
             ///////////////////////////////
             Padding(
               padding: const EdgeInsets.all(30.0),
@@ -167,12 +101,7 @@ class HomeScreen extends StatelessWidget {
                     ),
                     SizedBox(width: 50.0,),
 
-                    Expanded(
-                      child: buildImageInteractionCard(
-                        title: 'العيادات المتنقلة',
-                        image: 'https://gumlet.assettype.com/ajel%2Fimport%2Fuploads%2Fmaterial-file%2F5e6a41874d53fe7013667193%2F5e6a418a95952.jpg?auto=format%2Ccompress&fit=max&format=webp&w=400&dpr=2.6',
-                      ),
-                    ),
+
                   ],
                 ),
               ),
@@ -182,11 +111,7 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-       onPressed: (){},
-      backgroundColor: Colors.black,
-      child: Icon(Icons.add),
-    )
+
     );
   }
 }
