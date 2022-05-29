@@ -38,6 +38,7 @@ class GetDocErrorState extends DoctorStates{
 
 
 }
+class ChangeIndexSuccess extends DoctorStates{}
 class  PickedDocImageSuccessState extends DoctorStates{}
 class  PickedDocImageErrorState extends DoctorStates{}
 class  UploadDocImageSuccessState extends DoctorStates{}

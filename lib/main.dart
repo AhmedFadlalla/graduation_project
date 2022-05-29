@@ -26,7 +26,7 @@ void main(context) async {
   oId =CachHelper.getData(key: 'oId');
   dId =CachHelper.getData(key: 'dId');
   dynamic dDone =CachHelper.getData(key: 'done');
-print(uId);
+  print(uId);
   print(oId);
   print(dId);
   print(dDone);
@@ -73,12 +73,15 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(create: (context) => OwnerCubit()
             ..getOwnerData()
-            ..getHorseData()
             ..getAllPosts()
             ..getUserData()
             ..getSectionsData()
           ),
-          BlocProvider(create: (context) => DoctorCubit()..getDocData()..getAllPosts()..getAllUsers())
+          BlocProvider(create: (context) => DoctorCubit()
+            ..getDocData()
+            ..getAllPosts()
+            ..getAllUsers()
+          )
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -20,6 +20,7 @@ class DetailsScren extends StatelessWidget {
   String? typeid;
   List<dynamic> hoies = [];
   String? horid;
+  int index=0;
   @override
   void initState() {
     initState();
@@ -72,15 +73,15 @@ class DetailsScren extends StatelessWidget {
                           ),
                           Container(
                             child: BuildDropBottom(
-                              dropdownButtonTitle: 'اسم الحصان',
+                              dropdownButtonTitle: 'المايكروشيب',
                               function: (newValue) {
                                 cubit.onChangeNameItem(newValue);
                               },
                               items:cubit.horses
                                   .map((valueItem) {
                                 return DropdownMenuItem(
-                                  value: cubit.horseModel!.microshipCode,
-                                  child: Text(cubit.horseModel!.microshipCode),
+                                  value: cubit.horses[index].microshipCode,
+                                  child: Text(cubit.horses[cubit.currentIndex].microshipCode),
                                 );
                               }).toList(),
                               value: cubit.HorseNameChoose,

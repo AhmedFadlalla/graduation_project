@@ -58,6 +58,12 @@ class DoctorCubit extends Cubit<DoctorStates> //1
     emit(OwnerChangeBottomNavState());
   }
 
+  int cIndex=0;
+  void changeIndex(int index){
+    cIndex=index;
+    emit(ChangeIndexSuccess());
+
+  }
 ////////////////////////////////////
 
 // ////////////////////////////////////
@@ -102,13 +108,13 @@ class DoctorCubit extends Cubit<DoctorStates> //1
   UserModel? userModel;
 
   void getDocData() {
-    emit(GetDocLoadingState());
-
-    FirebaseFirestore.instance.collection('users').doc(dId).get().then((value) {
+    // emit(GetDocLoadingState());
+    FirebaseFirestore.instance.collection('users')
+        .doc(dId)
+        .snapshots()
+        .listen((value) {
       userModel = UserModel.fromJson(value.data()!);
-      emit(GetDocSuccessfulState());
-    }).catchError((error) {
-      emit(GetDocErrorState(error.toString()));
+      // emit(GetDocSuccessfulState());
     });
   }
 
@@ -206,14 +212,11 @@ class DoctorCubit extends Cubit<DoctorStates> //1
         .doc(userModel!.section)
         .collection('doctor')
         .doc(dId)
-        .get()
-        .then((value) {
+        .snapshots()
+        .listen((value) {
       doctorModel = DoctorModel.fromJson(value.data()!);
-      emit(GetDocFullDataSuccessfulState());
+      // emit(GetDocFullDataSuccessfulState());
 
-    }).catchError((error) {
-      print(error.toString());
-      emit(GetDocFullDataErrorState(error.toString()));
     });
   }
 
@@ -222,6 +225,8 @@ class DoctorCubit extends Cubit<DoctorStates> //1
   HorseModel? horseModel;
   String?horseName;
   void getHorses() {
+
+    horses=[];
     emit(GetHorsesDataLoadingState());
     FirebaseFirestore.instance
         .collection('owners')
@@ -246,25 +251,25 @@ class DoctorCubit extends Cubit<DoctorStates> //1
   }
 
 
-  Stream<List<HorseModel>>? getHorsesData() {
-
-    FirebaseFirestore.instance
-        .collection('owners')
-        .doc(userModel!.oId)
-        .collection('sections')
-        .doc(userModel!.section)
-        .collection('horses')
-        .snapshots().map((event) {
-      emit(GetHorsesDataSuccessfulState());
-         return event.docs.map((e) {
-            return HorseModel.fromJson(e.data());
-          }).toList();
-
-    });
-    return null;
-
-
-  }
+  // Stream<List<HorseModel>>? getHorsesData() {
+  //
+  //   FirebaseFirestore.instance
+  //       .collection('owners')
+  //       .doc(userModel!.oId)
+  //       .collection('sections')
+  //       .doc(userModel!.section)
+  //       .collection('horses')
+  //       .snapshots().map((event) {
+  //     emit(GetHorsesDataSuccessfulState());
+  //        return event.docs.map((e) {
+  //           return HorseModel.fromJson(e.data());
+  //         }).toList();
+  //
+  //   });
+  //   return null;
+  //
+  //
+  // }
 
   Future<void> sendDisease(DiseaseData diseaseData, hId) async {
     FirebaseFirestore.instance
@@ -746,11 +751,16 @@ class DoctorCubit extends Cubit<DoctorStates> //1
   Stream<List<AlekaModel>>? getelAlaaik(){
     return FirebaseFirestore.instance
         .collection('owners')
-        .doc(doctorModel!.oId).collection('ala2k')
-        .snapshots().map((snapShot){
+        .doc(doctorModel!.oId)
+        .collection('ala2k')
+        .snapshots()
+        .map((snapShot){
       return snapShot.docs.map((docs){
+        print(AlekaModel.fromJson(docs.data()));
         return AlekaModel.fromJson(docs.data());
+
       }).toList();
+
     });
   }
   

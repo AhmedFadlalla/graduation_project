@@ -27,6 +27,7 @@ class DocHomeScreen extends StatelessWidget {
     return BlocConsumer<DoctorCubit,DoctorStates>
       (
         builder: (context,state){
+
         return SingleChildScrollView(
           child:ConditionalBuilder(
             condition: cubit.horses.length>0,
@@ -140,8 +141,8 @@ class DocHomeScreen extends StatelessWidget {
           if (state is GetDocSuccessfulState)
             {
               cubit.getDocFullData();
-
               cubit.getHorses();
+
             }
 
 
@@ -191,7 +192,7 @@ class DocHomeScreen extends StatelessWidget {
               bottom: 0.0,
               right: 0.0,
               child: SizedBox(
-                height: 130.0,
+                height: 150.0,
                 width: size.width - 200,
                 child: Directionality(
                   textDirection: TextDirection.rtl,

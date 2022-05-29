@@ -246,96 +246,7 @@ class AlCar extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                             actions: [
-                              Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: 10.0, vertical: 10.0),
-                                  height: 200,
-                                  decoration: BoxDecoration(
-                                      color: Colors.brown[50],
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(color: Colors.brown, width: 1)),
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          height: 7,
-                                        ),
-                                        Text(
-                                          "اختيارك يتضمن : ",
-                                          style: TextStyle(fontSize: 24.0),
-                                          textDirection: TextDirection.rtl,
-                                        ),
-                                        SizedBox(
-                                          height: 20.0,
-                                        ),
-                                        Container(
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(left: 30.0),
-                                                child: Row(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(" بروتين" + "%",style: TextStyle(color:Colors.black,fontSize: 18),),
-                                                    SizedBox(width: 5.0,),
-                                                    Text("33",style: TextStyle(color:Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
 
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 10.0,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(left: 37.0),
-                                                child:  Row(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(" حديد " + "%",style: TextStyle(color:Colors.black,fontSize: 18),),
-                                                    SizedBox(width: 5.0,),
-                                                    Text("50",style: TextStyle(color:Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
-
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(left: 20.0),
-                                                child:Row(
-                                                  crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(" ماغنسيوم" + "%",style: TextStyle(color:Colors.black,fontSize: 18),),
-                                                    SizedBox(width: 5.0,),
-                                                    Text("40",style: TextStyle(color:Colors.black,fontSize: 20,fontWeight: FontWeight.bold),),
-
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Text(" : السعر",style: TextStyle(color:Colors.black,fontSize: 22,fontWeight: FontWeight.bold),),
-                                              Padding(
-                                                padding: const EdgeInsets.only(left: 55.0),
-                                                child: Row(
-                                                  children: [
-                                                    Text("جنيه",style: TextStyle(color:Colors.black,fontSize: 22,fontWeight: FontWeight.bold),),
-                                                    Text("100",style: TextStyle(color:Colors.black,fontSize: 22,fontWeight: FontWeight.bold),),
-                                                  ],
-                                                ),
-                                              ),
-                                              //السعر ده انت الي هتححدو هتجيبه من عندك من ال database
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )),
                             ],
                           ),
                         ),
@@ -349,7 +260,9 @@ class AlCar extends StatelessWidget {
                             [cubit.AliqaValueChoose1,cubit.AliqaValueChoose2,cubit.AliqaValueChoose3],
                             priceController.text.toString(),
                       )).then((value) {
-                        Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('تم الحفظ')));
+                          Navigator.pop(context);
+
                       });
                       }
                     },

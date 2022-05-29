@@ -40,13 +40,13 @@ class OwnerCubit extends Cubit<OwnerState> {
     OwnerModel? ownerModel;
 
   void getOwnerData() {
-    emit(GetOwnerLoadingState());
+    // emit(GetOwnerLoadingState());
 
     FirebaseFirestore.instance
         .collection('owners')
         .doc(oId!)
-        .get()
-        .then((value) {
+        .snapshots()
+        .listen((value) {
       ownerModel = OwnerModel.fromJson(value.data()!);
       print(ownerModel!.image);
       print(ownerModel!.studName);
@@ -55,10 +55,7 @@ class OwnerCubit extends Cubit<OwnerState> {
       print(ownerModel!.cover);
       print(ownerModel!.bio);
       print(ownerModel!.phone);
-      emit(GetOwnerSuccessfulState());
-    }).catchError((error) {
-      print(error.toString());
-      emit(GetOwnerErrorState(error.toString()));
+      // emit(GetOwnerSuccessfulState());
     });
   }
 
@@ -181,7 +178,7 @@ class OwnerCubit extends Cubit<OwnerState> {
   }) {
     emit(CreateHorseLoadingState());
 
-    firebase_storage.FirebaseStorage.instance
+     firebase_storage.FirebaseStorage.instance
         .ref()
         .child('horse/${Uri.file(horseImage!.path).pathSegments.last}')
         .putFile(horseImage!)
@@ -235,6 +232,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     required String color,
     required String gander,
   }) {
+
     addTypeCollection(sectionName);
     emit(CreateHorseLoadingState());
     HorseModel model = HorseModel(
@@ -263,11 +261,29 @@ class OwnerCubit extends Cubit<OwnerState> {
         .collection('owners')
         .doc(oId!)
         .collection('sections')
-         .doc(sectionName)
+        .doc(sectionName)
         .collection('horses')
         .doc(microshipCode)
         .set(model.toMap())
         .then((value) {
+
+      createHorseCollection(horseName: horseName,
+          horseImage: horseImage,
+          fatherName: fatherName,
+          fatherName1: fatherName1,
+          fatherName2: fatherName2,
+          motherName: motherName,
+          motherName1: motherName1,
+          motherName2: motherName2,
+          sectionName: sectionName,
+          boxNum: boxNum,
+          dateTime: dateTime,
+          initPrice: initPrice,
+          microshipCode: microshipCode,
+          type: type,
+          owner: owner,
+          color: color,
+          gander: gander);
       emit(CreateHorseSuccessState());
     }).catchError((error) {
       print(error.toString());
@@ -275,6 +291,61 @@ class OwnerCubit extends Cubit<OwnerState> {
     });
   }
 
+
+  void createHorseCollection({
+    required String horseName,
+    required String horseImage,
+    required String fatherName,
+    required String fatherName1,
+    required String fatherName2,
+    required String motherName,
+    required String motherName1,
+    required String motherName2,
+    required String sectionName,
+    required String boxNum,
+    required String owner,
+    required String initPrice,
+    required String dateTime,
+    required String microshipCode,
+    required String type,
+    required String color,
+    required String gander,
+
+}){
+    HorseModel model = HorseModel(
+        horseName: horseName,
+        horseImage: horseImage,
+        fatherName: fatherName,
+        fatherName1: fatherName1,
+        fatherName2: fatherName2,
+        motherName: motherName,
+        motherName1: motherName1,
+        motherName2: motherName2,
+        sectionName: sectionName,
+        boxNum: boxNum,
+        owner: owner,
+        type: type,
+        birthDate: dateTime,
+        initPrice: initPrice,
+        microshipCode: microshipCode,
+        color: color,
+        gander: gander);
+
+    FirebaseFirestore.instance
+        .collection('owners')
+        .doc(oId!)
+        .collection('horses')
+        .doc(microshipCode)
+         .set(model.toMap())
+         .then((value) {
+           emit(CreateHorsesCollectionSuccessfulState());
+    }).catchError((error){
+
+      emit(CreateHorsesCollectionErrorState(error.toString()));
+    });
+
+
+  }
 
   void addTypeCollection(String section){
 
@@ -299,39 +370,7 @@ class OwnerCubit extends Cubit<OwnerState> {
   List<HorseModel> horses = [];
   List<String> horsesId = [];
 
-  void getHorseData() {
-    FirebaseFirestore.instance
-        .collection('owners')
-        .doc(oId)
-        .collection('horses')
-        .get()
-        .then((value) {
-      value.docs.forEach((element) {
-        horses.add(HorseModel.fromJson(element.data()));
-        horsesId.add(element.id);
-      });
-      emit(GetHorsesSuccessfulState());
-    }).catchError((error) {
-      print(error.toString());
-      emit(GetHorsesErrorState(error.toString()));
-    });
-  }
 
-  getHorseDetails(
-     String horseId,
-  ) {
-    FirebaseFirestore.instance
-        .collection('owners')
-        .doc(oId)
-        .collection('horses')
-        .doc(horseId)
-        .get()
-        .then((value) {
-      emit(GetHorsesDetailsSuccessfulState());
-    }).catchError((error) {
-      emit(GetHorsesDetailsErrorState(error.toString()));
-    });
-  }
 
   String? valueChooseType;
 
@@ -652,7 +691,7 @@ class OwnerCubit extends Cubit<OwnerState> {
   List<int> likes = [];
 
   void getAllPosts() {
-    FirebaseFirestore.instance.collection('posts').get().then((value) {
+    FirebaseFirestore.instance.collection('posts').snapshots().listen((value) {
       value.docs.forEach((element) {
         element.reference.collection('likes').get().then((value) {
           likes.add(value.docs.length);
@@ -660,9 +699,7 @@ class OwnerCubit extends Cubit<OwnerState> {
           posts.add(PostModel.fromJson(element.data()));
         }).catchError((error) {});
       });
-      emit(GetPostsSuccessfulState());
-    }).catchError((error) {
-      emit(GetPostsErrorState(error.toString()));
+      // emit(GetPostsSuccessfulState());
     });
   }
 
@@ -866,21 +903,19 @@ class OwnerCubit extends Cubit<OwnerState> {
 
   List<SectionDataModel> sectionData=[];
   void getSectionsData(){
+
     FirebaseFirestore.instance
         .collection('owners')
         .doc(oId)
         .collection('sections')
-        .get()
-        .then((value) {
+        .snapshots()
+        .listen((value) {
       value.docs.forEach((element){
         sectionData.add(SectionDataModel.fromJson(element.data()));
       });
 
-       emit(GetSectionsDataSuccessfulStates());
+       // emit(GetSectionsDataSuccessfulStates());
        print(sectionData.length);
-    }).catchError((error){
-      print(error.toString());
-      emit(GetSectionsDataErrorStates(error.toString()));
     });
 
 
@@ -923,16 +958,13 @@ class OwnerCubit extends Cubit<OwnerState> {
         .collection('sections')
         .doc(secId)
     .collection('horses')
-        .get()
-        .then((value) {
+        .snapshots()
+        .listen((value) {
       value.docs.forEach((element) {
         horseData.add(HorseModel.fromJson(element.data()));
       });
       emit(GetHorsesSecDataSuccessState());
 
-    }).catchError((error){
-      print(error.toString());
-      emit(GetHorsesSecDataErrorState(error.toString()));
     });
 
   }

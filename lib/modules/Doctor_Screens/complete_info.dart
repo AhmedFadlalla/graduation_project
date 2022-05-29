@@ -29,118 +29,115 @@ class DoctorCompleteInfo extends StatelessWidget {
       },
       builder: (BuildContext context, state) {
 
-        DoctorCubit.get(context).getDocFullData();
+        var height=MediaQuery.of(context).size.height;
+
+
         var cubit=DoctorCubit.get(context);
-
+        cubit.getDocData();
         DoctorName.text=cubit.userModel!.name;
-        return SafeArea(
-          child: Scaffold(
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Directionality(
-                  textDirection: TextDirection.rtl,
-                  child: Column(
-                    children: [
+        return Scaffold(
+            body: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Column(
+                children: [
 
 
-                      InkWell(
-                        child: Stack(
-                          alignment: Alignment.bottomRight,
-                          children: [
-                            CircleAvatar(
-                              radius: 65.0,
-                              backgroundColor:
-                              Theme.of(context).scaffoldBackgroundColor,
-                              child: CircleAvatar(
-                                radius: 60.0,
-                                backgroundImage:cubit.docImage==null ?
-                                NetworkImage('https://media.istockphoto.com/photos/veterinarian-examining-the-horse-picture-id154954791')
-                                    :FileImage(cubit.docImage!)as ImageProvider,
-                              ),
-                            ),
-                            Icon(Icons.photo_camera),
-                          ],
+                  InkWell(
+                    child: Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+                        CircleAvatar(
+                          radius: 65.0,
+                          backgroundColor:
+                          Theme.of(context).scaffoldBackgroundColor,
+                          child: CircleAvatar(
+                            radius: 60.0,
+                            backgroundImage:cubit.docImage==null ?
+                            NetworkImage('https://media.istockphoto.com/photos/veterinarian-examining-the-horse-picture-id154954791')
+                                :FileImage(cubit.docImage!)as ImageProvider,
+                          ),
                         ),
-                        onTap: (){
-                          cubit.getDocImage();
-                        },
-                      ),
-
-                      SizedBox(
-                        height: 15,
-                      ),
-
-
-                      defaultFormField(
-                          controller: DoctorName,
-                          type: TextInputType.text,
-                          validator: (value) {
-                            if (value.isEmpty) {
-                              return 'يجب ادخال البيانات ';
-                            }
-                          },
-                          label: 'الاسم',
-                          prefixIcon: Icons.person),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: defaultFormField(
-                            controller: DoctorAddress,
-                            type: TextInputType.text,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'يجب ادخال البيانات ';
-                              }
-                            },
-                            label: 'العنوان',
-                            prefixIcon: Icons.location_on_sharp),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: defaultFormField(
-                            controller: RaqamQuamyDoctor,
-                            type: TextInputType.number,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'يجب ادخال البيانات ';
-                              }
-                            },
-                            label: 'رقم قومي',
-                            prefixIcon: Icons.perm_identity),
-                      ),
-
-
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Expanded(child: SizedBox(),),
-
-                      defaultButton2(
-                        function: () {
-                          cubit.uploadDocImage(
-                            name: DoctorName.text,
-                              ssn: RaqamQuamyDoctor.text,
-                              address:DoctorAddress.text);
-
-                        },
-                        text: 'Save',
-                        background: Colors.black,
-                        height: 50.0,
-                        width: 200.0,
-                        icon: Icons.done,
-                      ),
-
-
-                    ],
+                        Icon(Icons.photo_camera),
+                      ],
+                    ),
+                    onTap: (){
+                      cubit.getDocImage();
+                    },
                   ),
-                ),
-              )),
-        );
+
+                  SizedBox(
+                    height: height*0.01,
+                  ),
+
+
+                  defaultFormField(
+                      controller: DoctorName,
+                      type: TextInputType.text,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'يجب ادخال البيانات ';
+                        }
+                      },
+                      label: 'الاسم',
+                      prefixIcon: Icons.person),
+                  SizedBox(
+                    height: height*0.01,
+                  ),
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: defaultFormField(
+                        controller: DoctorAddress,
+                        type: TextInputType.text,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'يجب ادخال البيانات ';
+                          }
+                        },
+                        label: 'العنوان',
+                        prefixIcon: Icons.location_on_sharp),
+                  ),
+                  SizedBox(
+                    height: height*0.01,
+                  ),
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: defaultFormField(
+                        controller: RaqamQuamyDoctor,
+                        type: TextInputType.number,
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'يجب ادخال البيانات ';
+                          }
+                        },
+                        label: 'رقم قومي',
+                        prefixIcon: Icons.perm_identity),
+                  ),
+
+
+                  SizedBox(
+                    height: height*0.01,
+                  ),
+                  Expanded(child: SizedBox(),),
+
+                  defaultButton2(
+                    function: () {
+                      cubit.uploadDocImage(
+                        name: DoctorName.text,
+                          ssn: RaqamQuamyDoctor.text,
+                          address:DoctorAddress.text);
+
+                    },
+                    text: 'Save',
+                    background: Colors.black,
+                    height: 50.0,
+                    width: 200.0,
+                    icon: Icons.done,
+                  ),
+
+
+                ],
+              ),
+            ));
       },
     );
   }

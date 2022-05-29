@@ -130,6 +130,7 @@ class OwnerChatDetailsScreen extends StatelessWidget {
                   fallback:(context)=>Center(child: Column(
                     children: [
 
+                      Spacer(),
                       Container(
                         decoration: BoxDecoration(
                             border: Border.all(
@@ -142,6 +143,7 @@ class OwnerChatDetailsScreen extends StatelessWidget {
                         clipBehavior:Clip.antiAliasWithSaveLayer ,
                         child: Row(
                           children: [
+
                             Expanded(
                               child: TextFormField(
                                 decoration: InputDecoration(

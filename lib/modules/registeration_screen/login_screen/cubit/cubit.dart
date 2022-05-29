@@ -48,19 +48,17 @@ class LoginCubit extends Cubit<LoginStates>{
       String userId
 ){
     FirebaseFirestore.instance
-        .collection('users').doc(userId)
-        .get()
-        .then((value) {
+        .collection('users')
+        .doc(userId)
+        .snapshots()
+        .listen((value) {
           userData=UserModel.fromJson(value.data()!);
           status=userData!.status;
           print(status);
           emit(GetDocValueSuccessState());
 
-    })
-        .catchError((error){
-          print(error.toString());
-      emit(GetDocValueErrorState(error.toString()));
     });
+
   }
 
   DoctorModel? doctorModel;

@@ -361,8 +361,8 @@ class AddHorseScreen extends StatelessWidget {
                                     'فبراير',
                                     'مارس',
                                     'ابريل',
-                                    'مايو'
-                                        'يونيو',
+                                    'مايو',
+                                     'يونيو',
                                     'يوليو',
                                     'اغسطس',
                                     'سبتمبر',
@@ -491,6 +491,9 @@ class AddHorseScreen extends StatelessWidget {
                     ),
                   )));
         },
-        listener: (context, state) {});
+        listener: (context, state) {
+
+
+        });
   }
 }

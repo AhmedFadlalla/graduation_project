@@ -64,7 +64,7 @@ class HorsesSectionSection extends StatelessWidget {
                     image: NetworkImage('https://www.europeanequinelawyers.com/wp-content/uploads/2018/03/brexit-1024x682.jpg'),
                   ),
                   Text(
-                    'No Doctor Yet!!!!!!!!!',
+                    'No Horses Yet!!!!!!!!!',
                     style: TextStyle(
                       fontSize: 30.0,
                     ),
