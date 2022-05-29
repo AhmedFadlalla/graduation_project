@@ -21,7 +21,7 @@ class HorsesSectionSection extends StatelessWidget {
           var cubit=OwnerCubit.get(context);
           Size size = MediaQuery.of(context).size;
           return Scaffold(
-            backgroundColor: Colors.green,
+            backgroundColor: Color(0xFF4DB6AC),
 
             body: ConditionalBuilder(
               condition: cubit.horseData.length>0,
@@ -105,8 +105,8 @@ class HorsesSectionSection extends StatelessWidget {
               left: 0.0,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
-                height: 140,
-                width: 200,
+                height: 130,
+                width: 190,
                 child: Container(
                   height:80,
                   width: 80,
@@ -130,62 +130,80 @@ class HorsesSectionSection extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            'الاسم :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            '${model.horseName}',
-                            style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              'الاسم :',
+                              style: TextStyle(color: Colors.black, fontSize: 28,
+                                ),
+
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(
+                              '${model.horseName}',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 28,
+
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'المايكروشيب :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              Text(
+                                'المايكروشيب :',
+                                style: TextStyle(color: Colors.black, fontSize: 28,
+
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text(
+                                '${model.microshipCode}',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 28,
+
+                                ),
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            '${model.microshipCode}',
-                            style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'رقم الصندوق :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            '${model.boxNum}',
-                            style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              'رقم الصندوق :',
+                              style: TextStyle(color: Colors.black, fontSize: 28,
+
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(
+                              '${model.boxNum}',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 28,
+
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
 
                     ],

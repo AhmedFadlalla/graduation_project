@@ -16,7 +16,7 @@ Widget defaultButton({
 }) =>
     Container(
       width: width,
-      height: 40.0,
+      height: 50.0,
       child: MaterialButton(
         onPressed: function,
         child: Text(
@@ -30,7 +30,7 @@ Widget defaultButton({
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
-        color: background,
+        color: Color(0xFF4DB6AC),
       ),
     );
 Widget defaultTextButton({
@@ -86,7 +86,7 @@ Widget defaultFormField({
           enabledBorder:  OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.0),
               borderSide: const BorderSide(
-                color: Colors.red,
+                color: Color(0xFF4DB6AC),
 
               )
           ),
@@ -254,7 +254,7 @@ Widget BuildDropBottom(
       child: Container(
         padding: EdgeInsets.only(left: 16.0, right: 16.0),
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey),
+            border: Border.all(color: Color(0xFF4DB6AC)),
             borderRadius: BorderRadius.circular(5.0)),
         child: DropdownButton(
 //elevation: 0,
@@ -265,7 +265,7 @@ Widget BuildDropBottom(
 //fontWeight: FontWeight.bold,
               ),
             ),
-            dropdownColor: Colors.white54.withOpacity(0.6),
+            dropdownColor: Color(0xFFD4F8F5),
             icon: Icon(Icons.arrow_drop_down),
             iconSize: 36,
             isExpanded: true,
@@ -273,7 +273,7 @@ Widget BuildDropBottom(
               color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 20,
-//textDirection: TextDirection.rtl, عايز اعمل ده
+             //textDirection: TextDirection.rtl, عايز اعمل ده
             ),
             value: value,
             onChanged: function,

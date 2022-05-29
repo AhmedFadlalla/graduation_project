@@ -23,7 +23,7 @@ class Product extends StatelessWidget {
         );
       },
       child: const Icon(Icons.add),
-      backgroundColor: Colors.grey,
+      backgroundColor: Color(0xFF68E7D2),
     ),
     body:  StreamBuilder(
       stream: OwnerCubit.get(context).getProducts(),
@@ -32,11 +32,11 @@ class Product extends StatelessWidget {
       if(snapshot.hasData){
         List<ProductData> products=snapshot.data as List<ProductData>;
         return  Padding(
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: const EdgeInsets.only(top: 1.0),
       child: ListView.separated(itemBuilder: ((context, index) => productItem(
         context: context,
          data: products[index])),
-       separatorBuilder: (context,index)=>SizedBox(height: 20,),
+       separatorBuilder: (context,index)=>SizedBox(height: 1,),
         itemCount: products.length)
     );
       }
@@ -85,25 +85,30 @@ class Product extends StatelessWidget {
                   ),
                 );
               },
+
+
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+                margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                 width: double.infinity,
-                height: 100.0,
+                height: 70.0,
 
                 child: Row(
                   children: [
                     Expanded(
                       child: Padding(
                       padding: const EdgeInsets.only(left: 50.0),
-                      child: Text("سعر الكيلو: ${data.productPrice} جنيه",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 16.0),textDirection: TextDirection.ltr,),
+                      child: Text("سعر الكيلو: ${data.productPrice} جنيه",
+                        style: TextStyle(color: Colors.white,
+                            fontSize: 28.0),textDirection: TextDirection.ltr,),
                     )),
-                    Padding(padding:  const EdgeInsets.only(right: 40.0),child: Text("${data.productName}",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20.0),textDirection: TextDirection.rtl,),
+                    Padding(padding:  const EdgeInsets.only(right: 40.0),child: Text("${data.productName}",style: TextStyle(color: Colors.white,
+                       fontSize: 28.0),textDirection: TextDirection.rtl,),
                   )
                     ],
                 ),
                   decoration: BoxDecoration(
                     borderRadius:BorderRadius.circular(20),
-                    color: Colors.grey,
+                    color: Color(0xFF4DB6AC),
                   )
               ),
             );
@@ -213,7 +218,7 @@ class Product extends StatelessWidget {
                   ),
 
                   SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
                   
                 ]),
@@ -227,31 +232,24 @@ class Product extends StatelessWidget {
                     builder: (context,state){
                       return Form(
                     key: formKey,
-                    child:Container(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.grey,
-                       
-                      ),
-                    child:Text( 'حفظ '),
-                    onPressed: () {  
-                       OwnerCubit.get(context).saveProduct(
-                        ProductData(
-                          nameController.text.toString(),
-                        priceController.text.toString(), 
-                        metalController.text.toString(),
-                        powerController.text.toString(),
-                        proteinController.text.toString() 
-                        )
-                      ).then((value){
-                      Navigator.pop(context);
-                      });
-                    
+                    child:defaultButton(
+                    text: 'حفظ ',
+                    function: () {
+                     OwnerCubit.get(context).saveProduct(
+                      ProductData(
+                        nameController.text.toString(),
+                      priceController.text.toString(),
+                      metalController.text.toString(),
+                      powerController.text.toString(),
+                      proteinController.text.toString()
+                      )
+                    ).then((value){
+                    Navigator.pop(context);
+                    });
+
                     },
-                    
-                  ),
-                    )
+
+                  )
                     );
                 
                     },

@@ -44,9 +44,9 @@ class AddDoctorScreen extends StatelessWidget {
                           Text(
                             'Add Doctor',
                             style: TextStyle(
-                                fontSize: 25.0,
+                                fontSize: 30.0,
                                 fontWeight: FontWeight.bold,
-                                color: Color(0xFF000fff)
+                                color: Color(0xFF4DB6AC)
                             ),
                           )
                         ],
@@ -57,7 +57,7 @@ class AddDoctorScreen extends StatelessWidget {
                       Container(
 
                         decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.2),
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(10),
                           boxShadow: [
                             BoxShadow(
@@ -103,24 +103,27 @@ class AddDoctorScreen extends StatelessWidget {
                               //   ),
                               // ),
 
-                              BuildDropBottom(
-                                dropdownButtonTitle: ' اختر العنبر',
-                                function: (newValue) {
-                                  cubit.onChangeSectionDropDownButton(newValue);
-                                },
-                                items: [
-                                  'طلايق ',
-                                  ' أمهات',
-                                  'بكاري',
-                                  'مهارة اناث',
-                                  ' مهارة ذكور',
-                                ].map((valueItem) {
-                                  return DropdownMenuItem(
-                                    value: valueItem,
-                                    child: Text(valueItem),
-                                  );
-                                }).toList(),
-                                value: cubit.sectionValueChoose,
+                              Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: BuildDropBottom(
+                                  dropdownButtonTitle: ' اختر العنبر',
+                                  function: (newValue) {
+                                    cubit.onChangeSectionDropDownButton(newValue);
+                                  },
+                                  items: [
+                                    'طلايق ',
+                                    ' أمهات',
+                                    'بكاري',
+                                    'مهارة اناث',
+                                    ' مهارة ذكور',
+                                  ].map((valueItem) {
+                                    return DropdownMenuItem(
+                                      value: valueItem,
+                                      child: Text(valueItem),
+                                    );
+                                  }).toList(),
+                                  value: cubit.sectionValueChoose,
+                                ),
                               ),
                               SizedBox(
                                 height: 15.0,

@@ -23,9 +23,10 @@ class HorsesScreen extends StatelessWidget {
     return BlocConsumer<OwnerCubit,OwnerState>(
         builder: (context,state){
           var cubit=OwnerCubit.get(context);
-          return Scaffold(
-            backgroundColor: Colors.green,
+          return Scaffold(//0xFF4DB6AC
+            backgroundColor: Color(0xFF4DB6AC),
             floatingActionButton: FloatingActionButton(
+              backgroundColor: Color(0xFFE0F2F1),
               onPressed: (){
                 navigateTo(context, AddHorseScreen());
               },
@@ -92,7 +93,7 @@ class HorsesScreen extends StatelessWidget {
   }
   Widget buildSectionCard(SectionDataModel model,var size,index,context)=> InkWell(
     child: Container(
-      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+      margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
       height: 190.0,
       child: Stack(
         alignment: Alignment.bottomCenter,
@@ -142,8 +143,8 @@ class HorsesScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'الاسم :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
+                            'عنبر :',
+                            style: TextStyle(color: Colors.black, fontSize: 28),
                           ),
                           SizedBox(
                             width: 5.0,
@@ -151,8 +152,8 @@ class HorsesScreen extends StatelessWidget {
                           Text(
                             '${model.name}',
                             style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
+                                color: Colors.black,
+                                fontSize: 28,
                                 fontWeight: FontWeight.bold
                             ),
                           ),

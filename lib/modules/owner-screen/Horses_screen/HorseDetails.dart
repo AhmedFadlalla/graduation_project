@@ -19,11 +19,11 @@ class HorseDetailsScreen extends StatelessWidget {
               child: Directionality(
                 textDirection: TextDirection.rtl,
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.only(top: 25.0,left: 15.0,right: 15.0),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8.0),
-                      color: Colors.grey,
+                      color:Color(0xFF4EACA3),
                       boxShadow: [
                         BoxShadow(
                           offset: Offset(0, 4),
@@ -36,226 +36,252 @@ class HorseDetailsScreen extends StatelessWidget {
                       children: [
                         SizedBox(
                           height: height * 0.01,
+
                         ),
                         Container(
-                            padding: EdgeInsets.all(25),
-                            child: Image(
-                                image: NetworkImage(
-                                    '${cubit.horseData[cubit.index].horseImage}'))),
-                        SizedBox(height: 20.0,),
-                        Row(
-                          children: [
-                            Text(
-                              'الاسم :',
-                              style: TextStyle(color: Colors.red, fontSize: 20),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(
-                              '${cubit.horseData[cubit.index].horseName}',
-                              style: TextStyle(
-                                  color: Colors.brown,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
+                            padding: EdgeInsets.only(top: 1),
+                            margin: EdgeInsets.only(top: 1,),
+                            decoration:BoxDecoration(
+                              borderRadius:BorderRadius.circular(20)
+                            ) ,
+                            child: Container(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Image(
+                                    image: NetworkImage(
+                                        '${cubit.horseData[cubit.index].horseImage}')),
+                              ),
+                              decoration:BoxDecoration(
+                                  borderRadius:BorderRadius.circular(22)
+
+                              ),
+                            )
                         ),
                         SizedBox(height: 20.0,),
-                        Row(
-                          children: [
-                            Text(
-                              'العنبر :',
-                              style: TextStyle(color: Colors.red, fontSize: 20),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(
-                              '${cubit.horseData[cubit.index].sectionName}',
-                              style: TextStyle(
-                                  color: Colors.brown,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0,),
-                        Row(
-                          children: [
-                            Text(
-                              'المايكروشيب :',
-                              style: TextStyle(color: Colors.red, fontSize: 20),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(
-                              '${cubit.horseData[cubit.index].microshipCode}',
-                              style: TextStyle(
-                                  color: Colors.brown,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0,),
-                        Row(
-                          children: [
-                            Text(
-                              'السعر :',
-                              style: TextStyle(color: Colors.red, fontSize: 20),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(
-                              '${cubit.horseData[cubit.index].initPrice} جنية',
-                              style: TextStyle(
-                                  color: Colors.brown,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0,),
-                        Row(
-                          children: [
-                            Text(
-                              'تاريخ الميلاد :',
-                              style: TextStyle(color: Colors.red, fontSize: 20),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(
-                              '${cubit.horseData[cubit.index].birthDate}',
-                              style: TextStyle(
-                                  color: Colors.brown,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0,),
-                        Row(
-                          children: [
-                            Text(
-                              'الرسن :',
-                              style: TextStyle(color: Colors.red, fontSize: 20),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(
-                              '${cubit.horseData[cubit.index].type}',
-                              style: TextStyle(
-                                  color: Colors.brown,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0,),
-                        Row(
-                          children: [
-                            Text(
-                              'النوع :',
-                              style: TextStyle(color: Colors.red, fontSize: 20),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text(
-                              '${cubit.horseData[cubit.index].gander}',
-                              style: TextStyle(
-                                  color: Colors.brown,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0,),
-                        Row(
-                          children: [
-                            Text(
-                              '${cubit.horseData[cubit.index].horseName}',
-                              style: TextStyle(
-                                  color: Colors.brown,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(width: 25.0,),
-                            Column(
+                        Container(
+
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 10.0),
+                            child: Column(
                               children: [
                                 Row(
                                   children: [
                                     Text(
-                                      '${cubit.horseData[cubit.index].fatherName}',
-                                      style: TextStyle(
-                                          color: Colors.brown,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                                      'الاسم :',
+                                      style: TextStyle(color: Colors.white, fontSize: 28),
                                     ),
-                                    SizedBox(width: 25.0,),
-                                    Column(
-                                      children: [
-                                        Text(
-                                          '${cubit.horseData[cubit.index].fatherName1}',
-                                          style: TextStyle(
-                                              color: Colors.brown,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(height: 25.0,),
-                                        Text(
-                                          '${cubit.horseData[cubit.index].motherName1}',
-                                          style: TextStyle(
-                                              color: Colors.brown,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        )
-                                      ],
+                                    SizedBox(
+                                      width: 5.0,
+                                    ),
+                                    Text(
+                                      '${cubit.horseData[cubit.index].horseName}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 28,
+                                      ),
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 25.0,),
+                                SizedBox(height: 5.0,),
                                 Row(
                                   children: [
                                     Text(
-                                      '${cubit.horseData[cubit.index].motherName}',
+                                      'العنبر :',
+                                      style: TextStyle(color: Colors.white, fontSize: 28),
+                                    ),
+                                    SizedBox(
+                                      width: 5.0,
+                                    ),
+                                    Text(
+                                      '${cubit.horseData[cubit.index].sectionName}',
                                       style: TextStyle(
-                                          color: Colors.brown,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                                        color: Colors.white,
+                                        fontSize: 28,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5.0,),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'المايكروشيب :',
+                                      style: TextStyle(color: Colors.white, fontSize: 28),
+                                    ),
+                                    SizedBox(
+                                      width: 5.0,
+                                    ),
+                                    Text(
+                                      '${cubit.horseData[cubit.index].microshipCode}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 28,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5.0,),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'السعر :',
+                                      style: TextStyle(color: Colors.white, fontSize: 28),
+                                    ),
+                                    SizedBox(
+                                      width: 5.0,
+                                    ),
+                                    Text(
+                                      '${cubit.horseData[cubit.index].initPrice} جنية',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 28,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5.0,),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'تاريخ الميلاد :',
+                                      style: TextStyle(color: Colors.white, fontSize: 28),
+                                    ),
+                                    SizedBox(
+                                      width: 5.0,
+                                    ),
+                                    Text(
+                                      '${cubit.horseData[cubit.index].birthDate}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 28,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5.0,),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'الرسن :',
+                                      style: TextStyle(color: Colors.white, fontSize: 28),
+                                    ),
+                                    SizedBox(
+                                      width: 5.0,
+                                    ),
+                                    Text(
+                                      '${cubit.horseData[cubit.index].type}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 28,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5.0,),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'النوع :',
+                                      style: TextStyle(color: Colors.white, fontSize: 28),
+                                    ),
+                                    SizedBox(
+                                      width: 5.0,
+                                    ),
+                                    Text(
+                                      '${cubit.horseData[cubit.index].gander}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 28,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5.0,),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${cubit.horseData[cubit.index].horseName}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 28,
+                                      ),
                                     ),
                                     SizedBox(width: 25.0,),
                                     Column(
                                       children: [
-                                        Text(
-                                          '${cubit.horseData[cubit.index].fatherName2}',
-                                          style: TextStyle(
-                                              color: Colors.brown,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '${cubit.horseData[cubit.index].fatherName}',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 28,
+                                              ),
+                                            ),
+                                            SizedBox(width: 25.0,),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  '${cubit.horseData[cubit.index].fatherName1}',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 28,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 25.0,),
+                                                Text(
+                                                  '${cubit.horseData[cubit.index].motherName1}',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 28,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                         SizedBox(height: 25.0,),
-                                        Text(
-                                          '${cubit.horseData[cubit.index].motherName2}',
-                                          style: TextStyle(
-                                              color: Colors.brown,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.bold),
-                                        )
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '${cubit.horseData[cubit.index].motherName}',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 28,
+                                              ),
+                                            ),
+                                            SizedBox(width: 25.0,),
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  '${cubit.horseData[cubit.index].fatherName2}',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 28,
+                                                  ),
+                                                ),
+                                                SizedBox(height: 25.0,),
+                                                Text(
+                                                  '${cubit.horseData[cubit.index].motherName2}',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 28,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     ),
+
                                   ],
                                 ),
                               ],
                             ),
+                          ),
+                        )
 
-                          ],
-                        ),
                       ],
                     ),
                   ),

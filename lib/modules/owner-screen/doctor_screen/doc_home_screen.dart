@@ -20,8 +20,9 @@ class DoctorHomeScreen extends StatelessWidget {
           var cubit=OwnerCubit.get(context);
           Size size = MediaQuery.of(context).size;
           return Scaffold(
-            backgroundColor: Colors.green,
+            backgroundColor: Color(0xFF4DB6AC),
             floatingActionButton: FloatingActionButton(
+              backgroundColor: Colors.white,
               onPressed: (){
                 navigateTo(context, AddDoctorScreen());
               },
@@ -139,8 +140,8 @@ class DoctorHomeScreen extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            'الاسم :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
+                            'العنبر :',
+                            style: TextStyle(color: Colors.black, fontSize: 28),
                           ),
                           SizedBox(
                             width: 5.0,
@@ -148,9 +149,9 @@ class DoctorHomeScreen extends StatelessWidget {
                           Text(
                             '${model.name}',
                             style: TextStyle(
-                                color: Colors.brown,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
+                                color: Colors.black,
+                                fontSize: 28,
+
                             ),
                           ),
                         ],
