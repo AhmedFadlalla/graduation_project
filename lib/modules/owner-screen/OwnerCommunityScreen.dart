@@ -115,6 +115,7 @@ class OwnerCommunityScreen extends StatelessWidget {
   Widget buildPostItem(PostModel model,BuildContext context,index)=>Card(
     clipBehavior: Clip.antiAliasWithSaveLayer,
     elevation: 10.0,
+
     margin: EdgeInsets.symmetric(
       horizontal: 8.0,
     ),
