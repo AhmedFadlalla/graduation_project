@@ -49,6 +49,13 @@ class CreateHorsesCollectionErrorState extends OwnerState{
 
 
 }
+class DeleteHorseSuccessfulState extends OwnerState{}
+
+class DeleteHorseErrorState extends OwnerState{
+  final String error;
+
+  DeleteHorseErrorState(this.error);
+}
 class AddCollectionSuccessfulState extends OwnerState{}
 class AddCollectionErrorState extends OwnerState{
   final String error;

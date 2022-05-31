@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.dart';
+import 'package:graduation_project/layouts/owner_home_layout/owner_home_Layout.dart';
+import 'package:graduation_project/shared/component/components.dart';
 
 class HorseDetailsScreen extends StatelessWidget {
   const HorseDetailsScreen({Key? key}) : super(key: key);
@@ -280,7 +282,30 @@ class HorseDetailsScreen extends StatelessWidget {
                               ],
                             ),
                           ),
-                        )
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: defaultButton(
+                                  function: (){
+
+                              },
+                                  text: 'Edit'),
+                            ),
+                            Expanded(
+                              child: defaultButton(
+                                  function: (){
+
+                                    cubit.deleteHorse(secId: cubit.horseModel!.sectionName, horseId:cubit.horseModel!.microshipCode );
+                              },
+                                  text: 'Delete'),
+                            ),
+
+
+                          ],
+                        ),
+
+
 
                       ],
                     ),
@@ -290,6 +315,19 @@ class HorseDetailsScreen extends StatelessWidget {
             ),
           );
         },
-        listener: (context, state) {});
+        listener: (context, state) {
+          if (state is DeleteHorseSuccessfulState)
+            {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Deleted')
+                    ,backgroundColor: Colors.green,));
+              Navigator.pushReplacement(
+                  context, //my place
+                  MaterialPageRoute(
+                  builder: (context) => OwnerHomeScreenLayout(),
+          )
+              );
+            }
+        });
   }
 }

@@ -968,6 +968,7 @@ class OwnerCubit extends Cubit<OwnerState> {
     });
 
   }
+
 HorseModel? horseModel;
   void getHorseDetailsData({
     required horseId,
@@ -995,6 +996,26 @@ HorseModel? horseModel;
     });
 
 
+
+  }
+
+  void deleteHorse({
+  required String secId,
+    required horseId,
+}){
+    FirebaseFirestore.instance
+        .collection('owners')
+        .doc(oId)
+        .collection('sections')
+        .doc(secId)
+        .collection('horses')
+        .doc(horseId).delete().then((value) {
+
+          emit(DeleteHorseSuccessfulState());
+    }).catchError((error){
+      print(error.toString());
+      emit(DeleteHorseErrorState(error.toString()));
+    });
 
   }
 
