@@ -29,7 +29,6 @@ class AccomModel {
       'Price': Price,
       'info': info,
       'address': address,
-
       'phone': phone,
       'accomCreatorId': accomCreatorId,
       'accomCreatorName': accomCreatorName,

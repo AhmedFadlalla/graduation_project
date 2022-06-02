@@ -30,12 +30,19 @@ class InfoScreen extends StatelessWidget {
           if (state is CreateOwnerSuccessState)
             {
 
-
+              CachHelper.saveData(
+                  key: 'uId',
+                  value: 'null')
+                  .then((value) {
                 CachHelper.saveData(
                     key: 'oId',
                     value: state.oId)
                     .then((value) {
-                  navigateAndFinish(context, OwnerHomeScreenLayout());
+                  HorseCubit.get(context).makeOwner();
+                  navigateAndFinish(context, OwnerHomeScreenLayout(ownerId: CachHelper.getData(key: 'oId'),));
+              });
+
+
                 });
               // BlocProvider(
               //     create: (context)=>OwnerCubit()..getOwnerData()

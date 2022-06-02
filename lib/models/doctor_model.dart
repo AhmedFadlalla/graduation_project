@@ -12,7 +12,7 @@ class DoctorModel{
   late String address;
   late String bio;
   late String cover;
-
+   int? done;
 
 
 
@@ -29,6 +29,7 @@ class DoctorModel{
     address=json['address'];
     bio=json['bio'];
     cover=json['cover'];
+    done=json['done'];
 
 
 
@@ -49,6 +50,7 @@ class DoctorModel{
         'address':address,
         'bio':bio,
         'cover':cover,
+        'done':done,
 
 
 
@@ -67,6 +69,7 @@ class DoctorModel{
     required this.address,
     required this.bio,
     required this.cover,
+     this.done,
 
 
   });

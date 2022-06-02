@@ -3,6 +3,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/layouts/home_layout/home_layout.dart';
+import 'package:graduation_project/modules/registeration_screen/login_screen/login_screen.dart';
 
 import 'package:graduation_project/modules/registeration_screen/register_screen/register_cubit/cubit.dart';
 import 'package:graduation_project/modules/registeration_screen/register_screen/register_cubit/states.dart';
@@ -22,7 +23,7 @@ class RegisterScreen extends StatelessWidget {
         listener: (context,state){
 
           if(state is CreateUserSuccessState) {
-              navigateAndFinish(context, HomeScreenLayout());
+              navigateAndFinish(context, LoginScreen());
 
 
           }

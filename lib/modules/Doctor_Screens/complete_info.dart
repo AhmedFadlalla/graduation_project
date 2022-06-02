@@ -5,12 +5,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/layouts/doc_home_layout/Doctor_Cubit/doc_cubit.dart';
 import 'package:graduation_project/layouts/doc_home_layout/Doctor_Cubit/doc_states.dart';
 import 'package:graduation_project/layouts/doc_home_layout/doc_home_layout.dart';
+import 'package:graduation_project/shared/component/constants.dart';
 import 'package:graduation_project/shared/network/local/cach_helper.dart';
+import 'package:graduation_project/shared/styles/colors.dart';
 import 'package:graduation_project/shared/styles/icon_broken.dart';
 
 import '../../shared/component/components.dart';
 
 class DoctorCompleteInfo extends StatelessWidget {
+  final String? docId;
+  DoctorCompleteInfo({this.docId});
   var DoctorName = TextEditingController();
   var DoctorAddress = TextEditingController();
   var RaqamQuamyDoctor = TextEditingController();
@@ -19,12 +23,17 @@ class DoctorCompleteInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(dId==null){
+      dId=docId;
+    }
     return BlocConsumer<DoctorCubit, DoctorStates>(
       listener: (BuildContext context, state) {
 
         if (state is UpdateDocDataSuccessfulState) {
-          CachHelper.saveData(key: 'done', value: 1);
-          navigateAndFinish(context, DocHomeScreenLayout());
+          CachHelper.saveData(key: 'done', value: 1).then((value) {
+            navigateAndFinish(context, DocHomeScreenLayout());
+          });
+
         }
       },
       builder: (BuildContext context, state) {
@@ -33,6 +42,7 @@ class DoctorCompleteInfo extends StatelessWidget {
 
 
         var cubit=DoctorCubit.get(context);
+
         cubit.getDocData();
         DoctorName.text=cubit.userModel!.name;
         return Scaffold(
@@ -40,8 +50,9 @@ class DoctorCompleteInfo extends StatelessWidget {
               textDirection: TextDirection.rtl,
               child: Column(
                 children: [
-
-
+                  SizedBox(
+                    height: height*0.1,
+                  ),
                   InkWell(
                     child: Stack(
                       alignment: Alignment.bottomRight,
@@ -128,7 +139,7 @@ class DoctorCompleteInfo extends StatelessWidget {
 
                     },
                     text: 'Save',
-                    background: Colors.black,
+                    background: defColorApp,
                     height: 50.0,
                     width: 200.0,
                     icon: Icons.done,

@@ -9,6 +9,7 @@ import 'package:graduation_project/layouts/home_layout/cubit/cubit.dart';
 import 'package:graduation_project/layouts/home_layout/home_layout.dart';
 import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_cubit.dart';
 import 'package:graduation_project/layouts/owner_home_layout/owner_home_Layout.dart';
+import 'package:graduation_project/main.dart';
 import 'package:graduation_project/modules/Doctor_Screens/complete_info.dart';
 
 import 'package:graduation_project/modules/owner-screen/doctor_screen/doc_home_screen.dart';
@@ -49,8 +50,14 @@ class LoginScreen extends StatelessWidget {
                     key: 'uId',
                     value: state.uId)
                     .then((value) {
-
-                  navigateAndFinish(context, HomeScreenLayout());
+                  Navigator.pushReplacement(
+                    context, //my place
+                    MaterialPageRoute(
+                      builder: (context) => HomeScreenLayout(userId: CachHelper.getData(key: 'uId')),
+                    ),
+                    /////اللي انا رايحله
+                  );
+                  // navigateAndFinish(context, HomeScreenLayout());
                   print(uId);
                 });
               }
@@ -60,8 +67,14 @@ class LoginScreen extends StatelessWidget {
                       key: 'oId',
                       value: state.uId)
                       .then((value) {
-
-                    navigateAndFinish(context, OwnerHomeScreenLayout());
+                    Navigator.pushReplacement(
+                      context, //my place
+                      MaterialPageRoute(
+                        builder: (context) => OwnerHomeScreenLayout(ownerId: CachHelper.getData(key: 'oId')),
+                      ),
+                      /////اللي انا رايحله
+                    );
+                    // navigateAndFinish(context, OwnerHomeScreenLayout(oId: CachHelper.getData(key: 'oId'),));
 
 
                     print(oId);
@@ -73,10 +86,12 @@ class LoginScreen extends StatelessWidget {
                       key: 'dId',
                       value: state.uId)
                       .then((value) {
-                    CachHelper.saveData(
-                        key: 'done',
-                        value: 0);
-                    navigateAndFinish(context,DoctorCompleteInfo() );
+                        dDone=CachHelper.getData(key: 'done');
+                    if(dDone==1){
+                      navigateAndFinish(context,DocHomeScreenLayout(docId: CachHelper.getData(key: 'dId'),) );
+                    }
+                    else
+                       navigateAndFinish(context,DoctorCompleteInfo(docId: CachHelper.getData(key: 'dId'),) );
                     print(dId);
                   });
                 }
@@ -89,93 +104,100 @@ class LoginScreen extends StatelessWidget {
         },
         builder: (context,state){
           var cubit=LoginCubit.get(context);
+          var formKey=GlobalKey<FormState>();
           return Scaffold(
             body: Padding(
               padding: const EdgeInsets.all(15.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'LOGIN',
-                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                        color: defaultColor,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 25.0
-                    ),),
-                  SizedBox(height: 5.0,),
-                  Text(
-                    'Login to communicate with your friend',
-                    style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18.0
-                    ),),
-                  SizedBox(height: 15.0,),
-                  defaultFormField(
-                      controller: emailController,
-                      type: TextInputType.emailAddress,
-                      validator: (value){
-                        if(value.isEmpty){
-                          return 'Email must not be empty ';
-                        }
-                        return null;
-                      },
-                      label: 'E-mail Address',
-                      prefixIcon: Icons.email),
-                  SizedBox(height: 15.0,),
-                  defaultFormField(
-                      controller: passwordController,
-                      type: TextInputType.text,
-                      validator: (value){
-                        if(value.isEmpty){
-                          return 'password must not be empty ';
-                        }
-                        return null;
-                      },
-                      label: 'Password',
-                      prefixIcon: Icons.lock),
-                  SizedBox(height: 15.0,),
-                  ConditionalBuilder(
-                      condition: state is! LoginLoadingState,
-                      builder: (context)=>materialBottomLogin(
-                          pressFunction: (){
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'LOGIN',
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          color: defaultColor,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 25.0
+                      ),),
+                    SizedBox(height: 5.0,),
+                    Text(
+                      'Login to communicate with your friend',
+                      style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18.0
+                      ),),
+                    SizedBox(height: 15.0,),
+                    defaultFormField(
+                        controller: emailController,
+                        type: TextInputType.emailAddress,
+                        validator: (value){
+                          if(value.isEmpty){
+                            return 'Email must not be empty ';
+                          }
+                          return null;
+                        },
+                        label: 'E-mail Address',
+                        prefixIcon: Icons.email),
+                    SizedBox(height: 15.0,),
+                    defaultFormField(
+                        controller: passwordController,
+                        type: TextInputType.text,
+                        validator: (value){
+                          if(value.isEmpty){
+                            return 'password must not be empty ';
+                          }
+                          return null;
+                        },
+                        label: 'Password',
+                        prefixIcon: Icons.lock),
+                    SizedBox(height: 15.0,),
+                    ConditionalBuilder(
+                        condition: state is! LoginLoadingState,
+                        builder: (context)=>materialBottomLogin(
+                            pressFunction: (){
 
 
-
+                              if(formKey.currentState!.validate()){
                                 cubit.userLogin(
                                     email: emailController.text,
                                     password: passwordController.text);
-                                // LoginCubit.get(context).getDocValue();
-                                // if(LoginCubit.get(context).isDoc==true)
-                                //   navigateTo(context, DoctorHomeScreen());
+                              }
+
+
+                                  // LoginCubit.get(context).getDocValue();
+                                  // if(LoginCubit.get(context).isDoc==true)
+                                  //   navigateTo(context, DoctorHomeScreen());
 
 
 
-                          },
-                          bottomText: 'LOGIN',
-                          backgroundColor: defaultColor,
-                          width: double.infinity),
-                      fallback: (context)=>Center(child: CircularProgressIndicator())),
-                  SizedBox(height: 15.0,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Don\'t have an account ',
-                        style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                            color: Colors.black
-                        ),),
-                      TextButton(onPressed: (){
-                        navigateTo(context, RegisterScreen());
-                      }, child: Text('Register now'))
+                            },
+                            bottomText: 'LOGIN',
+                            backgroundColor: defaultColor,
+                            width: double.infinity),
+                        fallback: (context)=>Center(child: CircularProgressIndicator())),
+                    SizedBox(height: 15.0,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Don\'t have an account ',
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
+                              color: Colors.black
+                          ),),
+                        TextButton(onPressed: (){
+                          navigateTo(context, RegisterScreen());
+                        }, child: Text('Register now'))
 
-                    ],
-                  )
+                      ],
+                    )
 
 
 
-                ],
+                  ],
 
+                ),
               ),
             ),
           );

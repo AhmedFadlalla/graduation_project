@@ -11,6 +11,7 @@ import '../../../layouts/doc_home_layout/Doctor_Cubit/doc_states.dart';
 import '../../../models/alekaamodel.dart';
 import '../../../models/horsemodel.dart';
 import '../../../shared/component/components.dart';
+import '../../../shared/styles/colors.dart';
 
 
 class DetailsScren extends StatelessWidget {
@@ -621,9 +622,11 @@ class DetailsScren extends StatelessWidget {
                       height: 60.0,
                       child: defaultbutton(
                           width: double.infinity,
-                          background: Colors.grey,
+                          background: defColorApp,
                           function: () {
+                            
                             print("hello flutter");
+
                           },
                           text: 'حفظ',
                           size: 30.0),

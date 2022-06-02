@@ -70,6 +70,8 @@ class RegisterCubit extends Cubit<RegisterStates> {
         bio: 'write your bio',
         phone: phone,
         status: 1,
+      oId: '',
+      section: ''
 
 
 

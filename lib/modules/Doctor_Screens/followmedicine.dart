@@ -58,7 +58,7 @@ class _FollowMedicine extends State<FollowMedicine>{
                       elevation: 22.0,
                       child: Container(
                         width: double.infinity,
-                        height: 66,
+                        height: 80,
                         child:Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Row(

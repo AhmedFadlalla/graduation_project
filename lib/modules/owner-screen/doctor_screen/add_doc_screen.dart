@@ -7,6 +7,7 @@ import 'package:graduation_project/layouts/owner_home_layout/cubit/owner_state.d
 import 'package:graduation_project/shared/styles/colors.dart';
 
 import '../../../shared/component/components.dart';
+import '../../../shared/network/local/cach_helper.dart';
 
 class AddDoctorScreen extends StatelessWidget {
   const AddDoctorScreen({Key? key}) : super(key: key);
@@ -218,7 +219,15 @@ class AddDoctorScreen extends StatelessWidget {
         },
         listener: (context,state){
           if(state is CreateDocSuccessState)
-            showToast(text: 'Successful Register', state: ToastStates.SUCCESS);
+            {
+              CachHelper.saveData(key: 'done', value: 0).then((value) {
+                showToast(text: 'Successful Register', state: ToastStates.SUCCESS);
+              });
+
+
+            }
+
+
         });
   }
 }

@@ -16,6 +16,7 @@ String token='';
  String? uId;
 String? oId;
 String? dId;
+dynamic dDone;
 
 //baseUrl: http://newsapi.org/
 // methode: v2/top-headlines?

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/shared/styles/colors.dart';
 
 
 import '../../../layouts/doc_home_layout/Doctor_Cubit/doc_cubit.dart';
@@ -82,7 +83,7 @@ class ShowDetails extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius:BorderRadius.circular(20),
-                color:Colors.grey,
+                color:defColorApp,
               ),
             );
             

@@ -25,17 +25,17 @@ void main(context) async {
   uId = CachHelper.getData(key: 'uId');
   oId =CachHelper.getData(key: 'oId');
   dId =CachHelper.getData(key: 'dId');
-  dynamic dDone =CachHelper.getData(key: 'done');
+  dDone =CachHelper.getData(key: 'done');
   print(uId);
   print(oId);
   print(dId);
   print(dDone);
 
 
-  if (uId != null && oId==null) {
+  if (uId != null && oId==null && dId == null) {
     widget = HomeScreenLayout();
   }
-  else if(uId == null && oId!=null)
+  else if(uId == null && oId!=null && dId == null||uId != null && oId!=null && dId == null)
   {
     widget=OwnerHomeScreenLayout();
   }
@@ -71,8 +71,9 @@ class MyApp extends StatelessWidget {
             ..getAllPosts()
             ..getAccomData()
           ),
-          BlocProvider(create: (context) => OwnerCubit()
-            ..getOwnerData()
+          BlocProvider(
+              create: (context) => OwnerCubit()
+            ..getOwnerData(ownerId: oId)
             ..getAllPosts()
             ..getUserData()
             ..getSectionsData()

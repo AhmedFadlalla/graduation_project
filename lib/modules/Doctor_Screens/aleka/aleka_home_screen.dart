@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/modules/Doctor_Screens/aleka/show.dart';
+import 'package:graduation_project/shared/styles/colors.dart';
 
 import '../../../shared/component/components.dart';
 import 'alka.dart';
@@ -24,10 +25,8 @@ class AlekaHomeScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 100.0,
                 child: defaultbutton(
-
-
                     width:double.infinity,
-                    background: Colors.grey.withOpacity(0.9),
+                    background: defColorApp,
                     function:(){print("hello flutter");},
                     text:'العلائق',
                     size: 20.0
@@ -46,7 +45,7 @@ class AlekaHomeScreen extends StatelessWidget {
                 child: defaultbutton(
                   width:double.infinity,
                   function:(){print("hello flutter");},
-                  background: Colors.grey.withOpacity(0.9),
+                  background: defColorApp,
                   text:'كون عليقة',
                   size: 20.0,
                 ),

@@ -107,15 +107,18 @@ class DoctorCubit extends Cubit<DoctorStates> //1
 
   UserModel? userModel;
 
-  void getDocData() {
+  void getDocData() async{
     // emit(GetDocLoadingState());
-    FirebaseFirestore.instance.collection('users')
+    FirebaseFirestore
+        .instance
+        .collection('users')
         .doc(dId)
         .snapshots()
         .listen((value) {
       userModel = UserModel.fromJson(value.data()!);
-      // emit(GetDocSuccessfulState());
+      emit(GetDocSuccessfulState());
     });
+
   }
 
   File? docImage;
@@ -183,7 +186,9 @@ class DoctorCubit extends Cubit<DoctorStates> //1
         section: userModel!.section!,
         address: address,
         cover: userModel!.cover,
-        bio: userModel!.bio);
+        bio: userModel!.bio,
+        done: 1
+    );
     FirebaseFirestore.instance
         .collection('owners')
         .doc(userModel!.oId)

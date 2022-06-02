@@ -30,15 +30,18 @@ class HorseCubit extends Cubit<HorseStates> {
 
   UserModel? userModel;
 
-  void getUserData() {
+  void  getUserData() {
     emit(GetUserLoadingState());
 
-    FirebaseFirestore.instance.collection('users').doc(uId).get().then((value) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uId)
+        .get()
+        .then((value) {
       userModel = UserModel.fromJson(value.data()!);
       emit(GetUserSuccessfulState());
-    }).catchError((error) {
-      emit(GetUserErrorState(error.toString()));
     });
+
   }
 
   int currentIndex = 0;
@@ -297,6 +300,9 @@ class HorseCubit extends Cubit<HorseStates> {
     });
   }
 
+  void updateStatusValue(){
+
+  }
   void createOwner({
     required String studName,
     required String address,
@@ -305,7 +311,7 @@ class HorseCubit extends Cubit<HorseStates> {
     OwnerModel model = OwnerModel(
         studName: studName,
         ownerName: userModel!.name,
-        oId: '00' + uId!,
+        oId: uId!,
         phone: userModel!.phone,
         address: address,
         image: image,
@@ -314,10 +320,11 @@ class HorseCubit extends Cubit<HorseStates> {
     emit(CreateOwnerLoadingState());
     FirebaseFirestore.instance
         .collection('owners')
-        .doc('00' + uId!)
+        .doc(uId!)
         .set(model.toMap())
         .then((value) {
-      emit(CreateOwnerSuccessState('00' + uId!));
+
+      emit(CreateOwnerSuccessState(uId!));
     }).catchError((error) {
       print(error.toString());
       emit(CreateOwnerErrorState(error.toString()));

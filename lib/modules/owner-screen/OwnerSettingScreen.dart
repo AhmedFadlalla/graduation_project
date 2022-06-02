@@ -64,7 +64,7 @@ class OwnerSettingsScreen extends StatelessWidget {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('${OwnerCubit.get(context).userModel!.name}',
+                              Text('${OwnerCubit.get(context).ownerModel!.studName}',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,

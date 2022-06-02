@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../shared/component/components.dart';
+import '../../../shared/styles/colors.dart';
 import 'horsedetails.dart';
 class CareHorse extends StatelessWidget {
   @override
@@ -19,7 +20,7 @@ class CareHorse extends StatelessWidget {
                   height: 60.0,
                   child: defaultbutton(
                     width:double.infinity,
-                    background:Colors.grey,
+                    background:defColorApp,
                     function:(){print("hello flutter");},
                     text:'التذكر',
                     size: 20.0
@@ -37,7 +38,7 @@ class CareHorse extends StatelessWidget {
                     height: 60.0,
                     child: defaultbutton(
                       width:double.infinity,
-                      background:Colors.grey,
+                      background:defColorApp,
                       function:(){print("hello flutter");},
                       text:'الخيول والتغذية',
                       size: 20.0

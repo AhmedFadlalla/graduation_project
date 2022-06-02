@@ -14,6 +14,7 @@ import '../../layouts/doc_home_layout/Doctor_Cubit/doc_states.dart';
 import '../../main.dart';
 import '../../models/roshetamodel.dart';
 import '../../shared/component/components.dart';
+import '../../shared/styles/colors.dart';
 
 class Rosheta extends StatelessWidget {
   var tashkhess = TextEditingController();
@@ -30,9 +31,7 @@ class Rosheta extends StatelessWidget {
        
         return SafeArea(
           child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Colors.black,
-              ),
+
               body: SingleChildScrollView(
                   child: Form(
                     key: formKey,
@@ -259,8 +258,8 @@ class Rosheta extends StatelessWidget {
                                 }
                               },
                               text: 'أضف الدواء',
-                              background: Colors.black,
-                              height: 50.0,
+                              background: defColorApp,
+                              height: 60.0,
                               width: 200.0
                           ),
                         ],

@@ -7,6 +7,7 @@ import 'package:graduation_project/layouts/doc_home_layout/Doctor_Cubit/doc_stat
 import 'package:graduation_project/modules/Doctor_Screens/rosheta.dart';
 import 'package:graduation_project/modules/owner-screen/doctor_screen/add_doc_screen.dart';
 import 'package:graduation_project/shared/component/components.dart';
+import 'package:graduation_project/shared/styles/colors.dart';
 
 import '../../models/horse_model.dart';
 import 'aleka/aleka_home_screen.dart';
@@ -57,10 +58,9 @@ class DocHomeScreen extends StatelessWidget {
                         child: Container(
                           margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
                           width: double.infinity,
-                          height: 100.0,
+                          height: 60.0,
                           child: defaultButton(
                               width:double.infinity,
-                              background:Colors.grey,
                               function:(){Navigator.push(context, MaterialPageRoute(builder: (context)=>AlekaHomeScreen()));},
                               text:' العلائق',
                             fontSize: 30.0
@@ -77,13 +77,13 @@ class DocHomeScreen extends StatelessWidget {
                           child: Container(
                             margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
                             width: double.infinity,
-                            height: 100.0,
-                            child: defaultbutton(
+                            height: 60.0,
+                            child: defaultButton(
                                 width:double.infinity,
-                                background:Colors.grey,
-                                function:(){print("hello flutter");},
+
+                                function:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=>CareHorse()));},
                                 text:'التغذية',
-                                size: 30.0
+                                fontSize: 30.0
                             ),
                           ),
                         ),
@@ -120,18 +120,93 @@ class DocHomeScreen extends StatelessWidget {
                 ],
               ),
             ) ,
-            fallback:(context)=>Center(child: Stack(
-              alignment: Alignment.bottomCenter,
+            fallback:(context)=>Center(child: Column(
               children: [
-                Image(
-                  image: NetworkImage('https://www.europeanequinelawyers.com/wp-content/uploads/2018/03/brexit-1024x682.jpg'),
+                SizedBox(
+                  height: height*0.1,
                 ),
-                Text(
-                  'No horses Yet !!!!',
-                  style: TextStyle(
-                    fontSize: 30.0,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+
+
+                    Text(
+                      'Welcome ',
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+                        width: double.infinity,
+                        height: 60.0,
+                        child: defaultButton(
+                            width:double.infinity,
+                            function:(){Navigator.push(context, MaterialPageRoute(builder: (context)=>AlekaHomeScreen()));},
+                            text:' العلائق',
+                            fontSize: 30.0
+
+
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CareHorse()));
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+                          width: double.infinity,
+                          height: 60.0,
+                          child: defaultButton(
+                              width:double.infinity,
+
+                              function:(){print("hello flutter");},
+                              text:'التغذية',
+                            fontSize: 30.0
+
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+                    padding: EdgeInsets.only(right: 8.0,left: 8.0),
+                    height: 35.0,
+                    color: Colors.blue,
+                    child: Text(
+                      'Your Horses',
+                      style: TextStyle(
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
                   ),
-                )
+                ),
+                Stack(
+                  alignment: Alignment.bottomCenter,
+                  children: [
+                    Image(
+                      image: NetworkImage('https://www.europeanequinelawyers.com/wp-content/uploads/2018/03/brexit-1024x682.jpg'),
+                    ),
+                    Text(
+                      'No horses Yet !!!!',
+                      style: TextStyle(
+                        fontSize: 30.0,
+                      ),
+                    )
+                  ],
+                ),
               ],
             ))  ,
           ) ,
@@ -201,9 +276,7 @@ class DocHomeScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            'الاسم :',
-                            style: TextStyle(color: Colors.red, fontSize: 20),
+                          Text('الاسم :', style: TextStyle(color: Colors.red, fontSize: 20),
                           ),
                           SizedBox(
                             width: 5.0,
@@ -321,7 +394,7 @@ class DocHomeScreen extends StatelessWidget {
                   children: [
                     defaultButton2(
                       text: 'التاريخ المرضي',
-                      background: Colors.black,
+                      background: defColorApp,
                       function: () {
                         Navigator.push(
                           context, //my place
@@ -341,7 +414,7 @@ class DocHomeScreen extends StatelessWidget {
                     ///////////////////////////////////////////////////////////////////////////////
                     defaultButton2(
                       text: 'اضافة دواء أو لقاح',
-                      background: Colors.black,
+                      background: defColorApp,
                       function: () {
                         Navigator.push(
                           context, //my place
@@ -368,7 +441,7 @@ class DocHomeScreen extends StatelessWidget {
                           ),);
                         /////اللي انا رايحله
                       },
-                      background: Colors.black,
+                      background: defColorApp,
                     ),
 
                     ////////////////////////////////

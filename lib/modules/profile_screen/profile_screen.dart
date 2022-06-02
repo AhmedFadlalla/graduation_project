@@ -41,7 +41,7 @@ class UserProfileScreen extends StatelessWidget {
                         ),
                         image: DecorationImage(
                           image: NetworkImage(
-                            '${HorseCubit.get(context).userModel!.cover}',
+                            '${HorseCubit.get(context).userModel?.cover}',
                           ),
                           fit: BoxFit.cover,
                         ),

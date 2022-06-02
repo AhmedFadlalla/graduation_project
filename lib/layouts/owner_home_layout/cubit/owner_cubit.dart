@@ -39,14 +39,14 @@ class OwnerCubit extends Cubit<OwnerState> {
 
     OwnerModel? ownerModel;
 
-  void getOwnerData() {
+  void getOwnerData({String? ownerId}) {
     // emit(GetOwnerLoadingState());
 
     FirebaseFirestore.instance
         .collection('owners')
         .doc(oId!)
-        .snapshots()
-        .listen((value) {
+        .get()
+        .then((value) {
       ownerModel = OwnerModel.fromJson(value.data()!);
       print(ownerModel!.image);
       print(ownerModel!.studName);
@@ -55,7 +55,10 @@ class OwnerCubit extends Cubit<OwnerState> {
       print(ownerModel!.cover);
       print(ownerModel!.bio);
       print(ownerModel!.phone);
-      // emit(GetOwnerSuccessfulState());
+      emit(GetOwnerSuccessfulState());
+    }).catchError((error){
+      print(error.toString());
+      emit(GetOwnerErrorState(error.toString()));
     });
   }
 
@@ -592,7 +595,8 @@ class OwnerCubit extends Cubit<OwnerState> {
       section:section,
       address: '',
       bio: userModel!.bio,
-      cover: userModel!.cover
+      cover: userModel!.cover,
+      done: 0,
     );
     FirebaseFirestore.instance
         .collection('owners')
@@ -904,6 +908,7 @@ class OwnerCubit extends Cubit<OwnerState> {
   List<SectionDataModel> sectionData=[];
   void getSectionsData(){
 
+    sectionData=[];
     FirebaseFirestore.instance
         .collection('owners')
         .doc(oId)

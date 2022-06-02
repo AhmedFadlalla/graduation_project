@@ -19,6 +19,7 @@ class LoginCubit extends Cubit<LoginStates>{
   static LoginCubit get(context)=>BlocProvider.of(context);
 
 
+  int? value;
   void userLogin ({
     required String email,
     required String password,
@@ -29,8 +30,9 @@ class LoginCubit extends Cubit<LoginStates>{
         .signInWithEmailAndPassword(email: email, password: password)
         .then((value){
           print(value.user!.uid);
-          getStatusValue('${value.user!.uid}');
+          getStatusValue('${value.user!.uid}') ;
           emit(LoginSuccessState(value.user!.uid));
+
 
     }).catchError((error){
       emit(LoginErrorState(error.toString()));
@@ -44,20 +46,22 @@ class LoginCubit extends Cubit<LoginStates>{
 
   UserModel? userData;
   int? status;
-  getStatusValue(
+  void getStatusValue(
       String userId
 ){
+    print('hi');
     FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
         .snapshots()
         .listen((value) {
-          userData=UserModel.fromJson(value.data()!);
-          status=userData!.status;
+      userData=UserModel.fromJson(value.data()!);
+      status =userData!.status;
           print(status);
-          emit(GetDocValueSuccessState());
+          // emit(GetDocValueSuccessState());
 
     });
+    print(status);
 
   }
 
